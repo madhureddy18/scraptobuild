@@ -20,7 +20,10 @@ jobs:
       - run: bash studio/render/setup.sh "${{ github.event.inputs.scene }}" kit
       - run: cd kit/codevid && CHROME_PATH=/usr/bin/google-chrome NSH=12 SH=${{ matrix.shard }} node render.js scenes/${{ github.event.inputs.scene }}.js
       - uses: actions/upload-artifact@v4
-        with: { name: seg-${{ matrix.shard }}, path: kit/codevid/out/seg_*.mp4, retention-days: 3 }
+        with:
+          name: seg-${{ matrix.shard }}
+          path: kit/codevid/out/seg_*.mp4
+          retention-days: 3
   assemble:
     needs: frames
     runs-on: ubuntu-latest
@@ -29,7 +32,10 @@ jobs:
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fontconfig
       - run: bash studio/render/setup.sh "${{ github.event.inputs.scene }}" kit
       - uses: actions/download-artifact@v4
-        with: { path: segs, pattern: seg-*, merge-multiple: true }
+        with:
+          path: segs
+          pattern: seg-*
+          merge-multiple: true
       - name: Join segments, add voice, music, SFX and captions
         run: |
           ls segs/seg_*.mp4 | sort | sed "s#^#file '$PWD/#;s#\$#'#" > list.txt && ffmpeg -v error -y -f concat -safe 0 -i list.txt -c copy all.mp4
