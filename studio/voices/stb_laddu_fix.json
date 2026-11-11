@@ -1,0 +1,50 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Twelve hundred years ago, they did not build a temple. They carved one, out of a living mountain."
+ },
+ "voices": {
+  "narrator_epic": "male, middle-aged, very low pitch, british accent"
+ },
+ "cast": {
+  "narrator": "narrator_epic"
+ },
+ "jobs": [
+  {
+   "voice": "narrator_epic",
+   "text": "Every single day, it makes around three lakh laddoos.",
+   "speed": 0.86,
+   "file": "02a.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Every single day, it makes around three lakh ladd-doos.",
+   "speed": 0.86,
+   "file": "02b.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Conveyor belts carry raw materials in, and laddoos out.",
+   "speed": 0.86,
+   "file": "14a.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Conveyor belts carry raw materials in, and ladd-doos out.",
+   "speed": 0.86,
+   "file": "14b.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "And on big festival days, this kitchen can make up to eight lakh laddoos in one day.",
+   "speed": 0.86,
+   "file": "16a.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "And on big festival days, this kitchen can make up to eight lakh ladd-doos in one day.",
+   "speed": 0.86,
+   "file": "16b.wav"
+  }
+ ]
+}
