@@ -1,0 +1,24 @@
+name: Check tokens (read-only)
+
+# Shows which secrets are set and what each one works for (Instagram / GitHub). Never prints a token.
+
+on: workflow_dispatch
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          T_IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          T_MADDIEANDCHOTUTOKEN: ${{ secrets.MADDIEANDCHOTUTOKEN }}
+          T_MADDIEANDCHOTUIGTOKEN: ${{ secrets.MADDIEANDCHOTUIGTOKEN }}
+          T_SCRAPTOBUILDIGTOKEN: ${{ secrets.SCRAPTOBUILDIGTOKEN }}
+          T_FINEGRAINTOKEN: ${{ secrets.FINEGRAINTOKEN }}
+        run: |
+          for n in IG_TOKEN MADDIEANDCHOTUTOKEN MADDIEANDCHOTUIGTOKEN SCRAPTOBUILDIGTOKEN FINEGRAINTOKEN; do
+            v=$(printenv T_$n | tr -d '[:space:]')
+            if [ -z "$v" ]; then echo "$n: not set"; continue; fi
+            ig=$(curl -s "https://graph.instagram.com/v21.0/me?fields=username&access_token=$v" | python3 -c "import sys,json; d=json.load(sys.stdin); print('@'+d['username'] if 'username' in d else 'no')" 2>/dev/null || echo no)
+            ghc=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $v" "https://api.github.com/repos/$GITHUB_REPOSITORY")
+            echo "$n: set | instagram: $ig | github repo access: $([ "$ghc" = 200 ] && echo yes || echo "no ($ghc)")"
+          done
