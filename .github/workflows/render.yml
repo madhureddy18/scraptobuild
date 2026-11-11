@@ -16,7 +16,8 @@ jobs:
         shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fontconfig
+      - run: command -v ffmpeg || (for i in 1 2 3; do timeout 180 sudo apt-get update -qq && timeout 300 sudo apt-get install -y -qq ffmpeg fontconfig && break; sleep 10; done)
+        timeout-minutes: 15
       - run: bash studio/render/setup.sh "${{ github.event.inputs.scene }}" kit
       - run: cd kit/codevid && CHROME_PATH=/usr/bin/google-chrome NSH=12 SH=${{ matrix.shard }} node render.js scenes/${{ github.event.inputs.scene }}.js
       - uses: actions/upload-artifact@v4
@@ -29,7 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fontconfig
+      - run: command -v ffmpeg || (for i in 1 2 3; do timeout 180 sudo apt-get update -qq && timeout 300 sudo apt-get install -y -qq ffmpeg fontconfig && break; sleep 10; done)
+        timeout-minutes: 15
       - run: bash studio/render/setup.sh "${{ github.event.inputs.scene }}" kit
       - uses: actions/download-artifact@v4
         with:
