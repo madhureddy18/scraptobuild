@@ -1,0 +1,11 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Twelve hundred years ago, they did not build a temple. They carved one, out of a living mountain."
+ },
+ "voices": {
+  "narrator_epic": "male, middle-aged, very low pitch, british accent"
+ },
+ "cast": { "narrator": "narrator_epic" },
+ "speed": 0.9
+}

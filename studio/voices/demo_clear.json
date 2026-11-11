@@ -1,0 +1,10 @@
+{
+ "seed": 7,
+ "ref_text": { "narrator": "Twelve hundred years ago, they did not build a temple. They carved one, out of a living mountain." },
+ "voices": { "narrator_epic": "male, middle-aged, very low pitch, british accent" },
+ "jobs": [
+  {"voice": "narrator_epic", "text": "This temple was not built. It was carved... from one single rock.", "file": "01.wav", "speed": 0.9},
+  {"voice": "narrator_epic", "text": "[surprise-oh] Two hundred thousand tonnes of stone, removed by hand. From the top, down.", "file": "02.wav", "speed": 0.9},
+  {"voice": "narrator_epic", "text": "One wrong strike, and there was no going back.", "file": "03.wav", "speed": 0.9}
+ ]
+}
