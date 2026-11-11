@@ -145,7 +145,7 @@ window.SCENE = {
     bx(60, 0.2, 60, M({ color: 0x24131a, roughness: 0.5, metalness: 0.2 }), PX, -0.2, 0);
     const plate = mesh(new THREE.CylinderGeometry(2.2, 2.0, 0.18, 40), mBrass, PX, 0.9, 0); bx(1.2, 0.8, 1.2, mWood, PX, 0, 0);
     const bigL = mesh(ladduGeo, mLaddu, PX, 2.25, 0); bigL.scale.setScalar(1.25);
-    const spot = new THREE.SpotLight(0xffd9a0, 120, 40, 0.5, 0.5, 1.2); spot.position.set(PX + 4, 12, 8); spot.target = bigL; S.add(spot);
+    const spot = new THREE.SpotLight(0xffd9a0, 35, 40, 0.5, 0.5, 1.2); spot.position.set(PX + 4, 12, 8); spot.target = bigL; S.add(spot);
     const NG = 120, glit = new THREE.InstancedMesh(new THREE.SphereGeometry(0.04, 6, 4), new THREE.MeshBasicMaterial({ color: 0xffd76a, toneMapped: false }), NG); S.add(glit);
     const gp = Array.from({ length: NG }, () => ({ a: dr() * 6.28, r: 2 + dr() * 3, y: dr() * 5, s: 0.2 + dr() * 0.6 }));
     const NMT = 800, mount = new THREE.InstancedMesh(ladduGeo, mLaddu, NMT); mount.castShadow = true; S.add(mount);
@@ -156,7 +156,7 @@ window.SCENE = {
     const disc = (s, col, fg) => (x, w, h) => { x.fillStyle = 'rgba(0,0,0,0.35)'; x.beginPath(); x.arc(w / 2, h / 2 + 6, 108, 0, 7); x.fill(); x.fillStyle = col; x.beginPath(); x.arc(w / 2, h / 2, 104, 0, 7); x.fill(); x.strokeStyle = 'rgba(255,255,255,0.85)'; x.lineWidth = 8; x.stroke(); x.fillStyle = fg; x.textAlign = 'center'; x.textBaseline = 'middle'; x.font = '700 118px "Oswald"'; x.fillText(s, w / 2, h / 2 + 6); };
     const hillTags = hillTop.map(([x, h, z], i) => label(disc(String(i + 1), i === 6 ? '#ffcf5a' : '#2f6b3a', i === 6 ? '#20142a' : '#fff'), i === 6 ? 9 : 7, x, (i === 6 ? TY + 16 : h + 6), z));
     const tag = (txt, sub) => (x, w, h) => { x.fillStyle = 'rgba(14,10,22,0.85)'; K.rrect(x, 8, 8, w - 16, h - 16, 40); x.fill(); x.strokeStyle = 'rgba(255,207,90,0.7)'; x.lineWidth = 5; x.stroke(); x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.font = '700 64px "Oswald"'; x.fillText(txt, w / 2, h / 2 - 22); x.fillStyle = '#ffcf5a'; x.font = '600 50px "Oswald"'; x.fillText(sub, w / 2, h / 2 + 40); };
-    PILES.forEach(p => { p.tag = label(tag(p.name, p.t >= 1 ? p.t + ' TONNES' : Math.round(p.t * 1000) + ' KG'), p.t >= 1 ? 3.0 : 2.2, p.x, p.r * 0.62 + (p.t >= 1 ? 3 : 2.0), p.z, 512, 220); });
+    PILES.forEach(p => { p.tag = label(tag(p.name, p.t >= 1 ? p.t + ' TONNES' : Math.round(p.t * 1000) + ' KG'), p.t >= 1 ? 2.4 : 1.5, p.x, p.r * 0.62 + (p.t >= 1 ? 2.6 : 1.5), p.z, 512, 220); });
 
     // ---------------------------------------------------------------- HUD
     const hudTex = K.canvasTex(1080, 1920, () => {});
@@ -205,9 +205,9 @@ window.SCENE = {
       A(fade(t, a, b + 0.1), () => { const k7 = F('loc', 0.8); A(fade(t, k7, b + 0.1), () => Z(pop(t, k7), 540, 220, () => pill(540, 220, '★  7TH HILL: VENKATADRI', { size: 46, fg: '#20142a', bg: GOLD, border: null })));
         pill(540, 120, '7 HILLS · SESHACHALAM RANGE', { size: 36 }); }); };
     const drawCooks = t => { const a = B('cooks'), b = E('cooks'); if (t < a - 0.1 || t > b + 0.4) return;
-      A(fade(t, a - 0.1, b + 0.1), () => Z(pop(t, a - 0.1, b + 0.1), 540, 520, () => { panel(110, 160, 860, 700, 40);
+      A(fade(t, a - 0.1, b + 0.1), () => Z(pop(t, a - 0.1, b + 0.1), 540, 560, () => { panel(110, 160, 860, 820, 40);
         txt('≈ ' + IN(620 * eo(prog(t, a, a + 1.4))), 540, 260, { size: 120, w: 700, col: GOLD }); txt('COOKS', 540, 360, { size: 52, w: 600 });
-        const shown = Math.floor(620 * eo(prog(t, a, a + 1.6))); for (let i = 0; i < 620; i++) { const c = i % 31, r = Math.floor(i / 31); person(170 + c * 24.5, 430 + r * 21, 18, i < shown ? (i % 7 === 0 ? GOLD : '#f3eee2') : 'rgba(255,255,255,0.12)'); }
+        const shown = Math.floor(620 * eo(prog(t, a, a + 1.6))); for (let i = 0; i < 620; i++) { const c = i % 31, r = Math.floor(i / 31); person(165 + c * 25, 440 + r * 26, 22, i < shown ? (i % 7 === 0 ? GOLD : '#f3eee2') : 'rgba(255,255,255,0.12)'); }
       })); };
     const drawSince = t => { const a = B('since'), b = E('since'); if (t < a - 0.1 || t > b + 0.4) return;
       A(fade(t, a - 0.1, b + 0.1), () => { panel(80, 150, 920, 300, 36);
@@ -272,7 +272,7 @@ window.SCENE = {
     const shot = (a, b, p0, l0, p1 = p0, l1 = l0, o = {}) => shots.push({ a, b, p0, l0, p1, l1, ...o });
     const V3 = (v, t) => typeof v === 'function' ? v(t) : v;
     const TP = [0, TY + 5, -1];
-    shot(0, B('hook2'), [0, TY + 3, 34], [0, TY + 6, 0], [9, TY + 8, 20], TP);
+    shot(0, B('hook2'), [24, TY + 11, 22], [0, TY + 5, -1], [15, TY + 8.5, 13], [0, TY + 5.5, -1]);
     shot(B('hook2'), B('hook3'), [KX + 2, 7, 19], [KX - 3, 2, -5], [KX + 1, 6, 15], [KX - 3, 2, -5]);
     shot(B('hook3'), F('hook3', 0.5), [TX + 1.6, 3.0, TZ + 2.4], [TX, 2.1, TZ + 0.2], [TX + 1.3, 2.8, TZ + 2.0], [TX, 2.1, TZ + 0.2]);
     shot(F('hook3', 0.5), B('loc'), [HK + 2.0, 4.6, SZ + 3.0], [HK, 2.4, SZ], [HK + 1.6, 4.2, SZ + 2.5], [HK, 2.4, SZ]);
@@ -281,8 +281,8 @@ window.SCENE = {
     shot(B('potu'), B('cooks'), [KX, 7.5, 24], [KX, 2.5, -5], [KX, 5.5, 16], [KX, 2.5, -5]);
     shot(B('cooks'), B('since'), [KX - 20, 5, 6], [KX - 6, 2.2, -7], [KX - 17, 4.5, 4], [KX - 6, 2.2, -7]);
     shot(B('since'), B('ingr'), t => { const a = lerp(-0.5, 0.6, prog(t, B('since'), B('ingr'))); return [PX + Math.sin(a) * 6, 3.4, Math.cos(a) * 6]; }, [PX, 2.2, 0]);
-    shot(B('ingr'), B('nuts'), [IX, 20, 30], [IX, 1, 2], [IX, 17, 26], [IX, 1, 2]);
-    shot(B('nuts'), B('step1'), [IX - 1, 8, 20], [IX - 1.5, 1, 7], [IX - 1, 7, 18], [IX - 1.5, 1, 7.5]);
+    shot(B('ingr'), B('nuts'), [IX, 28, 36], [IX, 0, 3], [IX, 25, 32], [IX, 0, 3]);
+    shot(B('nuts'), B('step1'), [IX - 1, 13, 24], [IX - 1.5, 0.5, 7], [IX - 1, 12, 22], [IX - 1.5, 0.5, 7.5]);
     shot(B('step1'), B('step2'), [HK + 2.2, 4.5, SZ + 3.2], [HK, 2.4, SZ], [HK + 1.4, 3.9, SZ + 2.4], [HK, 2.3, SZ]);
     shot(B('step2'), B('step3'), [VX + 3.4, 6.4, VZ + 5], [VX, 2.6, VZ], [VX + 2.6, 5.6, VZ + 4.2], [VX, 2.6, VZ]);
     shot(B('step3'), B('belts'), [TX + 1.5, 3.0, TZ + 2.4], [TX, 2.1, TZ + 0.2], [TX + 1.1, 2.75, TZ + 1.9], [TX, 2.1, TZ + 0.2]);
