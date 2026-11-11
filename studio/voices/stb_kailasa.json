@@ -1,0 +1,128 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Twelve hundred years ago, they did not build a temple. They carved one, out of a living mountain."
+ },
+ "voices": {
+  "narrator_epic": "male, middle-aged, very low pitch, british accent"
+ },
+ "cast": {
+  "narrator": "narrator_epic"
+ },
+ "jobs": [
+  {
+   "voice": "narrator_epic",
+   "text": "Nobody built this temple.",
+   "speed": 0.86,
+   "file": "01.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "They carved it... out of one single rock.",
+   "speed": 0.86,
+   "file": "02.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "And they started from the roof. Not the floor.",
+   "speed": 0.86,
+   "file": "03.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "One wrong hit could ruin everything. Watch how they did it.",
+   "speed": 0.86,
+   "file": "04.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "This is the Kailasa Temple, at the Ellora Caves, in Maharashtra, India.",
+   "speed": 0.86,
+   "file": "05.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Ellora has thirty-four caves, cut into one long cliff. Kailasa is cave sixteen.",
+   "speed": 0.86,
+   "file": "06.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "It was carved around the year seven hundred and sixty, under King Krishna the First.",
+   "speed": 0.86,
+   "file": "07.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Step one. Workers cut three deep trenches into the hill.",
+   "speed": 0.86,
+   "file": "08.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "That left one giant block of rock, standing alone.",
+   "speed": 0.86,
+   "file": "09.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Step two. They started at the top, and carved downwards.",
+   "speed": 0.86,
+   "file": "10.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "First the roof. Then the walls. Then the floor.",
+   "speed": 0.86,
+   "file": "11.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "No machines. Only hammers and chisels.",
+   "speed": 0.86,
+   "file": "12.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "They removed about two hundred thousand tonnes of stone.",
+   "speed": 0.86,
+   "file": "13.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "The temple is about thirty-two metres tall. As high as a ten-storey building.",
+   "speed": 0.86,
+   "file": "14.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Pillars, stairs, bridges, even life-size elephants. All one piece of rock.",
+   "speed": 0.86,
+   "file": "15.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "And there was no undo.",
+   "speed": 0.86,
+   "file": "16.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "One wrong strike... and the stone could never be put back.",
+   "speed": 0.86,
+   "file": "17.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Today, it is a UNESCO World Heritage Site. Still standing, after twelve hundred years.",
+   "speed": 0.86,
+   "file": "18.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Comment ROCK if this amazed you. And follow for the next build.",
+   "speed": 0.86,
+   "file": "19.wav"
+  }
+ ]
+}
