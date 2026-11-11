@@ -25,7 +25,7 @@ window.SCENE = {
     const M = (o) => new THREE.MeshStandardMaterial(Object.assign({ roughness: 0.8 }, o));
     const mesh = (geo, m, x, y, z, parent = S) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = o.receiveShadow = true; parent.add(o); return o; };
     const bx = (w, h, d, m, x, y, z, parent) => mesh(new THREE.BoxGeometry(w, h, d), m, x, y + h / 2, z, parent);
-    const mGrass = M({ map: tex('#3e5a2c', 3), color: 0xffffff }), mStone = M({ map: tex('#cdbb9c', 5) }), mGold = M({ color: 0xffc23a, metalness: 1, roughness: 0.25, emissive: 0x5a3500, emissiveIntensity: 0.6 });
+    const mGrass = M({ map: tex('#3e5a2c', 3), color: 0xffffff }), mStone = M({ map: tex('#cdbb9c', 5) }), mGold = M({ color: 0xffc23a, metalness: 0.45, roughness: 0.3, emissive: 0x9a6200, emissiveIntensity: 0.9 });
     mGrass.map.repeat.set(30, 30);
     const mLaddu = M({ map: tex('#e89a2e', 8, 1800, ['#f4b648', '#d9821e', '#f7c45c', '#c9741a', '#ffd27a']), roughness: 0.6 });
     const ladduGeo = (() => { const g = new THREE.SphereGeometry(1, 28, 20), p = g.attributes.position, v = new THREE.Vector3();
@@ -132,11 +132,11 @@ window.SCENE = {
     const grid = new THREE.GridHelper(44, 22, 0x8a6a4e, 0x8a6a4e); grid.position.set(IX, 0.01, 4); grid.material.transparent = true; grid.material.opacity = 0.25; S.add(grid);
     const pileTex = (c, dots) => tex(c, 30 + c.length, 3000, dots);
     const PILES = [
-      { id: 'flour', name: 'GRAM FLOUR', t: 10, x: IX - 6, z: 0, at: () => F('flour', 0.05), m: M({ map: pileTex('#efd38a', ['#f5df9e', '#e3c374', '#fbe8b0']) }) },
-      { id: 'sugar', name: 'SUGAR', t: 10, x: IX + 6, z: -1, at: () => F('flour', 0.55), m: M({ map: pileTex('#f6f3ec', ['#ffffff', '#e8e2d6', '#fbf8f2']), roughness: 0.4 }) },
-      { id: 'cashew', name: 'CASHEWS', t: 0.7, x: IX - 7, z: 8, at: () => F('nuts', 0.02), m: M({ map: pileTex('#ead2a0', ['#f3e0b8', '#d9bd86', '#f7ebcf']) }) },
-      { id: 'raisin', name: 'RAISINS', t: 0.54, x: IX - 1, z: 9, at: () => F('nuts', 0.36), m: M({ map: pileTex('#5a2a18', ['#3e1a0e', '#6e3420', '#2c1208']) }) },
-      { id: 'card', name: 'CARDAMOM', t: 0.15, x: IX + 4.5, z: 9, at: () => F('nuts', 0.7), m: M({ map: pileTex('#7f9a52', ['#93ad66', '#6a8442', '#a3bb78']) }) },
+      { id: 'flour', name: 'GRAM FLOUR', t: 10, x: IX - 4.4, z: -5, at: () => F('flour', 0.05), m: M({ map: pileTex('#efd38a', ['#f5df9e', '#e3c374', '#fbe8b0']) }) },
+      { id: 'sugar', name: 'SUGAR', t: 10, x: IX + 4.4, z: -5, at: () => F('flour', 0.55), m: M({ map: pileTex('#f6f3ec', ['#ffffff', '#e8e2d6', '#fbf8f2']), roughness: 0.4 }) },
+      { id: 'cashew', name: 'CASHEWS', t: 0.7, x: IX - 3.4, z: 4, at: () => F('nuts', 0.02), m: M({ map: pileTex('#ead2a0', ['#f3e0b8', '#d9bd86', '#f7ebcf']) }) },
+      { id: 'raisin', name: 'RAISINS', t: 0.54, x: IX, z: 4.5, at: () => F('nuts', 0.36), m: M({ map: pileTex('#5a2a18', ['#3e1a0e', '#6e3420', '#2c1208']) }) },
+      { id: 'card', name: 'CARDAMOM', t: 0.15, x: IX + 3.0, z: 4.5, at: () => F('nuts', 0.7), m: M({ map: pileTex('#7f9a52', ['#93ad66', '#6a8442', '#a3bb78']) }) },
     ];
     PILES.forEach(p => { p.r = 4.2 * Math.cbrt(p.t / 10); p.mesh = mesh(new THREE.SphereGeometry(p.r, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2), p.m, p.x, 0, p.z); p.mesh.scale.y = 0.62; });
 
@@ -183,7 +183,7 @@ window.SCENE = {
     const IN = n => Math.round(n).toLocaleString('en-IN');
     const pinIcon = (cx, cy, s, col = RED) => { X.fillStyle = col; X.beginPath(); X.arc(cx, cy - s * 0.55, s * 0.45, Math.PI * 0.85, Math.PI * 2.15); X.lineTo(cx, cy + s * 0.15); X.closePath(); X.fill(); X.fillStyle = '#fff'; X.beginPath(); X.arc(cx, cy - s * 0.55, s * 0.17, 0, 7); X.fill(); };
     const ladduIcon = (x, y, r) => { const g = X.createRadialGradient(x - r * 0.35, y - r * 0.35, r * 0.1, x, y, r); g.addColorStop(0, '#ffd27a'); g.addColorStop(1, '#d9821e'); X.fillStyle = g; X.beginPath(); X.arc(x, y, r, 0, 7); X.fill(); X.fillStyle = 'rgba(120,50,0,0.35)'; for (let i = 0; i < 14; i++) { const a = i * 2.39, rr = r * 0.75 * Math.sqrt((i + 0.5) / 14); X.beginPath(); X.arc(x + Math.cos(a) * rr, y + Math.sin(a) * rr, r * 0.09, 0, 7); X.fill(); } };
-    const person = (x, y, s, col) => { X.fillStyle = col; X.beginPath(); X.arc(x, y - s * 0.55, s * 0.22, 0, 7); X.fill(); K.rrect(X, x - s * 0.25, y - s * 0.3, s * 0.5, s * 0.6, s * 0.12); X.fill(); };
+    const person = (x, y, s, col) => { X.fillStyle = col; X.beginPath(); X.arc(x, y - s * 0.36, s * 0.17, 0, 7); X.fill(); X.beginPath(); X.moveTo(x - s * 0.3, y + s * 0.32); X.quadraticCurveTo(x - s * 0.3, y - s * 0.17, x, y - s * 0.17); X.quadraticCurveTo(x + s * 0.3, y - s * 0.17, x + s * 0.3, y + s * 0.32); X.closePath(); X.fill(); };
 
     const INDIA = [[68.2, 23.7], [68.8, 23.3], [69.0, 22.4], [70.5, 20.8], [72.3, 21.3], [72.6, 22.2], [72.9, 20.8], [72.8, 19.0], [73.3, 17.0], [73.9, 15.5], [74.6, 13.5], [75.5, 11.5], [76.2, 10.0], [77.0, 8.3], [77.6, 8.1], [78.2, 8.9], [79.0, 9.4], [79.3, 10.3], [79.85, 10.8], [79.9, 12.3], [80.3, 13.5], [80.1, 15.2], [80.6, 15.9], [81.5, 16.3], [82.3, 16.7], [83.4, 17.7], [84.8, 19.2], [86.4, 20.0], [87.0, 21.0], [87.6, 21.6], [88.2, 21.7], [89.0, 21.9], [88.7, 23.5], [88.0, 24.4], [88.4, 25.2], [89.0, 25.3], [89.8, 26.0], [90.6, 25.2], [92.0, 25.1], [92.3, 24.2], [91.6, 23.2], [92.3, 22.0], [93.2, 22.3], [93.4, 23.8], [94.2, 24.0], [94.6, 25.4], [95.2, 26.6], [96.3, 27.3], [97.3, 28.2], [96.2, 29.3], [95.4, 29.0], [94.0, 28.0], [92.2, 27.8], [91.6, 27.1], [89.8, 26.8], [88.9, 27.2], [88.8, 28.1], [88.1, 27.9], [88.1, 26.5], [86.0, 26.5], [84.0, 27.4], [82.0, 27.7], [80.1, 28.8], [80.9, 30.2], [79.0, 31.4], [78.7, 32.6], [79.4, 32.6], [79.5, 34.0], [78.0, 35.5], [77.0, 35.6], [75.0, 37.0], [73.9, 36.0], [73.7, 34.6], [74.0, 33.4], [74.6, 32.7], [75.3, 32.2], [74.5, 31.0], [73.9, 30.1], [72.2, 28.4], [70.6, 27.8], [69.5, 26.6], [70.1, 25.2], [71.0, 24.5], [69.9, 24.2], [68.8, 24.3]];
     const AP = [[77.2, 15.9], [77.5, 15.0], [76.9, 14.6], [77.1, 13.9], [77.9, 13.0], [78.6, 12.6], [79.4, 12.9], [80.2, 13.4], [80.1, 15.2], [80.6, 15.9], [81.5, 16.3], [82.3, 16.7], [83.4, 17.7], [84.8, 19.1], [84.2, 19.0], [83.2, 18.6], [82.3, 18.0], [81.6, 17.7], [81.0, 17.3], [80.2, 16.9], [79.6, 16.7], [79.2, 16.3], [78.1, 16.0]];
@@ -207,7 +207,8 @@ window.SCENE = {
     const drawCooks = t => { const a = B('cooks'), b = E('cooks'); if (t < a - 0.1 || t > b + 0.4) return;
       A(fade(t, a - 0.1, b + 0.1), () => Z(pop(t, a - 0.1, b + 0.1), 540, 560, () => { panel(110, 160, 860, 820, 40);
         txt('≈ ' + IN(620 * eo(prog(t, a, a + 1.4))), 540, 260, { size: 120, w: 700, col: GOLD }); txt('COOKS', 540, 360, { size: 52, w: 600 });
-        const shown = Math.floor(620 * eo(prog(t, a, a + 1.6))); for (let i = 0; i < 620; i++) { const c = i % 31, r = Math.floor(i / 31); person(165 + c * 25, 440 + r * 26, 22, i < shown ? (i % 7 === 0 ? GOLD : '#f3eee2') : 'rgba(255,255,255,0.12)'); }
+        const shown = Math.floor(62 * eo(prog(t, a, a + 1.6))); for (let i = 0; i < 62; i++) { const c = i % 10, r = Math.floor(i / 10); person(195 + c * 77, 470 + r * 62, 52, i < shown ? '#f3eee2' : 'rgba(255,255,255,0.12)'); }
+        txt('EACH ICON = 10 COOKS', 540, 920, { size: 28, w: 500, col: 'rgba(255,255,255,0.75)' });
       })); };
     const drawSince = t => { const a = B('since'), b = E('since'); if (t < a - 0.1 || t > b + 0.4) return;
       A(fade(t, a - 0.1, b + 0.1), () => { panel(80, 150, 920, 300, 36);
@@ -281,8 +282,8 @@ window.SCENE = {
     shot(B('potu'), B('cooks'), [KX, 7.5, 24], [KX, 2.5, -5], [KX, 5.5, 16], [KX, 2.5, -5]);
     shot(B('cooks'), B('since'), [KX - 20, 5, 6], [KX - 6, 2.2, -7], [KX - 17, 4.5, 4], [KX - 6, 2.2, -7]);
     shot(B('since'), B('ingr'), t => { const a = lerp(-0.5, 0.6, prog(t, B('since'), B('ingr'))); return [PX + Math.sin(a) * 6, 3.4, Math.cos(a) * 6]; }, [PX, 2.2, 0]);
-    shot(B('ingr'), B('nuts'), [IX, 28, 36], [IX, 0, 3], [IX, 25, 32], [IX, 0, 3]);
-    shot(B('nuts'), B('step1'), [IX - 1, 13, 24], [IX - 1.5, 0.5, 7], [IX - 1, 12, 22], [IX - 1.5, 0.5, 7.5]);
+    shot(B('ingr'), B('nuts'), [IX, 32, 40], [IX, 0, -1], [IX, 29, 36], [IX, 0, -1]);
+    shot(B('nuts'), B('step1'), [IX, 13, 21], [IX, 0.5, 3.5], [IX, 12, 19], [IX, 0.5, 4]);
     shot(B('step1'), B('step2'), [HK + 2.2, 4.5, SZ + 3.2], [HK, 2.4, SZ], [HK + 1.4, 3.9, SZ + 2.4], [HK, 2.3, SZ]);
     shot(B('step2'), B('step3'), [VX + 3.4, 6.4, VZ + 5], [VX, 2.6, VZ], [VX + 2.6, 5.6, VZ + 4.2], [VX, 2.6, VZ]);
     shot(B('step3'), B('belts'), [TX + 1.5, 3.0, TZ + 2.4], [TX, 2.1, TZ + 0.2], [TX + 1.1, 2.75, TZ + 1.9], [TX, 2.1, TZ + 0.2]);
