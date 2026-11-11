@@ -1,0 +1,65 @@
+name: Cut Reel
+
+# Started by the website's "Save cut" button. Cuts queue/<id>.mp4 to start..end (seconds) and saves it back.
+# Shares the posting lock, so a cut and a post never run at the same time.
+
+on:
+  workflow_dispatch:
+    inputs:
+      id:
+        description: "Video id in the queue"
+        type: string
+        required: true
+      start:
+        description: "Keep from (seconds)"
+        type: string
+        required: true
+      end:
+        description: "Keep until (seconds)"
+        type: string
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: post-reel
+  cancel-in-progress: false
+
+jobs:
+  cut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make sure ffmpeg is installed
+        run: command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+      - name: Cut the video
+        env:
+          ID: ${{ inputs.id }}
+          START: ${{ inputs.start }}
+          END: ${{ inputs.end }}
+        run: python3 cut.py "$ID" "$START" "$END"
+      - name: If the cut failed, unblock the video and note why
+        if: failure()
+        env:
+          ID: ${{ inputs.id }}
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib
+          f = pathlib.Path("queue") / (os.environ["ID"] + ".json")
+          if f.exists():
+              m = json.loads(f.read_text(encoding="utf-8")); m.pop("trim", None); m["cut_error"] = "The cut failed - open the run details on GitHub, or try again."
+              f.write_text(json.dumps(m, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+          PY
+      - name: Save it
+        if: always()
+        env:
+          ID: ${{ inputs.id }}
+        run: |
+          git config user.name "scraptobuild-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A queue; git add -A originals 2>/dev/null || true
+          if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
+          git commit -m "Cut $ID"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done

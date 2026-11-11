@@ -1,0 +1,80 @@
+name: Schedule waiter
+
+# GitHub's own timer ("every 15 minutes" in post.yml) really runs every 3–8 hours, so scheduled Reels went out late or not at all.
+# This waiter starts whenever the queue changes (you schedule / reschedule / unschedule on the website), holds the time,
+# checks the queue every minute, and starts "Post Reels" within ~1 minute of the scheduled time.
+# A job can run at most 6 hours, so for a later time it hands over to a fresh waiter before then.
+# Test: a queue item whose id starts with _test only triggers a dry run (nothing is posted).
+# Only the newest waiter runs (a new schedule cancels the old waiter, which then re-reads the queue).
+
+on:
+  push:
+    branches: [main]
+    paths: ["queue/**.json"]
+  workflow_dispatch:
+  schedule:
+    - cron: "7 * * * *"      # backup restart, in case a waiter was ever lost
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: schedule-waiter
+  cancel-in-progress: true
+
+jobs:
+  wait:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            /queue/*.json
+          sparse-checkout-cone-mode: false
+          filter: blob:none
+      - name: Wait for scheduled Reels
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          cat > /tmp/next.py <<'PY'
+          import datetime as dt, glob, json, sys
+          IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
+          now, due, nxt = dt.datetime.now(IST), [], None
+          for f in sorted(glob.glob("queue/*.json")):
+              try: m = json.load(open(f, encoding="utf-8"))
+              except Exception: continue
+              at = m.get("at")
+              if not at or m.get("status") == "failed" or m.get("trim"): continue
+              try: t = dt.datetime.fromisoformat(at)
+              except ValueError: continue
+              if t <= now: due.append(f[6:-5])
+              elif nxt is None or t < nxt: nxt = t
+          if due: print("due " + " ".join(due))
+          elif nxt: print("wait %d %s" % ((nxt - now).total_seconds(), nxt.isoformat()))
+          else: print("none")
+          PY
+          start=$(date +%s); declare -A sent
+          while :; do
+            git fetch -q --depth 1 origin main && git reset -q --hard origin/main
+            read -r state rest <<< "$(python3 /tmp/next.py)"
+            case "$state" in
+              none) echo "Nothing scheduled. Done."; exit 0 ;;
+              due)
+                fire=0; dry=true
+                for id in $rest; do
+                  if [ -z "${sent[$id]}" ] || [ $(( $(date +%s) - ${sent[$id]} )) -gt 1500 ]; then sent[$id]=$(date +%s); fire=1; echo "$(TZ=Asia/Kolkata date '+%F %T') due: $id"; case $id in _test*) ;; *) dry=false ;; esac; fi
+                done
+                if [ $fire = 1 ]; then
+                  gh api -X POST "repos/$REPO/actions/workflows/post.yml/dispatches" -f ref=main -f 'inputs[id]=' -F "inputs[dry_run]=$dry" >/dev/null && echo "started Post Reels (dry_run=$dry)"
+                fi ;;
+              wait) [ $(( $(date +%s) - start )) -lt 120 ] && echo "next post: $(echo $rest | cut -d' ' -f2) (in $(( $(echo $rest | cut -d' ' -f1) / 60 )) min)" ;;
+            esac
+            if [ $(( $(date +%s) - start )) -gt 20400 ]; then     # 5h40m: hand over to a fresh waiter
+              gh api -X POST "repos/$REPO/actions/workflows/wait.yml/dispatches" -f ref=main >/dev/null && echo "handed over to a new waiter"
+              exit 0
+            fi
+            sleep 60
+          done

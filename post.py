@@ -1,4 +1,4 @@
-"""Post Reels to Instagram (@maddieandchotu). Runs on GitHub Actions, driven by the website (index.html).
+"""Post Reels to Instagram (@scraptobuild). Runs on GitHub Actions, driven by the website (index.html).
 
 queue/<id>.mp4 + queue/<id>.json + optional queue/<id>.jpg (cover)
   json: {"title", "caption", "hashtags": [max 5], "first_comment", "keywords", "audio_name", "thumb_offset" (ms),
@@ -58,7 +58,7 @@ def due_items():
     out = []
     for v, m in items():
         at = m.get("at")
-        if not at or m.get("status") == "failed":
+        if not at or m.get("status") == "failed" or m.get("trim"):   # trim = a cut is still being made
             continue
         try:
             if dt.datetime.fromisoformat(at) <= now():
@@ -87,7 +87,7 @@ def public_url(video):
     for i in range(20):
         try:
             r = requests.head(pages, allow_redirects=True, timeout=30)
-            if r.ok and int(r.headers.get("content-length") or 0) > 50_000:
+            if r.ok and int(r.headers.get("content-length") or 0) == video.stat().st_size:   # the fresh file, not an old copy (e.g. before a cut)
                 return pages
         except Exception:
             pass
@@ -172,6 +172,7 @@ def post_one(token, video, meta):
     video.unlink()
     jf.unlink(missing_ok=True)
     cover.unlink(missing_ok=True)
+    (ROOT / "originals" / video.name).unlink(missing_ok=True)   # pre-cut copy kept for "Undo cut"
     return True
 
 

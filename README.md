@@ -1,21 +1,19 @@
-# Maddie & Chotu Studio
+# @scraptobuild studio
 
-Your own free website for posting Reels to **@maddieandchotu**: **https://madhureddy18.github.io/maddieandchotu/**
+How things are built, from scrap or raw rock to the finished thing — 3D reels made entirely in code.
 
-- Videos made by Claude land in `queue/` ready to go: title, caption, 5 hashtags (Instagram's limit), first comment, audio name, cover image and a posting tip. Tap one, check it, then **Post now** or **Schedule**.
-- You can also add your own video from the site.
-- Nothing posts unless you schedule it or press Post now.
-- Scheduled Reels are checked every 15 minutes (GitHub can start a few minutes late). Post now takes ~1–4 minutes.
-- Posted Reels show up under "Posted" with a link to Instagram.
+**Website:** https://madhureddy18.github.io/scraptobuild/ — preview queued reels, edit captions, cut, **Post now** or **Schedule**. Log in once with a fine-grained GitHub token for this repo (Contents + Actions: Read and write).
 
-`tools/make_cover.py` makes a cover (frame + title).
-
-How it works: the site saves videos into `queue/` in this repo; GitHub Actions (`.github/workflows/post.yml`) posts them with the official Instagram API. Free, no servers.
+## How it works
+- `queue/<id>.mp4` + `.json` (+ `.jpg` cover) = a reel waiting to be posted. `at: null` = draft (never posts on its own).
+- `post.py` + `.github/workflows/post.yml` post to Instagram (Reels) with the cover, caption, hashtags and first comment.
+- `wait.yml` makes scheduled posts go out within ~1 minute of the time. `cut.yml` + `cut.py` = the website's ✂️ cut tool.
+- `refresh-token.yml` keeps the Instagram token alive every Monday.
 
 ## Secrets (Settings → Secrets and variables → Actions)
-- `MADDIEANDCHOTUIGTOKEN` – the @maddieandchotu Instagram token.
-- `IG_TOKEN` – a fine-grained GitHub token for this repo with *Secrets: Read and write* (the weekly job uses it to keep the Instagram token alive).
+- `MADDIEANDCHOTUIGTOKEN` — Instagram token for @scraptobuild (used to post).
+- `IG_TOKEN` — fine-grained GitHub token for this repo (Secrets: read+write), used to save the refreshed Instagram token.
+- `check-tokens.yml` (run it by hand) shows what each secret works for, without printing any token.
 
-The website asks for a fine-grained GitHub token with **Contents** and **Actions** = *Read and write* (it's stored only in your browser).
-
-Note: the repo is public because Instagram downloads videos from a public link.
+## Making reels
+`studio/` holds the scenes, locked narrator voice, music bed and the render setup (`voices.yml` for OmniVoice, `render.yml` renders on 12 machines in ~20 min).
