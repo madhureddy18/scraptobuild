@@ -35,7 +35,7 @@ window.SCENE = {
     const tWall = rockTex('#5a4a44', 3), tGround = rockTex('#6b5a3c', 5, false);
     [tWall, tGround].forEach(t => { t.wrapS = t.wrapT = THREE.RepeatWrapping; }); tWall.repeat.set(3, 2); tGround.repeat.set(28, 28);
     const mWall = new THREE.MeshStandardMaterial({ map: tWall, roughness: 0.95 });
-    const mRock = new THREE.MeshStandardMaterial({ map: rockTex('#4d403b', 7), roughness: 0.92 });
+    const mRock = new THREE.MeshStandardMaterial({ map: rockTex('#7a6252', 7), roughness: 0.92 });
     const mTemple = new THREE.MeshStandardMaterial({ map: rockTex('#8a7466', 11, false), roughness: 0.85 });
     const mDark = new THREE.MeshStandardMaterial({ color: 0x150e0c, roughness: 1 });
     const mGround = new THREE.MeshStandardMaterial({ map: tGround, roughness: 1 });
@@ -122,7 +122,7 @@ window.SCENE = {
     ghost.position.y = H / 2; S.add(ghost);
     const ghostFill = new THREE.Mesh(new THREE.BoxGeometry(2 * RX, H, 2 * RZ), new THREE.MeshBasicMaterial({ color: 0xffc04a, transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
     ghostFill.position.y = H / 2; S.add(ghostFill);
-    const cutPlane = new THREE.Mesh(new THREE.PlaneGeometry(2 * RX + 1.2, 2 * RZ + 1.2), new THREE.MeshBasicMaterial({ color: 0xffc04a, transparent: true, opacity: 0.32, depthWrite: false, side: THREE.DoubleSide, toneMapped: false }));
+    const cutPlane = new THREE.Mesh(new THREE.PlaneGeometry(2 * RX + 1.2, 2 * RZ + 1.2), new THREE.MeshBasicMaterial({ color: 0xffc04a, transparent: true, opacity: 0.16, depthWrite: false, side: THREE.DoubleSide, toneMapped: false }));
     cutPlane.rotation.x = -Math.PI / 2; S.add(cutPlane);
 
     // ---------------------------------------------------------------- 3D labels (sprites)
@@ -131,7 +131,7 @@ window.SCENE = {
       x.strokeStyle = 'rgba(255,255,255,0.85)'; x.lineWidth = 8; x.stroke(); x.fillStyle = fg; x.textAlign = 'center'; x.textBaseline = 'middle'; x.font = '700 118px "Oswald"'; x.fillText(s, w / 2, h / 2 + 6); };
     const FAITH = i => i <= 12 ? '#2fb8b0' : i <= 29 ? '#ff8a2a' : '#9a6cff';
     const caveTags = []; for (let i = 1; i <= 34; i++) caveTags.push(label(disc(String(i), i === 16 ? '#ffcf5a' : FAITH(i), i === 16 ? '#20142a' : '#fff'), i === 16 ? 6.5 : 4.2, caveX(i), i === 16 ? H + 4.5 : 7.8, FRONT + 1.4));
-    const trTags = [[-(RX + PX) / 2, 0], [(RX + PX) / 2, 0], [0, -(RZ + PZ) / 2]].map(([x, z], k) => label(disc(String(k + 1), '#ffcf5a', '#20142a'), 5, x, H + 3.2, z));
+    const trTags = [[-(RX + PX) / 2, 0], [(RX + PX) / 2, 0], [0, -(RZ + PZ) / 2]].map(([x, z], k) => label(disc(String(k + 1), '#ffcf5a', '#20142a'), 5, x, H + 1.6, k === 2 ? z + 1.5 : z));
 
     // ---------------------------------------------------------------- workers, debris, sparks
     const mCloth = new THREE.MeshStandardMaterial({ color: 0xf1e6d0, roughness: 0.8 }), mSkin = new THREE.MeshStandardMaterial({ color: 0x8a5a3a, roughness: 0.7 }), mTool = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, metalness: 0.6, roughness: 0.4 });
@@ -148,8 +148,11 @@ window.SCENE = {
     const wr = K.rng(77);
     const trCrew = Array.from({ length: 15 }, (_, i) => { const w = worker(0.45), k = i % 3; Object.assign(w, { k, u: wr(), v: wr(), ry: wr() * 6.28, ph: wr() * 6.28, sp: 7 + wr() * 4 }); return w; });
     const topCrew = Array.from({ length: 26 }, () => { const w = worker(0.45); Object.assign(w, { x: (wr() * 2 - 1) * (RX - 0.6), z: (wr() * 2 - 1) * (RZ - 0.6), ry: wr() * 6.28, ph: wr() * 6.28, sp: 7 + wr() * 4 }); return w; });
-    const TOOL = [2.3, 4.6];
-    [[0, 0, -0.6], [1.0, 0.8, 2.5], [-0.9, 0.9, 1.0]].forEach(([dx, dz, ry]) => { const w = worker(0.5); Object.assign(w, { x: TOOL[0] + dx, z: TOOL[1] + dz, ry, ph: dx * 3, sp: 8.5 }); topCrew.push(w); });
+    const TOOL = [1.0, -10.8];
+    [[0, 0, 0.3], [1.3, -0.4, -0.4], [-1.2, 0.3, 0.6]].forEach(([dx, dz, ry]) => { const w = worker(0.5); Object.assign(w, { x: TOOL[0] + dx, z: TOOL[1] + dz, ry, ph: dx * 3, sp: 8.5 }); topCrew.push(w); });
+    temple.updateMatrixWorld(true); const rc = new THREE.Raycaster(), DOWN = new THREE.Vector3(0, -1, 0);
+    const topAt = (x, z) => { rc.set(new THREE.Vector3(x, 60, z), DOWN); const h = rc.intersectObject(temple, true)[0]; return h ? h.point.y : 0; };
+    topCrew.forEach(w => { w.top = topAt(w.x, w.z); });
     const trBox = k => k === 0 ? [-PX, -RX, -RZ, PZ] : k === 1 ? [RX, PX, -RZ, PZ] : [-PX, PX, -PZ, -RZ];
     const ct = new THREE.Vector3(heroEl.position.x + 1.2, 1.05, heroEl.position.z);
     const hero = worker(0.62); hero.g.position.set(ct.x + 0.48, 0, ct.z); hero.g.rotation.y = -Math.PI / 2;
@@ -163,6 +166,7 @@ window.SCENE = {
     const spk = Array.from({ length: NS }, () => ({ v: new THREE.Vector3(0.6 + sr() * 2.4, sr() * 2.8, (sr() * 2 - 1) * 2.2), life: 0.25 + sr() * 0.45 }));
     const hits = [C.tease, B('undo2') + 0.15, C.hit];
     const flashL = new THREE.PointLight(0xffb04a, 0, 6, 2); flashL.position.copy(ct); S.add(flashL);
+    const toolL = new THREE.PointLight(0xffd2a0, 0, 14, 1.4); S.add(toolL);
     const workL = new THREE.PointLight(0xffc89a, 0, 9, 1.6); workL.position.set(ct.x + 1.0, 3.0, ct.z + 2.2); S.add(workL);
     const M4 = new THREE.Matrix4(), Q = new THREE.Quaternion(), V = new THREE.Vector3(), SC = new THREE.Vector3(), EU = new THREE.Euler();
 
@@ -393,15 +397,15 @@ window.SCENE = {
     shot(B('caves'), F('caves', 0.6), [-150, 28, 55], [-30, 4, 15], [-60, 24, 52], [0, 5, 12]);
     shot(F('caves', 0.6), B('when'), [-28, 24, 50], [0, 6, 10], [-8, 27, 44], [0, 5, 2]);
     shot(B('when'), C.rw, [-26, 30, 38], [0, 4, -1], [24, 28, 38], [0, 4, -1]);
-    shot(C.rw, C.bl, [26, 44, 37], [0, 4, -1], [21, 41, 34], [0, 4, -1], { ease: eo });
-    shot(C.bl, C.s2, t => { const a = lerp(0.9, 1.9, prog(t, C.bl, C.s2)); return [Math.cos(a) * 32, 26, Math.sin(a) * 32]; }, [0, 5, 0]);
+    shot(C.rw, C.bl, [6, 50, 46], [0, 1, -3], [3, 46, 42], [0, 1, -3], { ease: eo });
+    shot(C.bl, C.s2, [-20, 40, 40], [0, 2, -1], [20, 40, 40], [0, 2, -1]);
     shot(C.s2, B('tools'), [-14, 31, 31], [0, 7, 0], [-10, 27, 27], [0, 5, 0]);
-    shot(B('tools'), B('tonnes'), t => [TOOL[0] + 3.0, cvH(t) + 1.6, TOOL[1] + 4.0], t => [TOOL[0], cvH(t) + 0.35, TOOL[1]], t => [TOOL[0] + 2.4, cvH(t) + 1.4, TOOL[1] + 3.3], t => [TOOL[0], cvH(t) + 0.35, TOOL[1]]);
+    shot(B('tools'), B('tonnes'), t => [TOOL[0] + 3.6, cvH(t) + 2.4, -12.9], t => [TOOL[0], cvH(t) + 0.5, TOOL[1] + 0.2], t => [TOOL[0] + 3.0, cvH(t) + 2.0, -12.9], t => [TOOL[0], cvH(t) + 0.5, TOOL[1] + 0.2]);
     shot(B('tonnes'), B('size'), [22, 37, 34], [0, 3, -1], [18, 31, 30], [0, 3, -1]);
     shot(B('size'), B('onepiece'), [-24, 26, 30], [0, 6, -2], [-18, 22, 26], [0, 6, -2]);
     shot(OP(0), OP(0.15), [3.4, 1.0, 12.8], [5.9, 8.8, 9.6], [3.6, 1.4, 12.6], [5.9, 8.0, 9.6]);
     shot(OP(0.15), OP(0.29), [2.6, 3.4, 13.0], [2.6, 1.2, 9.4], [2.6, 3.0, 12.6], [2.6, 1.2, 9.6]);
-    shot(OP(0.29), OP(0.43), [4.8, 7.8, 7.6], [0, 5.5, 7.1], [4.2, 7.2, 7.0], [0, 5.5, 7.1]);
+    shot(OP(0.29), OP(0.43), [5.6, 9.5, 7.0], [0, 5.4, 7.4], [5.0, 8.8, 7.6], [0, 5.4, 7.4]);
     shot(OP(0.43), OP(0.65), [7.7, 1.5, 8.4], [5.25, 1.0, -3], [7.7, 1.4, 7.2], [5.25, 1.0, -4]);
     shot(OP(0.65), B('undo1'), [0, 30, 33], [0, 3, -1], [-6, 34, 35], [0, 3, -1]);
     shot(B('undo1'), B('undo2'), [ct.x + 1.4, 2.6, ct.z + 5.2], [ct.x + 0.3, 1.1, ct.z], [ct.x + 1.2, 2.2, ct.z + 4.0], [ct.x + 0.3, 1.05, ct.z]);
@@ -423,11 +427,11 @@ window.SCENE = {
     const update = t => {
       const P = pre(t), ch = cvH(t), dawn = t >= B('today') - 0.05;
       S.background = dawn ? skyDawn : skyDusk; sun.color.setHex(dawn ? 0xffd2a0 : 0xffb27a);
-      K.renderer.toneMappingExposure = 1.05 + 0.2 * prog(t, B('today'), B('today') + 2);
+      K.renderer.toneMappingExposure = 1.18 + 0.15 * prog(t, B('today'), B('today') + 2);
       blocks.forEach(m => { m.visible = P && ch > 0.02; m.scale.y = Math.max(0.001, ch); m.position.y = ch / 2; });
       trench.forEach((m, k) => { const h = trH(t, k); m.visible = P && h > 0.02; m.scale.y = Math.max(0.001, h); m.position.y = h / 2; });
       const gA = Math.max(prog(t, C.rock1 - 0.1, C.rock1 + 0.2) * (1 - prog(t, E('hook3'), E('hook3') + 0.2)), fade(t, C.bl, C.s2 - 0.2));
-      ghost.visible = gA > 0; ghost.material.opacity = gA; ghostFill.visible = gA > 0; ghostFill.material.opacity = gA * 0.06;
+      ghost.visible = gA > 0; ghost.material.opacity = gA; ghostFill.visible = gA > 0; ghostFill.material.opacity = gA * 0.03;
       const cp = prog(t, B('hook3') + 0.2, E('hook3') - 0.2); cutPlane.visible = t > B('hook3') && t < E('hook3') + 0.1; cutPlane.position.y = H * (1 - eo(cp)) + 0.05;
       caveTags.forEach((s, i) => { const a = B('caves') + 0.2 + (i / 34) * (E('caves') - B('caves')) * 0.5, k = K.easeBack(prog(t, a, a + 0.3)) * (1 - prog(t, E('caves') + 0.1, E('caves') + 0.4)); s.visible = k > 0.01; s.scale.setScalar(Math.max(0.01, k) * (i === 15 ? 6.5 + Math.sin(t * 6) * 0.4 : 4.2)); });
       trTags.forEach((s, k) => { const v = K.easeBack(prog(t, tr[k][0], tr[k][0] + 0.3)) * (1 - prog(t, C.s2 - 0.3, C.s2)); s.visible = P && v > 0.01; s.scale.setScalar(Math.max(0.01, v) * 5); });
@@ -435,7 +439,7 @@ window.SCENE = {
       trCrew.forEach(w => { const k = w.k, on = trOn && t > tr[k][0] - 0.2; w.g.visible = on; if (!on) return; const [x0, x1, z0, z1] = trBox(k);
         w.g.position.set(lerp(x0 + 0.3, x1 - 0.3, w.u), trH(t, k), lerp(z0 + 0.5, z1 - 0.5, w.v)); w.g.rotation.y = w.ry; w.arm.rotation.x = swing(w, t); });
       const topOn = P && t > C.cA - 0.1 && t < C.cB;
-      topCrew.forEach(w => { w.g.visible = topOn; if (!topOn) return; w.g.position.set(w.x, ch, w.z); w.g.rotation.y = w.ry; w.arm.rotation.x = swing(w, t); });
+      topCrew.forEach(w => { w.g.visible = topOn; if (!topOn) return; w.g.position.set(w.x, Math.max(ch, w.top), w.z); w.g.rotation.y = w.ry; w.arm.rotation.x = swing(w, t); });
       const heroOn = (t > B('tease') - 0.1 && t < B('loc')) || (t > B('undo1') - 0.1 && t < B('today'));
       hero.g.visible = heroOn; hero.arm.rotation.x = heroArm(t);
       const fall = t - C.hit;
@@ -460,6 +464,7 @@ window.SCENE = {
         SC.setScalar(Math.max(0.0001, s)); M4.compose(V, Q, SC); sparks.setMatrixAt(i, M4); }
       hits.forEach((h, i) => { fl = Math.max(fl, t > h ? Math.exp(-(t - h) * 12) * (i === 2 ? 9 : 4) : 0); });
       sparks.instanceMatrix.needsUpdate = true; flashL.intensity = fl; workL.intensity = heroOn ? 7 : 0;
+      toolL.intensity = (t > B('tools') - 0.1 && t < B('tonnes')) ? 30 : 0; toolL.position.set(TOOL[0] + 2.5, ch + 3.5, TOOL[1] - 1.2);
       drawHud(t);
     };
 
