@@ -1,0 +1,116 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Twelve hundred years ago, they did not build a temple. They carved one, out of a living mountain."
+ },
+ "voices": {
+  "narrator_epic": "male, middle-aged, very low pitch, british accent"
+ },
+ "cast": {
+  "narrator": "narrator_epic"
+ },
+ "jobs": [
+  {
+   "voice": "narrator_epic",
+   "text": "Inside Tirumala temple, there is a secret kitchen.",
+   "speed": 0.86,
+   "file": "01.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Every single day, it makes around three lakh laddus.",
+   "speed": 0.86,
+   "file": "02.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "By hand. Without stopping. Watch how.",
+   "speed": 0.86,
+   "file": "03.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "This is Tirumala, in Andhra Pradesh. The temple sits on the seventh of seven hills.",
+   "speed": 0.86,
+   "file": "04.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Inside is the Laddu Potu, the temple kitchen.",
+   "speed": 0.86,
+   "file": "05.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "About six hundred and twenty cooks work here.",
+   "speed": 0.86,
+   "file": "06.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "They have made this laddu since seventeen fifteen. Over three hundred years.",
+   "speed": 0.86,
+   "file": "07.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "First, the ingredients. Every single day.",
+   "speed": 0.86,
+   "file": "08.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Ten tonnes of gram flour. Ten tonnes of sugar.",
+   "speed": 0.86,
+   "file": "09.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Seven hundred kilos of cashews. Five hundred and forty kilos of raisins. One hundred and fifty kilos of cardamom.",
+   "speed": 0.86,
+   "file": "10.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Step one: batter drops into hot ghee, and becomes boondi.",
+   "speed": 0.86,
+   "file": "11.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Step two: the boondi is mixed with sugar syrup, cashews, raisins and cardamom.",
+   "speed": 0.86,
+   "file": "12.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Step three: every laddu is rolled by hand.",
+   "speed": 0.86,
+   "file": "13.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Conveyor belts carry raw materials in, and laddus out.",
+   "speed": 0.86,
+   "file": "14.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Since two thousand and nine, the name Tirupati laddu is protected by a G I tag.",
+   "speed": 0.86,
+   "file": "15.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "And on big festival days, this kitchen can make up to eight lakh laddus in one day.",
+   "speed": 0.86,
+   "file": "16.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Follow for more secrets like this.",
+   "speed": 0.86,
+   "file": "17.wav"
+  }
+ ]
+}
