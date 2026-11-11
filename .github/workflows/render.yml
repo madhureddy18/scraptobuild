@@ -1,0 +1,41 @@
+name: render (codevid, sharded)
+on:
+  workflow_dispatch:
+    inputs:
+      scene: { description: 'Scene name in studio/scenes (without _lines/_body)', default: 'stb_kailasa' }
+      music: { description: 'Music bed in the repo', default: 'studio/music/epic_bed.mp3' }
+permissions:
+  contents: write
+jobs:
+  frames:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fontconfig
+      - run: bash studio/render/setup.sh "${{ github.event.inputs.scene }}" kit
+      - run: cd kit/codevid && CHROME_PATH=/usr/bin/google-chrome NSH=12 SH=${{ matrix.shard }} node render.js scenes/${{ github.event.inputs.scene }}.js
+      - uses: actions/upload-artifact@v4
+        with: { name: seg-${{ matrix.shard }}, path: kit/codevid/out/seg_*.mp4, retention-days: 3 }
+  assemble:
+    needs: frames
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fontconfig
+      - run: bash studio/render/setup.sh "${{ github.event.inputs.scene }}" kit
+      - uses: actions/download-artifact@v4
+        with: { path: segs, pattern: seg-*, merge-multiple: true }
+      - name: Join segments, add voice, music, SFX and captions
+        run: |
+          ls segs/seg_*.mp4 | sort | sed "s#^#file '$PWD/#;s#\$#'#" > list.txt && ffmpeg -v error -y -f concat -safe 0 -i list.txt -c copy all.mp4
+          cd kit/codevid && CHROME_PATH=/usr/bin/google-chrome VIDEO_IN=$GITHUB_WORKSPACE/all.mp4 MUSIC_FILE=$GITHUB_WORKSPACE/${{ github.event.inputs.music }} node render.js scenes/${{ github.event.inputs.scene }}.js
+      - name: Push the finished reel to the render-out branch
+        run: |
+          mkdir pub && cp kit/codevid/out/${{ github.event.inputs.scene }}.mp4 pub/ && cd pub && mkdir -p autodm && echo '{"git":{"deploymentEnabled":false}}' > autodm/vercel.json && git init -q && git checkout -q -b render-out
+          git -c user.name=render-bot -c user.email=bot@users.noreply.github.com add -A && git -c user.name=render-bot -c user.email=bot@users.noreply.github.com commit -qm "render ${{ github.run_id }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" render-out

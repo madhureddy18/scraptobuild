@@ -1,0 +1,19 @@
+diff --git a/codevid/render.js b/codevid/render.js
+index 584543b..022488f 100644
+--- a/codevid/render.js
++++ b/codevid/render.js
+@@ -139,11 +139,12 @@ function captions(info, T, D, file) {
+     '\n\n[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n';
+   const esc = s => String(s).replace(/[{}]/g, '');
+   const ev = info.watermark === false ? [] : [`Dialogue: 6,${ts(0)},${ts(D)},Mark,,0,0,0,,${esc(info.watermark || 'VERSE FILMS')}`];
++  const HL = T.lines.some(l => l.text.includes('*'));            // *keyword* -> yellow, everything else white
+   for (const l of T.lines) {                                    // speaker-coloured captions, 2-4 word chunks
+-    const words = l.text.split(/\s+/), chunks = [];
++    const words = l.text.replace(/\*([^*]+)\*/g, (m, s) => s.split(' ').map(w => '\u0001' + w + '\u0002').join(' ')).split(/\s+/), chunks = [];
+     for (let k = 0; k < words.length;) { const n = words.length - k <= 4 ? words.length - k : 3; chunks.push(words.slice(k, k + n).join(' ')); k += n; }
+     const span = (l.end - l.t) / chunks.length;
+-    chunks.forEach((c, k) => ev.push(`Dialogue: 1,${ts(l.t + k * span)},${ts(l.t + (k + 1) * span + (k === chunks.length - 1 ? 0.15 : 0))},${(l.who === 'bloc' || l.who === 'chotu' || l.who === 'bittu' || l.who === 'claude') ? 'Bloc' : 'Raju'},,0,0,0,,{\\fscx88\\fscy88\\t(0,110,\\fscx100\\fscy100)}${esc(c)}`));
++    chunks.forEach((c, k) => ev.push(`Dialogue: 1,${ts(l.t + k * span)},${ts(l.t + (k + 1) * span + (k === chunks.length - 1 ? 0.15 : 0))},${!HL && (l.who === 'bloc' || l.who === 'chotu' || l.who === 'bittu' || l.who === 'claude') ? 'Bloc' : 'Raju'},,0,0,0,,{\\fscx80\\fscy80\\t(0,110,\\fscx100\\fscy100)}${esc(c).replace(/\u0001/g, '{\\c&H0036C8FF&}').replace(/\u0002/g, '{\\c&H00FFFFFF&}')}`));
+   }
+   for (const b of info.badges) ev.push(`Dialogue: 2,${ts(b.t)},${ts(b.end)},Badge,,0,0,0,,{\\fad(120,120)}${esc(b.text)}`);
+   for (const b of info.big) ev.push(`Dialogue: 3,${ts(b.t)},${ts(b.end)},Big,,0,0,0,,{\\fscx30\\fscy30\\t(0,180,\\fscx112\\fscy112)\\t(180,300,\\fscx100\\fscy100)}${esc(b.text)}`);
