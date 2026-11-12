@@ -1,0 +1,116 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Twelve hundred years ago, they did not build a temple. They carved one, out of a living mountain."
+ },
+ "voices": {
+  "narrator_epic": "male, middle-aged, very low pitch, british accent"
+ },
+ "cast": {
+  "narrator": "narrator_epic"
+ },
+ "jobs": [
+  {
+   "voice": "narrator_epic",
+   "text": "They say this temple's shadow never touches the ground.",
+   "speed": 0.86,
+   "file": "01.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "That's a myth. But the truth is even crazier.",
+   "speed": 0.86,
+   "file": "02.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "This is the Brihadeeswarar Temple, in Thanjavoor, Tamil Nadu.",
+   "speed": 0.86,
+   "file": "03.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "King Raja Raja Chola built it around the year ten-ten. More than a thousand years ago.",
+   "speed": 0.86,
+   "file": "04.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Its tower rises about sixty-six metres. Like a twenty-storey building.",
+   "speed": 0.86,
+   "file": "05.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "It is made of around one hundred and thirty thousand tonnes of granite.",
+   "speed": 0.86,
+   "file": "06.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "But Thanjavoor is flat river land. There are no granite hills nearby.",
+   "speed": 0.86,
+   "file": "07.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Every block was hauled in from far away.",
+   "speed": 0.86,
+   "file": "08.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "And the top stone? It is said to weigh about eighty tonnes.",
+   "speed": 0.86,
+   "file": "09.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "No cranes. So how did it get sixty-six metres up?",
+   "speed": 0.86,
+   "file": "10.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Legend says they built a ramp, about six kilometres long.",
+   "speed": 0.86,
+   "file": "11.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Elephants and people dragged it up... inch by inch.",
+   "speed": 0.86,
+   "file": "12.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Even the Nandi at the entrance is carved from one single rock.",
+   "speed": 0.86,
+   "file": "13.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "And the shadow? It does fall on the ground.",
+   "speed": 0.86,
+   "file": "14.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "At noon, it simply hides under the temple's own base.",
+   "speed": 0.86,
+   "file": "15.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "A thousand years later, it still stands. A UNESCO World Heritage Site.",
+   "speed": 0.86,
+   "file": "16.wav"
+  },
+  {
+   "voice": "narrator_epic",
+   "text": "Follow for the next build.",
+   "speed": 0.86,
+   "file": "17.wav"
+  }
+ ]
+}
