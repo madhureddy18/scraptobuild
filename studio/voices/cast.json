@@ -1,11 +1,14 @@
 {
  "seed": 7,
  "ref_text": {
-  "narrator": "Twelve hundred years ago, they did not build a temple. They carved one, out of a living mountain."
+  "narrator": "This temple was not built, it was carved from a single rock. Twelve hundred years ago, workers cut straight down into a mountain."
  },
  "voices": {
-  "narrator_epic": "male, middle-aged, very low pitch, british accent"
+  "narrator_v2": "male, young adult, moderate pitch, indian accent"
  },
- "cast": { "narrator": "narrator_epic" },
- "speed": 0.9
+ "cast": {
+  "narrator": "narrator_v2"
+ },
+ "speed": 1.0,
+ "note": "narrator_v2 = cloned from studio/voices/refs/narrator_v2.wav (Maddy's clip, Nov 2026). Old Epic Documentary ref kept as refs/narrator_epic.wav."
 }

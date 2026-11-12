@@ -1,0 +1,47 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "This temple was not built, it was carved from a single rock. Twelve hundred years ago, workers cut straight down into a mountain."
+ },
+ "voices": {
+  "narrator_v2": "male, young adult, moderate pitch, indian accent"
+ },
+ "jobs": [
+  {
+   "voice": "narrator_v2",
+   "text": "Inside this temple, there is a secret kitchen. It makes three lakh laddoos every single day.",
+   "speed": 1.0,
+   "file": "01_normal.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "Inside this temple, there is a secret kitchen. It makes three lakh laddoos every single day.",
+   "speed": 0.92,
+   "file": "01_slow.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "They say this temple's shadow never touches the ground. That's a myth. The truth is even crazier.",
+   "speed": 1.0,
+   "file": "02_normal.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "They say this temple's shadow never touches the ground. That's a myth. The truth is even crazier.",
+   "speed": 0.92,
+   "file": "02_slow.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "No cranes. No machines. Just elephants, ropes, and a ramp six kilometres long.",
+   "speed": 1.0,
+   "file": "03_normal.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "No cranes. No machines. Just elephants, ropes, and a ramp six kilometres long.",
+   "speed": 0.92,
+   "file": "03_slow.wav"
+  }
+ ]
+}
