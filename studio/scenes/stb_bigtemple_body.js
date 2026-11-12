@@ -112,6 +112,38 @@ window.SCENE = {
     const people = Array.from({ length: 10 }, () => { const g = new THREE.Group(); S.add(g); mesh(new THREE.CapsuleGeometry(0.14, 0.45, 4, 8), tm(0xf3eee2), 0, 0.42, 0, g, false); mesh(new THREE.SphereGeometry(0.13, 10, 8), tm(0x8a5a3a), 0, 0.85, 0, g, false); return g; });
     const ropes = Array.from({ length: 2 }, () => { const r = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1, 6), ROPE); S.add(r); return r; });
 
+    // ---------------------------------------------------------------- people: pilgrims, onlookers, the king, birds
+    const SKIN = [tm(0x8a5a3a), tm(0x6e4428), tm(0xa06a44)], HAIR = tm(0x1e1410);
+    const CLOTH = [0xe63946, 0xff8c1a, 0xff4fa3, 0x2a9d8f, 0xffd23f, 0x3a86ff, 0x9b5de5, 0xf1f1e8, 0xf1f1e8, 0xf1f1e8].map(c => tm(c));
+    const person = (seed, s = 0.42) => { const r = K.rng(seed * 97 + 13), cl = CLOTH[Math.floor(r() * CLOTH.length)], sk = SKIN[Math.floor(r() * 3)], sari = r() < 0.5;
+      const g = new THREE.Group(); g.scale.setScalar(s); S.add(g);
+      const legs = [-1, 1].map(sx => { const l = new THREE.Group(); l.position.set(sx * 0.09, 0.58, 0); g.add(l); mesh(new THREE.CapsuleGeometry(0.075, 0.42, 4, 8), sari ? cl : CLOTH[7], 0, -0.28, 0, l, false); return l; });
+      if (sari) mesh(new THREE.CylinderGeometry(0.16, 0.28, 0.75, 12), cl, 0, 0.55, 0, g); else mesh(new THREE.CylinderGeometry(0.15, 0.2, 0.42, 12), CLOTH[7], 0, 0.42, 0, g);
+      mesh(new THREE.CapsuleGeometry(0.15, 0.3, 4, 10), sari ? cl : (r() < 0.5 ? sk : cl), 0, 1.0, 0, g);
+      const head = new THREE.Group(); head.position.set(0, 1.36, 0); g.add(head); mesh(new THREE.SphereGeometry(0.13, 12, 10), sk, 0, 0, 0, head);
+      mesh(new THREE.SphereGeometry(0.135, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2), HAIR, 0, 0.02, -0.01, head, false); if (sari) mesh(new THREE.SphereGeometry(0.06, 8, 6), HAIR, 0, -0.02, -0.13, head, false);
+      const arms = [-1, 1].map(sx => { const a = new THREE.Group(); a.position.set(sx * 0.19, 1.16, 0); g.add(a); mesh(new THREE.CapsuleGeometry(0.05, 0.36, 4, 8), sk, 0, -0.2, 0, a, false); return a; });
+      return { g, legs, arms, head, ph: r() * 6.28, sp: 0.8 + r() * 0.4 };
+    };
+    const walk = (p, t, moving) => { const w = moving ? Math.sin(t * 7 * p.sp + p.ph) : 0; p.legs[0].rotation.x = w * 0.5; p.legs[1].rotation.x = -w * 0.5; p.arms[0].rotation.x = -w * 0.4; p.arms[1].rotation.x = w * 0.4; p.g.position.y = 0.3 + Math.abs(w) * 0.02; };
+    // pradakshina loop around the shrine (clockwise from above), plus visitors walking the main axis
+    const LOOP = [[-9.5, -11], [9.5, -11], [9.5, 15.5], [-9.5, 15.5]], LP = 2 * (19 + 26.5);
+    const loopAt = u => { u = ((u % 1) + 1) % 1; let d = u * LP; for (let i = 0; i < 4; i++) { const a = LOOP[i], b = LOOP[(i + 1) % 4], len = Math.hypot(b[0] - a[0], b[1] - a[1]); if (d <= len) { const k = d / len; return [lerp(a[0], b[0], k), lerp(a[1], b[1], k), Math.atan2(b[0] - a[0], b[1] - a[1])]; } d -= len; } return [LOOP[0][0], LOOP[0][1], 0]; };
+    const pilgrims = Array.from({ length: 46 }, (_, i) => { const p = person(i + 1); p.u0 = i / 46 + K.rng(i + 5)() * 0.01; p.off = (K.rng(i + 9)() * 2 - 1) * 1.2; return p; });
+    const visitors = Array.from({ length: 16 }, (_, i) => { const p = person(100 + i); p.x = (i % 4 - 1.5) * 1.6 + (i % 2 ? 0.4 : -0.4); p.z0 = 22 + (i * 1.7) % 14; return p; });
+    const onlookers = [[4.6, 15.2, 0.3], [5.4, 16.1, -0.2], [6.3, 15.4, 0.1], [3.8, 16.6, 0.4], [7.0, 16.4, -0.3]].map(([x, z, ry], i) => { const p = person(300 + i, 0.48); p.g.position.set(x, 0.3, z); p.g.rotation.y = Math.PI + ry; p.head.rotation.x = -0.75; return p; });
+    // the king (stylised), shown only on the "built" line
+    const king = new THREE.Group(); king.position.set(-7.5, 0.3, 15.5); king.rotation.y = -0.42; S.add(king);
+    { const robe = tm(0xc1121f), gold = GOLDM; mesh(new THREE.CylinderGeometry(0.42, 0.7, 1.7, 16), robe, 0, 0.85, 0, king); mesh(new THREE.CapsuleGeometry(0.36, 0.5, 4, 12), robe, 0, 1.95, 0, king);
+      mesh(new THREE.TorusGeometry(0.38, 0.06, 8, 20), gold, 0, 1.8, 0, king).rotation.x = Math.PI / 2;
+      mesh(new THREE.SphereGeometry(0.3, 16, 12), SKIN[0], 0, 2.65, 0, king); mesh(new THREE.SphereGeometry(0.31, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), HAIR, 0, 2.7, -0.05, king, false); for (const sx of [-1, 1]) mesh(new THREE.SphereGeometry(0.045, 8, 6), tm(0x1a1020), sx * 0.11, 2.7, 0.27, king, false);
+      const mus = mesh(new THREE.TorusGeometry(0.1, 0.03, 6, 12, Math.PI), HAIR, 0, 2.53, 0.28, king, false); mus.rotation.z = Math.PI;
+      mesh(new THREE.CylinderGeometry(0.28, 0.32, 0.38, 16), gold, 0, 3.02, 0, king); for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2; mesh(new THREE.ConeGeometry(0.06, 0.26, 6), gold, Math.cos(a) * 0.26, 3.32, Math.sin(a) * 0.26, king, false); }
+      const arm = new THREE.Group(); arm.position.set(0.48, 2.2, 0); king.add(arm); mesh(new THREE.CapsuleGeometry(0.1, 0.6, 4, 8), robe, 0.0, 0.35, 0, arm); arm.rotation.z = -0.5; king.arm = arm;
+      mesh(new THREE.CapsuleGeometry(0.1, 0.6, 4, 8), robe, -0.48, 1.85, 0, king).rotation.z = 0.25; }
+    king.scale.setScalar(0.001);
+    // birds circling the tower top
+    const birds = Array.from({ length: 14 }, (_, i) => { const g = new THREE.Group(); S.add(g); const w = [-1, 1].map(sx => { const p = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.04, 0.3), new THREE.MeshBasicMaterial({ color: 0x2a2030 })); p.position.x = sx * 0.45; const pv = new THREE.Group(); pv.add(p); g.add(pv); return pv; }); return { g, w, r: 10 + (i * 37 % 9), y: 25 + (i * 13 % 6), sp: 0.25 + (i % 5) * 0.04, ph: i * 0.9 }; });
     // ---------------------------------------------------------------- HUD (comic style)
     const hudTex = K.canvasTex(1080, 1920, () => {});
     const hudScene = new THREE.Scene(), hudCam = new THREE.OrthographicCamera(-540, 540, 960, -960, -10, 10);
@@ -241,13 +273,13 @@ window.SCENE = {
     shot(0, B('hook2'), [15, 3.5, 28], [0, 14, 0], [11, 4, 21], [0, 15, 0]);
     shot(B('hook2'), B('loc'), [34, 34, 44], [-4, 3, -4], [30, 36, 40], [-6, 3, -6]);
     shot(B('loc'), B('built'), [0, 150, 190], [0, 0, 0], [0, 130, 160], [0, 0, 0]);
-    shot(B('built'), B('height'), [-30, 12, 30], [0, 11, 0], [-20, 17, 36], [0, 11, 0]);
+    shot(B('built'), B('height'), [-12.5, 3.2, 27], [-5, 7, 8], [-17, 7, 33], [-2, 10, 4]);
     shot(B('height'), B('granite'), [13, 12, 112], [13, 11, 0], [13, 12, 104], [13, 11, 0]);
     shot(B('granite'), B('flat'), [28, 15, 36], [0, 12, 0], [24, 19, 30], [0, 13, 0]);
     shot(B('flat'), B('haul'), [70, 30, 150], [-30, 4, -40], [40, 24, 130], [-40, 4, -60]);
     shot(B('haul'), B('top'), t => [lerp(-100, -84, prog(t, B('haul'), B('top'))), 6, 80], t => [lerp(-112, -96, prog(t, B('haul'), B('top'))), 2.2, 60]);
     shot(B('top'), B('lift'), [8, 23.5, 10], [0, TOPY + 1.5, 0], [6, 22.8, 8], [0, TOPY + 1.6, 0]);
-    shot(B('lift'), B('ramp'), [6, 1.4, 16], [0, 17, 0], [5, 1.4, 15], [0, 19, 0]);
+    shot(B('lift'), B('ramp'), [6.6, 0.9, 19.5], [1, 16, 0], [6.0, 0.9, 18.5], [0.5, 19, 0]);
     shot(B('ramp'), B('drag'), [-14, 18, 124], [-14, 10, 0], [-14, 17, 114], [-14, 10, 0]);
     shot(B('drag'), B('nandi'), t => [capPos.x + 2, capPos.y + 5, capPos.z + 21], t => [capPos.x + 2.5, capPos.y + 1, capPos.z], t => [capPos.x + 2, capPos.y + 4.5, capPos.z + 19], t => [capPos.x + 2.5, capPos.y + 1.2, capPos.z]);
     shot(B('nandi'), B('shadow1'), [6.8, 2.9, NZ - 1.25], [0, 1.2, NZ - 0.5], [5.9, 2.6, NZ - 1.25], [0, 1.2, NZ - 0.5]);
@@ -292,6 +324,13 @@ window.SCENE = {
       // granite convoy on the road
       const hOn2 = t > B('flat') - 0.2 && t < B('top');
       convoy.forEach(({ e, sled, i }) => { e.visible = sled.visible = hOn2; if (!hOn2) return; const x = -230 + ((t * 3.2 + i * 14) % 210); e.position.set(x, 0, 60); e.rotation.y = 0; sled.position.set(x - 3.6, 0.65, 60); e.legs.forEach((l, k) => { l.rotation.z = Math.sin(t * 5 + k * 1.6 + i) * 0.35; }); });
+      // people
+      pilgrims.forEach((p, i) => { const [x, z, a] = loopAt(p.u0 + t * 0.0055 * p.sp), nx = Math.cos(a), nz = -Math.sin(a); p.g.position.x = x + nx * p.off; p.g.position.z = z + nz * p.off; p.g.rotation.y = a; walk(p, t, true); });
+      visitors.forEach((p, i) => { const span = 12, ph = ((t * 0.35 * p.sp + i * 0.7) % (2 * span)), dir = ph < span ? -1 : 1, d = ph < span ? ph : 2 * span - ph; p.g.position.x = p.x; p.g.position.z = p.z0 - d * 0.5 + 0; p.g.rotation.y = dir < 0 ? Math.PI : 0; walk(p, t, true); });
+      onlookers.forEach(p => walk(p, t, false));
+      const kOn = t > B('built') - 0.1 && t < B('height'), kk = K.easeBack(prog(t, B('built'), B('built') + 0.5)) * (1 - prog(t, B('height') - 0.25, B('height')));
+      king.visible = kOn && kk > 0.01; king.scale.setScalar(Math.max(0.001, kk * 1.25)); king.arm.rotation.z = -0.5 - 1.6 * K.easeBack(prog(t, F('built', 0.2), F('built', 0.35)));
+      birds.forEach(b => { const a = b.ph + t * b.sp; b.g.position.set(Math.cos(a) * b.r, b.y + Math.sin(t * 0.7 + b.ph) * 1.2, Math.sin(a) * b.r); b.g.rotation.y = -a; const f = Math.sin(t * 12 + b.ph) * 0.6; b.w[0].rotation.z = f; b.w[1].rotation.z = -f; });
       drawHud(t);
     };
 
