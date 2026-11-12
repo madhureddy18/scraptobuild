@@ -1,4 +1,4 @@
-// Brihadeeswarar Temple, Thanjavur: myth-buster format. Epic Documentary narrator (0.86x + clarity EQ).
+// Brihadeeswarar Temple, Thanjavur: myth-buster format. narrator_v2 (cloned from Maddy's clip, normal speed).
 const LN = (who, text, say, o = {}) => { const sy = say || text.replace(/\*/g, ''); return { who, text, say: sy.replace(/\[[a-z-]+\]\s*/g, ''), omni: o.omni || sy, ...o }; };
 window.STB_LINES = [
   LN('narrator', 'They say this temple\'s *shadow* never touches the ground.', 'They say this temple\'s shadow never touches the ground.', { id: 'hook1', gap: 0.4 }),
@@ -18,5 +18,5 @@ window.STB_LINES = [
   LN('narrator', 'At *noon*, it simply hides under the temple\'s own *base*.', 'At noon, it simply hides under the temple\'s own base.', { id: 'shadow2', gap: 0.6 }),
   LN('narrator', '*1,000 years* later, it still stands. A *UNESCO World Heritage Site*.', 'A thousand years later, it still stands. A UNESCO World Heritage Site.', { id: 'today', gap: 0.4 }),
   LN('narrator', '*Follow* for the next build.', null, { id: 'cta', gap: 0.2 }),
-].map(l => ({ ...l, omniSpeed: l.omniSpeed || 0.86 }));
+].map(l => ({ ...l, omniSpeed: l.omniSpeed || 1.0 }));
 if (!window.SCENE) window.SCENE = { lines: window.STB_LINES };

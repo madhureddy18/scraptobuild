@@ -1,0 +1,143 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "This temple was not built, it was carved from a single rock. Twelve hundred years ago, workers cut straight down into a mountain."
+ },
+ "voices": {
+  "narrator_v2": "male, young adult, moderate pitch, indian accent"
+ },
+ "jobs": [
+  {
+   "voice": "narrator_v2",
+   "text": "They say this temple's shadow never touches the ground.",
+   "speed": 1,
+   "file": "01.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "That's a myth. But the truth is even crazier.",
+   "speed": 1,
+   "file": "02.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "This is the Brihadeeswarar Temple, in Thanjavoor, Tamil Nadu.",
+   "speed": 1,
+   "file": "03.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "King Raja Raja Chola built it around the year ten-ten. More than a thousand years ago.",
+   "speed": 1,
+   "file": "04.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "Its tower rises about sixty-six metres. Like a twenty-storey building.",
+   "speed": 1,
+   "file": "05.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "It is made of around one hundred and thirty thousand tonnes of granite.",
+   "speed": 1,
+   "file": "06.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "But Thanjavoor is flat river land. There are no granite hills nearby.",
+   "speed": 1,
+   "file": "07.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "Every block was hauled in from far away.",
+   "speed": 1,
+   "file": "08.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "And the top stone? It is said to weigh about eighty tonnes.",
+   "speed": 1,
+   "file": "09.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "No cranes. So how did it get sixty-six metres up?",
+   "speed": 1,
+   "file": "10.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "Legend says they built a ramp, about six kilometres long.",
+   "speed": 1,
+   "file": "11.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "Elephants and people dragged it up... inch by inch.",
+   "speed": 1,
+   "file": "12.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "Even the Nandi at the entrance is carved from one single rock.",
+   "speed": 1,
+   "file": "13.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "And the shadow? It does fall on the ground.",
+   "speed": 1,
+   "file": "14.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "At noon, it simply hides under the temple's own base.",
+   "speed": 1,
+   "file": "15.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "A thousand years later, it still stands. A UNESCO World Heritage Site.",
+   "speed": 1,
+   "file": "16.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "Follow for the next build.",
+   "speed": 1,
+   "file": "17.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "This is the Bri-ha-dees-wa-rar Temple, in Than-ja-voor, Tamil Nadu.",
+   "speed": 1,
+   "file": "03b.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "This is the Brihadeeswara Temple, in Thanjavoor, Tamil Nadu.",
+   "speed": 1,
+   "file": "03c.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "King Raaja Raaja Chola built it around the year ten-ten. More than a thousand years ago.",
+   "speed": 1,
+   "file": "04b.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "But Than-ja-voor is flat river land. There are no granite hills nearby.",
+   "speed": 1,
+   "file": "07b.wav"
+  },
+  {
+   "voice": "narrator_v2",
+   "text": "Even the Nun-dee at the entrance is carved from one single rock.",
+   "speed": 1,
+   "file": "13b.wav"
+  }
+ ]
+}
