@@ -26,7 +26,7 @@ window.SCENE = {
     const outline = (m, w = 0.07) => { m.geometry.computeBoundingSphere(); const r = m.geometry.boundingSphere.radius || 1; const o = new THREE.Mesh(m.geometry, ink); o.scale.setScalar(1 + w / r); m.add(o); return m; };
     const mesh = (geo, m, x, y, z, parent = S, ol = true) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = o.receiveShadow = true; parent.add(o); if (ol) outline(o); return o; };
     const bx = (w, h, d, m, x, y, z, parent, ol) => mesh(new THREE.BoxGeometry(w, h, d), m, x, y + h / 2, z, parent, ol);
-    const SAND = tm(0xe2a96a), SAND2 = tm(0xcf8f52), PAVE = tm(0xf3d9a6), WALL = tm(0xc98654), DARK = tm(0x3a2a24), GOLDM = tm(0xffc53a, { emissive: 0x6a4000 }), NANDI = tm(0x4a4a56);
+    const SAND = tm(0xe2a96a), SAND2 = tm(0xcf8f52), PAVE = tm(0xf3d9a6), WALL = tm(0xc98654), DARK = tm(0x3a2a24), GOLDM = tm(0xffc53a, { emissive: 0x6a4000 }), NANDI = tm(0x5c5c6c);
     const GRASS = [tm(0x6cc04a), tm(0x86d35a), tm(0x5aae3e), tm(0x9adf6a)], WATER = tm(0x4fb6e8), SOIL = tm(0xa8834e), GRANITE = tm(0x9a9aa6), GREY = tm(0x8d909c), ROPE = tm(0xc9a46a);
 
     // ---------------------------------------------------------------- land: Kaveri delta paddies + far hills
@@ -38,7 +38,7 @@ window.SCENE = {
     for (const z of [-120, 90, 210]) { const w = new THREE.Mesh(new THREE.BoxGeometry(700, 0.2, 2.2), WATER); w.position.set(0, 0.05, z); S.add(w); }
     const road = new THREE.Mesh(new THREE.BoxGeometry(260, 0.25, 7), tm(0xd9b77a)); road.position.set(-130, 0.08, 60); road.receiveShadow = true; S.add(road);
     { const hr = K.rng(21); for (let i = 0; i < 26; i++) { const a = (i / 26) * Math.PI * 2, r = 420 + hr() * 80, h = 40 + hr() * 50; const m = new THREE.Mesh(new THREE.ConeGeometry(70 + hr() * 50, h, 6), tm(0x8aa2c8)); m.position.set(Math.cos(a) * r, h / 2 - 3, Math.sin(a) * r); S.add(m); } }
-    { const tr = K.rng(9); for (let i = 0; i < 120; i++) { const a = tr() * 6.28, r = 40 + tr() * 200; const x = Math.cos(a) * r, z = Math.sin(a) * r; if (Math.abs(z - 60) < 8 && x < 0) continue; const g = new THREE.Group(); g.position.set(x, 0, z); S.add(g);
+    { const tr = K.rng(9); for (let i = 0; i < 120; i++) { const a = tr() * 6.28, r = 40 + tr() * 200; const x = Math.cos(a) * r, z = Math.sin(a) * r; if (Math.abs(z - 60) < 30 && x < 20) continue; if (Math.abs(x) < 30 && z > -40 && z < 70) continue; const g = new THREE.Group(); g.position.set(x, 0, z); S.add(g);
       mesh(new THREE.CylinderGeometry(0.25, 0.35, 5, 6), tm(0x8a5a2a), 0, 2.5, 0, g, false); const top = mesh(new THREE.IcosahedronGeometry(2.2 + tr(), 0), tm(0x3f9a3a), 0, 5.8, 0, g); top.scale.y = 0.8; } }
 
     // ---------------------------------------------------------------- temple compound
@@ -124,7 +124,7 @@ window.SCENE = {
     const A = (a, fn) => { if (a <= 0.002) return; X.save(); X.globalAlpha *= clamp(a); fn(); X.restore(); };
     const Z = (k, cx, cy, fn, rot = 0) => { if (k <= 0.002) return; X.save(); X.translate(cx, cy); X.rotate(rot); X.scale(k, k); X.translate(-cx, -cy); fn(); X.restore(); };
     const comic = (s, x, y, size, fill, { al = 'center', stroke = 14, f = 'Bangers', max } = {}) => { X.font = `${size}px "${f}"`; if (max) { const m = X.measureText(s).width; if (m > max) { size = Math.floor(size * max / m); X.font = `${size}px "${f}"`; } }
-      X.textAlign = al; X.textBaseline = 'middle'; X.lineJoin = 'round'; X.fillStyle = INKC; X.fillText(s, x + size * 0.06, y + size * 0.08); X.strokeStyle = INKC; X.lineWidth = stroke; X.strokeText(s, x, y); X.fillStyle = fill; X.fillText(s, x, y); };
+      X.textAlign = al; X.textBaseline = 'middle'; X.lineJoin = 'round'; if (stroke) { X.fillStyle = INKC; X.fillText(s, x + size * 0.04, y + size * 0.06); X.strokeStyle = INKC; X.lineWidth = stroke; X.strokeText(s, x, y); } X.fillStyle = fill; X.fillText(s, x, y); };
     const plain = (s, x, y, size, col = INKC, al = 'center', w = 600) => { X.font = `${w} ${size}px "Oswald"`; X.fillStyle = col; X.textAlign = al; X.textBaseline = 'middle'; X.fillText(s, x, y); };
     const card = (x, y, w, h, bg = WHT, r = 26) => { X.fillStyle = INKC; K.rrect(X, x + 12, y + 14, w, h, r); X.fill(); X.fillStyle = bg; K.rrect(X, x, y, w, h, r); X.fill(); X.strokeStyle = INKC; X.lineWidth = 8; X.stroke(); };
     const halftone = (x, y, w, h, col, step = 22, rmax = 7, dir = 1) => { X.save(); X.beginPath(); X.rect(x, y, w, h); X.clip(); X.fillStyle = col; for (let yy = y; yy < y + h + step; yy += step) for (let xx = x; xx < x + w + step; xx += step) { const k = dir > 0 ? (xx - x) / w : 1 - (xx - x) / w; X.beginPath(); X.arc(xx + ((yy / step) % 2) * step / 2, yy, Math.max(0.5, rmax * k), 0, 7); X.fill(); } X.restore(); };
@@ -173,7 +173,7 @@ window.SCENE = {
       // granite counter
       const ga = B('granite'), ge = E('granite');
       if (t > ga - 0.1 && t < ge + 0.3) A(fade(t, ga, ge + 0.1), () => Z(pop(t, ga + 0.05), 540, 330, () => { card(130, 200, 820, 270, WHT, 30);
-        comic(IN(130000 * eo(prog(t, ga + 0.2, ge - 0.2))), 540, 300, 130, '#6f7280', { stroke: 12 }); comic('TONNES OF GRANITE', 540, 410, 52, INKC, { stroke: 0 }); }));
+        comic(IN(130000 * eo(prog(t, ga + 0.2, ge - 0.2))), 540, 300, 130, '#ffffff', { stroke: 14 }); comic('TONNES OF GRANITE', 540, 410, 52, INKC, { stroke: 0 }); }));
       // flat land
       const fa_ = B('flat'), fe = E('flat');
       sticker(t, fa_ + 0.1, fe + 0.2, 'KAVERI DELTA · RICE FIELDS', GRN, WHT, 540, 220, 58, -0.03);
@@ -242,15 +242,15 @@ window.SCENE = {
     shot(B('hook2'), B('loc'), [34, 34, 44], [-4, 3, -4], [30, 36, 40], [-6, 3, -6]);
     shot(B('loc'), B('built'), [0, 150, 190], [0, 0, 0], [0, 130, 160], [0, 0, 0]);
     shot(B('built'), B('height'), [-30, 12, 30], [0, 11, 0], [-20, 17, 36], [0, 11, 0]);
-    shot(B('height'), B('granite'), [12.5, 12, 96], [12.5, 11, 0], [12.5, 12, 88], [12.5, 11, 0]);
+    shot(B('height'), B('granite'), [13, 12, 112], [13, 11, 0], [13, 12, 104], [13, 11, 0]);
     shot(B('granite'), B('flat'), [28, 15, 36], [0, 12, 0], [24, 19, 30], [0, 13, 0]);
     shot(B('flat'), B('haul'), [70, 30, 150], [-30, 4, -40], [40, 24, 130], [-40, 4, -60]);
-    shot(B('haul'), B('top'), t => [lerp(-120, -60, prog(t, B('haul'), B('top'))), 9, 82], t => [lerp(-140, -80, prog(t, B('haul'), B('top'))), 2, 60]);
+    shot(B('haul'), B('top'), t => [lerp(-100, -84, prog(t, B('haul'), B('top'))), 6, 80], t => [lerp(-112, -96, prog(t, B('haul'), B('top'))), 2.2, 60]);
     shot(B('top'), B('lift'), [8, 23.5, 10], [0, TOPY + 1.5, 0], [6, 22.8, 8], [0, TOPY + 1.6, 0]);
     shot(B('lift'), B('ramp'), [6, 1.4, 16], [0, 17, 0], [5, 1.4, 15], [0, 19, 0]);
-    shot(B('ramp'), B('drag'), [-30, 34, 60], [-34, 10, 0], [-26, 30, 52], [-30, 12, 0]);
-    shot(B('drag'), B('nandi'), t => [capPos.x + 7, capPos.y + 4.5, capPos.z + 12], t => [capPos.x - 2, capPos.y + 1, capPos.z], t => [capPos.x + 6, capPos.y + 3.5, capPos.z + 10], t => [capPos.x - 2, capPos.y + 1.2, capPos.z]);
-    shot(B('nandi'), B('shadow1'), [2.2, 2.2, NZ - 3.6], [0, 1.6, NZ], [1.6, 2.0, NZ - 3.0], [0, 1.6, NZ]);
+    shot(B('ramp'), B('drag'), [-14, 18, 124], [-14, 10, 0], [-14, 17, 114], [-14, 10, 0]);
+    shot(B('drag'), B('nandi'), t => [capPos.x + 2, capPos.y + 5, capPos.z + 21], t => [capPos.x + 2.5, capPos.y + 1, capPos.z], t => [capPos.x + 2, capPos.y + 4.5, capPos.z + 19], t => [capPos.x + 2.5, capPos.y + 1.2, capPos.z]);
+    shot(B('nandi'), B('shadow1'), [6.8, 2.9, NZ - 1.25], [0, 1.2, NZ - 0.5], [5.9, 2.6, NZ - 1.25], [0, 1.2, NZ - 0.5]);
     shot(B('shadow1'), B('today'), [0, 95, 2], [0, 0, -1], [0, 88, 2], [0, 0, -1]);
     shot(B('today'), B('cta'), [-26, 5, 44], [0, 12, 0], [-34, 18, 62], [0, 11, 0]);
     shot(B('cta'), D + 1, [-34, 18, 62], [0, 11, 0], [-10, 30, 86], [0, 9, 0]);
@@ -282,7 +282,7 @@ window.SCENE = {
       if (s >= 0) { capPos.set(RTOP.x - cs * s, RTOP.y - sn * s, 0); cap.rotation.z = Math.atan(RS); }
       else { const k = t >= dE - 0.3 && t < dE + 0.4 ? eo(prog(t, dE - 0.3, dE + 0.3)) : 1; capPos.set(lerp(RTOP.x, 0, k), TOPY, 0); cap.rotation.z = 0; }
       cap.position.copy(capPos);
-      capGlow.material.opacity = 0.35 * K.pulse(t, B('top') + 0.1, E('top') - B('top'));
+      capGlow.material.opacity = 0.18 * K.pulse(t, B('top') + 0.1, E('top') - B('top'));
       // pullers walk up the ramp ahead of the stone, people push from behind
       const dragOn = s >= 0;
       pullers.forEach((e, i) => { const se = s - 6 - i * 3.2; e.visible = dragOn && se > 0.5; if (!e.visible) return; e.position.set(RTOP.x - cs * se, RTOP.y - sn * se, i % 2 ? 0.8 : -0.8); e.rotation.set(0, 0, Math.atan(RS)); e.legs.forEach((l, k) => { l.rotation.z = Math.sin(t * 6 + k * 1.6 + i) * 0.35; }); });
