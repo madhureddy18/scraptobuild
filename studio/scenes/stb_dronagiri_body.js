@@ -67,13 +67,13 @@ window.SCENE = {
         if (x < -20 && x > -140 && z > -20 && z < 80) continue;             // keep the Burj / Hanuman stage clear
         const g = crag(0.01, rad, h, 8, 4, 100 + i, rad * 0.16); g.translate(0, h / 2, 0); snowColor(g, h * 0.62, 4, 200 + i); mesh(g, ROCK, x, 0, z, A); } }
     // Burj Khalifa ghosts for the hook (8 stacked, 828 m each = 8.28 units)
-    const BURJ = 8.28, burjMat = new THREE.MeshStandardMaterial({ color: 0x9fd8ff, emissive: 0x2a7ad8, emissiveIntensity: 0.9, transparent: true, opacity: 0.85, roughness: 0.2, metalness: 0.5 });
-    const burjs = Array.from({ length: 8 }, (_, k) => { const g = new THREE.Group(); g.position.set(-62, k * BURJ, 12); A.add(g);
+    const BURJ = 8.28, burjMat = new THREE.MeshStandardMaterial({ color: 0x9fd8ff, emissive: 0x3a9aff, emissiveIntensity: 1.6, transparent: true, opacity: 0.95, roughness: 0.2, metalness: 0.5 });
+    const burjs = Array.from({ length: 8 }, (_, k) => { const g = new THREE.Group(); g.position.set(-52, k * BURJ, 14); g.userData.wide = 2.6; A.add(g);
       const tiers = [[0.62, 2.2], [0.5, 1.8], [0.38, 1.5], [0.27, 1.1], [0.17, 0.8]]; let y = 0; tiers.forEach(([r, h]) => { mesh(new THREE.CylinderGeometry(r * 0.85, r, h, 6), burjMat, 0, y + h / 2, 0, g, false); y += h; });
       mesh(new THREE.CylinderGeometry(0.02, 0.09, BURJ - y, 6), burjMat, 0, y + (BURJ - y) / 2, 0, g, false); return g; });
     // height ruler (gold) beside the mountain
     const ruler = new THREE.Group(); ruler.position.set(-44, 0, 6); A.add(ruler);
-    const rulerBar = mesh(new THREE.BoxGeometry(0.5, 1, 0.5), GOLD, 0, 0.5, 0, ruler, false);
+    const rulerBar = mesh(new THREE.BoxGeometry(1.4, 1, 1.4), GOLD, 0, 0.5, 0, ruler, false);
     const ticks = Array.from({ length: 8 }, (_, i) => mesh(new THREE.BoxGeometry(3, 0.35, 0.35), GOLD, -1.2, (i + 1) * 10, 0, ruler, false));
     const rulerTop = mesh(new THREE.BoxGeometry(6, 0.5, 0.5), GOLD, -2.2, H, 0, ruler, false);
     // the village terrace (Dronagiri village ~3,600 m) with stone houses
@@ -105,12 +105,12 @@ window.SCENE = {
     for (const s of [-1, 1]) { mesh(new THREE.SphereGeometry(0.03, 8, 6), std(0x140c0c), s * 0.07, 0.05, 0.165, head, false); mesh(new THREE.SphereGeometry(0.06, 10, 8), SKINM, s * 0.19, 0.0, 0, head, false); mesh(new THREE.SphereGeometry(0.035, 8, 6), GOLD, s * 0.21, -0.07, 0.01, head, false); }
     mesh(new THREE.CylinderGeometry(0.17, 0.2, 0.18, 16), GOLD, 0, 0.17, 0, head, false); mesh(new THREE.ConeGeometry(0.15, 0.38, 16), GOLD, 0, 0.45, 0, head, false); mesh(new THREE.SphereGeometry(0.05, 8, 6), RED, 0, 0.2, 0.17, head, false);
     const halo = new THREE.Mesh(new THREE.RingGeometry(0.34, 0.4, 40), new THREE.MeshBasicMaterial({ color: 0xffd36a, transparent: true, opacity: 0.55, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false })); halo.position.set(0, 0.12, -0.12); head.add(halo);
-    const armR = new THREE.Group(); armR.position.set(0.3, 1.66, 0); fig.add(armR); cap(0.075, 0.5, SKINM, 0, 0.32, 0, armR); mesh(new THREE.TorusGeometry(0.08, 0.025, 6, 14), GOLD, 0, 0.12, 0, armR, false).rotation.x = Math.PI / 2;
-    const palm = new THREE.Object3D(); palm.position.set(0, 0.7, 0); armR.add(palm); mesh(new THREE.SphereGeometry(0.09, 10, 8), SKINM, 0, 0.66, 0, armR, false);
+    const armR = new THREE.Group(); armR.position.set(0.3, 1.66, 0); fig.add(armR); cap(0.075, 0.72, SKINM, 0, 0.44, 0, armR); mesh(new THREE.TorusGeometry(0.08, 0.025, 6, 14), GOLD, 0, 0.12, 0, armR, false).rotation.x = Math.PI / 2;
+    const palm = new THREE.Object3D(); palm.position.set(0, 0.98, 0); armR.add(palm); mesh(new THREE.SphereGeometry(0.1, 10, 8), SKINM, 0, 0.92, 0, armR, false);
     const armL = new THREE.Group(); armL.position.set(-0.3, 1.66, 0); fig.add(armL); cap(0.075, 0.5, SKINM, 0, -0.32, 0, armL);
     const mace = new THREE.Group(); mace.position.set(0, -0.66, 0.02); armL.add(mace); mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.9, 8), GOLD, 0, 0.1, 0, mace, false); mesh(new THREE.SphereGeometry(0.2, 16, 12), GOLD, 0, 0.62, 0, mace, false); mesh(new THREE.ConeGeometry(0.05, 0.14, 8), GOLD, 0, 0.85, 0, mace, false);
     const tail = mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([[0, 0.95, -0.2], [0, 0.7, -0.6], [0.15, 1.0, -0.95], [0.1, 1.6, -0.95], [-0.1, 1.95, -0.7]].map(p => new THREE.Vector3(...p))), 30, 0.045, 8), SKINM, 0, 0, 0, fig, false);
-    const hanGlow = new THREE.Mesh(new THREE.SphereGeometry(1.4, 24, 16), new THREE.MeshBasicMaterial({ color: 0xff9a3a, transparent: true, opacity: 0.08, depthWrite: false, blending: THREE.AdditiveBlending })); hanGlow.position.y = 1.2; fig.add(hanGlow);
+    const hanGlow = new THREE.Mesh(new THREE.SphereGeometry(1.1, 24, 16), new THREE.MeshBasicMaterial({ color: 0xff9a3a, transparent: true, opacity: 0.035, depthWrite: false, blending: THREE.AdditiveBlending })); hanGlow.position.y = 1.2; fig.add(hanGlow);
     const HS = 40;                                            // giant scale: ~80 units = 8 km, "as big as a mountain"
     const HANA = new THREE.Vector3(-58, 0, 22);               // standing spot in zone A
 
@@ -120,14 +120,14 @@ window.SCENE = {
     const sea = mesh(new THREE.PlaneGeometry(3000, 3000), OCEAN, 0, -0.3, 0, C, false); sea.rotation.x = -Math.PI / 2;
     const torchL = [];
     { const r = K.rng(5), TENT = std(0x5a4a3a), CLOTHM = [std(0x7a2a2a), std(0x2a4a6a), std(0x6a5a2a)];
-      for (let i = 0; i < 22; i++) { const a = r() * 6.28, d = 8 + r() * 30; const t = mesh(new THREE.ConeGeometry(1.4 + r(), 2.2 + r(), 4), i % 3 ? TENT : CLOTHM[i % 3], Math.cos(a) * d, 1.2, Math.sin(a) * d - 6, C); t.rotation.y = r(); }
+      for (let i = 0; i < 22; i++) { const a = r() * 6.28, d = 8 + r() * 30; const t = mesh(new THREE.ConeGeometry(1.4 + r(), 2.2 + r(), 4), i % 3 ? TENT : CLOTHM[i % 3], Math.cos(a) * d, 1.2, -6 - Math.abs(Math.sin(a)) * d, C); t.rotation.y = r(); }
       for (let i = 0; i < 7; i++) { const a = i / 7 * 6.28 + 0.3, d = 5 + (i % 3) * 2.2, x = Math.cos(a) * d, z = Math.sin(a) * d; mesh(new THREE.CylinderGeometry(0.05, 0.07, 1.8, 6), std(0x3a2a1a), x, 0.9, z, C, false);
         const fl = new THREE.Mesh(new THREE.SphereGeometry(0.16, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffa040 })); fl.position.set(x, 1.9, z); C.add(fl); torchL.push(fl); }
       const pl = new THREE.PointLight(0xff8a3a, 30, 30, 1.6); pl.position.set(0, 3, 0); C.add(pl); C.userData.pl = pl; }
     // the wounded prince on a mat, warriors around him (silhouettes, no detail)
     mesh(new THREE.BoxGeometry(2.6, 0.08, 1.1), std(0x8a6a3a), 0, 0.04, 0, C, false);
     { const g = new THREE.Group(); g.position.set(0, 0.22, 0); g.rotation.z = Math.PI / 2; C.add(g); cap(0.17, 1.3, std(0x2d6f8f, { flatShading: false }), 0, 0, 0, g); mesh(new THREE.SphereGeometry(0.17, 12, 10), std(0x8a5a3a, { flatShading: false }), 0, 0.92, 0, g, false); mesh(new THREE.ConeGeometry(0.15, 0.28, 12), GOLD, 0, 1.13, 0, g, false).rotation.z = 0; }
-    const princeGlow = new THREE.Mesh(new THREE.SphereGeometry(1.6, 20, 14), new THREE.MeshBasicMaterial({ color: 0x8ab8ff, transparent: true, opacity: 0.12, depthWrite: false, blending: THREE.AdditiveBlending })); princeGlow.position.y = 0.3; C.add(princeGlow);
+    const princeGlow = new THREE.Mesh(new THREE.SphereGeometry(1.6, 20, 14), new THREE.MeshBasicMaterial({ color: 0x8ab8ff, transparent: true, opacity: 0.05, depthWrite: false, blending: THREE.AdditiveBlending })); princeGlow.position.y = 0.3; C.add(princeGlow);
     const kneel = Array.from({ length: 6 }, (_, i) => { const a = i / 6 * 6.28 + 0.5, d = 2.1; const g = new THREE.Group(); g.position.set(Math.cos(a) * d, 0, Math.sin(a) * d); g.rotation.y = Math.atan2(-g.position.x, -g.position.z); C.add(g);
       cap(0.16, 0.36, std(0x5a3d2a, { flatShading: false }), 0, 0.42, 0, g); mesh(new THREE.SphereGeometry(0.15, 10, 8), std(0x5a3d2a, { flatShading: false }), 0, 0.84, 0.05, g, false); return g; });
 
@@ -135,11 +135,11 @@ window.SCENE = {
     const DZ = -1600, Dg = new THREE.Group(); Dg.position.set(0, 0, DZ); S.add(Dg);
     const sea2 = mesh(new THREE.PlaneGeometry(4000, 4000), OCEAN, 0, 0, 0, Dg, false); sea2.rotation.x = -Math.PI / 2;
     const CLOUD = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, flatShading: true, emissive: 0x302850, emissiveIntensity: 0.4 });
-    const NCL = 520, clouds = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 1), CLOUD, NCL); Dg.add(clouds);
-    { const r = K.rng(8), o = new THREE.Object3D(); for (let i = 0; i < NCL; i++) { o.position.set(-900 + r() * 1800, 95 + r() * 18, -420 + r() * 700); const s = 12 + r() * 22; o.scale.set(s * (1.4 + r()), s * 0.45, s); o.rotation.y = r() * 6; o.updateMatrix(); clouds.setMatrixAt(i, o.matrix); } }
+    const NCL = 1100, clouds = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 1), CLOUD, NCL); Dg.add(clouds);
+    { const r = K.rng(8), o = new THREE.Object3D(); for (let i = 0; i < NCL; i++) { o.position.set(-800 + r() * 2600, 95 + r() * 18, -420 + r() * 700); const s = 12 + r() * 22; o.scale.set(s * (1.4 + r()), s * 0.45, s); o.rotation.y = r() * 6; o.updateMatrix(); clouds.setMatrixAt(i, o.matrix); } }
     const streaks = Array.from({ length: 36 }, (_, i) => { const m = new THREE.Mesh(new THREE.BoxGeometry(1, 0.25, 0.25), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false })); S.add(m); return m; });
     const dawnSun = new THREE.Mesh(new THREE.CircleGeometry(60, 48), new THREE.MeshBasicMaterial({ color: 0xffe2a0, fog: false })); S.add(dawnSun);
-    const flightX = t => -260 + (t - B('hook2')) * 22 + Math.max(0, t - B('dist')) * 26;   // keeps moving forward through the flight lines
+    const flightX = t => -260 + (t - B('hook2')) * 12 + Math.max(0, t - B('dist')) * 14;   // keeps moving forward through the flight lines
 
     // ================================================================ HUD
     const hudTex = K.canvasTex(1080, 1920, () => {});
@@ -287,22 +287,22 @@ window.SCENE = {
     const HP = new THREE.Vector3(), SP = new THREE.Vector3();
     const fx = t => flightX(t);
     shot(0, B('hook2'), [-14, 5, 300], [-18, 42, 0], [-26, 9, 262], [-20, 40, 0]);                                                  // hook1: low valley, mountain + Burj stack
-    shot(B('hook2'), B('src'), t => [fx(t) - 170, 175, DZ + 300], t => [fx(t) + 10, 150, DZ], t => [fx(t) + 60, 190, DZ + 320], t => [fx(t), 150, DZ]);   // hook2: tracking flight
-    shot(B('src'), B('herb'), [CX + 6.5, 2.2, 7.5], [CX, 0.3, 0], [CX + 4.2, 1.6, 5.2], [CX, 0.2, 0]);                                 // src: night camp push-in
+    shot(B('hook2'), B('src'), t => [fx(t) - 150, 185, DZ + 330], t => [fx(t) + 38, 162, DZ], t => [fx(t) + 90, 195, DZ + 340], t => [fx(t) + 38, 162, DZ]);   // hook2: tracking flight
+    shot(B('src'), B('herb'), [CX + 3, 6.5, 12.5], [CX, 0.3, 0], [CX + 2, 4.8, 9.5], [CX, 0.3, 0]);                                 // src: night camp push-in
     shot(B('herb'), B('loc'), [14, 70, 26], [0, 63, 0], [10, 68, 20], [0, 64, 0]);                                                    // herb: glowing summit close
     shot(B('loc'), B('height'), [120, 260, 380], [0, 30, 0], [80, 230, 330], [0, 30, 0]);                                              // loc: aerial (map on top)
     shot(B('height'), B('lift'), [-14, 6, 250], [-18, 10, 0], [-14, 70, 250], [-18, 50, 0]);                                           // height: tilt up the ruler
     shot(B('lift'), B('giant'), [10, 30, 400], [-24, 50, 0], [0, 40, 370], [-26, 58, 0]);                                            // lift: wide, giant beside mountain
     shot(B('giant'), B('weight'), [HANA.x + 70, 3, HANA.z + 120], [HANA.x, 48, HANA.z], [HANA.x + 85, 4, HANA.z + 135], [HANA.x, 62, HANA.z]);   // giant: worm's-eye up at him
-    shot(B('weight'), B('me'), t => [SP.x + 34, SP.y + 16, SP.z + 66], t => [SP.x, SP.y + 3, SP.z], t => [SP.x + 14, SP.y + 22, SP.z + 74], t => [SP.x, SP.y + 3, SP.z]);   // weight+humans: orbit the carried summit
+    shot(B('weight'), B('me'), t => [SP.x - 40, SP.y + 20, SP.z + 62], t => [SP.x, SP.y + 4, SP.z], t => [SP.x - 58, SP.y + 26, SP.z + 44], t => [SP.x, SP.y + 4, SP.z]);   // weight+humans: orbit the carried summit
     shot(B('me'), B('dist'), t => [HANA.x + 120, 30, HANA.z + 260], t => [HANA.x, 50, HANA.z], t => [HANA.x + 100, 34, HANA.z + 280], t => [HANA.x, 52, HANA.z]);
     shot(B('dist'), B('dawn'), t => [fx(t) - 60, 420, DZ + 320], t => [fx(t), 140, DZ], t => [fx(t) - 20, 360, DZ + 300], t => [fx(t), 145, DZ]);   // dist: high chase
-    shot(B('dawn'), B('speed'), t => [fx(t) - 230, 175, DZ + 70], t => [fx(t) + 200, 150, DZ - 200], t => [fx(t) - 200, 172, DZ + 90], t => [fx(t) + 220, 150, DZ - 200]);   // dawn: behind him, sun ahead
-    shot(B('speed'), B('food'), t => [fx(t) + 150, 120, DZ + 230], t => [fx(t), 155, DZ], t => [fx(t) + 70, 130, DZ + 270], t => [fx(t), 155, DZ]);   // speed: low fast side
-    shot(B('food'), B('twist'), t => [fx(t) - 80, 260, DZ + 330], t => [fx(t), 150, DZ]);
+    shot(B('dawn'), B('speed'), t => [fx(t) - 230, 185, DZ + 90], t => [fx(t) + 60, 158, DZ - 40], t => [fx(t) - 200, 180, DZ + 110], t => [fx(t) + 70, 158, DZ - 40]);   // dawn: behind him, sun ahead
+    shot(B('speed'), B('food'), t => [fx(t) + 150, 125, DZ + 280], t => [fx(t) + 38, 160, DZ], t => [fx(t) + 80, 135, DZ + 310], t => [fx(t) + 38, 160, DZ]);   // speed: low fast side
+    shot(B('food'), B('twist'), t => [fx(t) - 80, 260, DZ + 360], t => [fx(t) + 38, 155, DZ]);
     shot(B('twist'), B('why'), [VX + 22, VY + 4, VZ + 26], [VX - 10, VY + 6, VZ - 10], [VX + 16, VY + 3.5, VZ + 20], [VX - 12, VY + 8, VZ - 12]);  // village with the peak behind
     shot(B('why'), B('cta'), [VX + 16, VY + 3.5, VZ + 20], [VX - 12, VY + 8, VZ - 12], [VX + 30, VY + 6, VZ + 40], [0, 60, 0]);       // tilt from village to the peak
-    shot(B('cta'), D + 1, t => [fx(t) + 170, 120, DZ + 260], t => [fx(t), 165, DZ], t => [fx(t) + 260, 150, DZ + 380], t => [fx(t), 165, DZ]);
+    shot(B('cta'), D + 1, t => [fx(t) + 170, 130, DZ + 300], t => [fx(t) + 38, 170, DZ], t => [fx(t) + 250, 160, DZ + 420], t => [fx(t) + 38, 170, DZ]);
     K.shoot = t => { let s = shots[shots.length - 1]; for (const q of shots) if (t >= q.a - 0.12 && t < q.b - 0.12) { s = q; break; }
       const k = (s.ease || K.ease)(prog(t, s.a, s.b)), p0 = V3(s.p0, t), p1 = V3(s.p1, t), l0 = V3(s.l0, t), l1 = V3(s.l1, t);
       K.cam.position.set(lerp(p0[0], p1[0], k), lerp(p0[1], p1[1], k), lerp(p0[2], p1[2], k)); K.cam.lookAt(lerp(l0[0], l1[0], k), lerp(l0[1], l1[1], k), lerp(l0[2], l1[2], k)); };
@@ -313,7 +313,7 @@ window.SCENE = {
       const z = setLook(t);
       A.visible = z === 'A'; C.visible = z === 'C'; Dg.visible = z === 'D';
       // Burj stack builds during the hook
-      const bn = 1 + 7 * clamp((t - 0.3) / Math.max(0.5, E('hook1') - 1.0)); burjs.forEach((g, k) => { const s = clamp(bn - k); g.visible = t < B('hook2') && s > 0.01; g.scale.set(1, Math.max(0.01, K.easeBack(s)), 1); });
+      const bn = 1 + 7 * clamp((t - 0.3) / Math.max(0.5, E('hook1') - 1.0)); burjs.forEach((g, k) => { const s = clamp(bn - k); g.visible = t < B('hook2') && s > 0.01; g.scale.set(2.6, Math.max(0.01, K.easeBack(s)), 2.6); });
       // ruler grows during "height"
       const rk = eo(prog(t, B('height') + 0.2, F('height', 0.85))), rOn = t > B('height') - 0.15 && t < B('lift') - 0.12; ruler.visible = rOn; rulerBar.scale.y = Math.max(0.01, H * rk); ticks.forEach((m, i) => { m.visible = (i + 1) * 10 < H * rk; }); rulerTop.visible = rk > 0.99;
       // Hanuman pose + place
@@ -336,11 +336,11 @@ window.SCENE = {
       // herbs glow on the summit until it is lifted
       herbs.forEach((h, i) => { const on = t < B('dist'); h.visible = on; const p = 0.8 + 0.35 * Math.sin(t * 4 + i * 1.7); h.scale.setScalar(p * (t > B('herb') - 0.2 && t < B('lift') ? 1.8 : 1)); });
       // camp torches flicker
-      torchL.forEach((f, i) => f.scale.setScalar(0.85 + 0.3 * Math.abs(Math.sin(t * 13 + i * 2.1)))); C.userData.pl.intensity = 26 + 6 * Math.sin(t * 11); princeGlow.material.opacity = 0.1 + 0.05 * Math.sin(t * 2.5);
+      torchL.forEach((f, i) => f.scale.setScalar(0.85 + 0.3 * Math.abs(Math.sin(t * 13 + i * 2.1)))); C.userData.pl.intensity = 26 + 6 * Math.sin(t * 11); princeGlow.material.opacity = 0.04 + 0.02 * Math.sin(t * 2.5);
       // flight: streaks, dawn sun
       const spd = z === 'D' ? (t > B('speed') - 0.12 && t < B('twist') ? 1 : 0.45) : 0;
       streaks.forEach((m, i) => { m.visible = spd > 0; if (!m.visible) return; const r = K.rng(900 + i)(), r2 = K.rng(950 + i)(), len = 40 + r * 60; const ph = ((t * 260 * spd + i * 97) % 700); m.position.set(fx(t) + 350 - ph, 120 + r2 * 70, DZ - 60 + (i % 7) * 22); m.scale.set(len, 1, 1); m.material.opacity = 0.35 * spd; });
-      const dawnK = z === 'D' && t >= B('dawn') - 0.12 ? ease(prog(t, B('dawn') - 0.12, F('dawn', 0.9))) : 0; dawnSun.visible = dawnK > 0.01; dawnSun.position.set(fx(t) + 1300, 40 + dawnK * 120, DZ - 1300); dawnSun.lookAt(K.cam.position); dawnSun.material.color.setHex(0xffe6b0);
+      const dawnK = z === 'D' && t >= B('dawn') - 0.12 ? ease(prog(t, B('dawn') - 0.12, F('dawn', 0.9))) : 0; dawnSun.visible = dawnK > 0.01; dawnSun.position.set(fx(t) + 1100, 60 + dawnK * 110, DZ - 700); dawnSun.lookAt(K.cam.position); dawnSun.material.color.setHex(0xffe6b0);
       // villagers idle
       villagers.forEach((g, i) => { g.position.y = VY + Math.abs(Math.sin(t * 2 + i)) * 0.02; });
       drawHud(t);
