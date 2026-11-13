@@ -1,0 +1,161 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Hi guys, this is Madhu. This is my simple trick. If you try this at the same time, trust me guys, this is very useful for you."
+ },
+ "voices": {
+  "narrator_v3": "male, young adult, indian accent"
+ },
+ "jobs": [
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "01_hanuman_a.wav",
+   "text": "This is the story of Hanuman."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "02_hanuman_b.wav",
+   "text": "This is the story of Hanu-maan."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "03_hanuman_c.wav",
+   "text": "This is the story of Hunoo-maan."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "04_ramayana_a.wav",
+   "text": "This is the story of Ramayana."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "05_ramayana_b.wav",
+   "text": "This is the story of Raamaayan."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "06_ramayana_c.wav",
+   "text": "This is the story of Raa-maa-yuh-na."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "07_valmiki_a.wav",
+   "text": "This is the story of Valmiki."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "08_valmiki_b.wav",
+   "text": "This is the story of Vaal-meeki."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "09_valmiki_c.wav",
+   "text": "This is the story of Vaalmeeki."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "10_lakshmana_a.wav",
+   "text": "This is the story of Lakshmana."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "11_lakshmana_b.wav",
+   "text": "This is the story of Lakshman."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "12_lakshmana_c.wav",
+   "text": "This is the story of Luksh-mun."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "13_dronagiri_a.wav",
+   "text": "This is the story of Dronagiri."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "14_dronagiri_b.wav",
+   "text": "This is the story of Drona giri."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "15_dronagiri_c.wav",
+   "text": "This is the story of Dro-naa-giri."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "16_chamoli_a.wav",
+   "text": "This is the story of Chamoli."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "17_chamoli_b.wav",
+   "text": "This is the story of Chamolee."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "18_chamoli_c.wav",
+   "text": "This is the story of Chuh-moh-lee."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "19_uttarakhand_a.wav",
+   "text": "This is the story of Uttarakhand."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "20_uttarakhand_b.wav",
+   "text": "This is the story of Utta-raa-khand."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "21_uttarakhand_c.wav",
+   "text": "This is the story of Uttaraakhand."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "22_burj_a.wav",
+   "text": "This is the story of Burj Khalifa."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "23_burj_b.wav",
+   "text": "This is the story of Burj Kha-lee-fa."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "24_lanka_a.wav",
+   "text": "This is the story of Lanka."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "25_lanka_b.wav",
+   "text": "This is the story of Lunka."
+  }
+ ]
+}
