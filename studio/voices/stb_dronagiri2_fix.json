@@ -1,0 +1,34 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Claude, this faceless channel got a million views last month and made two thousand six hundred dollars. And you've been starting a YouTube channel for two years. Oh wait, do I need to code? No, you need to wait a few minutes without touching anything."
+ },
+ "voices": {
+  "narrator_v4": "male, young adult"
+ },
+ "cast": {
+  "narrator": "narrator_v4"
+ },
+ "speed": 1,
+ "note": "narrator_v4 = cloned from refs/narrator_v4.wav (Maddy's narrator_1 clip, 13 Nov 2026), English, speed 1.0 (normal). Older refs kept: v3, v2, epic.",
+ "jobs": [
+  {
+   "voice": "narrator_v4",
+   "speed": 1.0,
+   "file": "12a.wav",
+   "text": "And to this day, many people in Dronagiri village don't worship Hanu-maan, because they believe he took their sacred mountain."
+  },
+  {
+   "voice": "narrator_v4",
+   "speed": 1.0,
+   "file": "12b.wav",
+   "text": "And to this day, many people in Drona-giri village don't worship Hanu-maan, because they believe he took their sacred mountain."
+  },
+  {
+   "voice": "narrator_v4",
+   "speed": 1.0,
+   "file": "12c.wav",
+   "text": "And to this day, many people in Dhrona giri village don't worship Hanu-maan, because they believe he took their sacred mountain."
+  }
+ ]
+}
