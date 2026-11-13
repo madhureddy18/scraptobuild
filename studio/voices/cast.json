@@ -1,14 +1,14 @@
 {
  "seed": 7,
  "ref_text": {
-  "narrator": "Hi guys, this is Madhu. This is my simple trick. If you try this at the same time, trust me guys, this is very useful for you."
+  "narrator": "Claude, this faceless channel got a million views last month and made two thousand six hundred dollars. And you've been starting a YouTube channel for two years. Oh wait, do I need to code? No, you need to wait a few minutes without touching anything."
  },
  "voices": {
-  "narrator_v3": "male, young adult, indian accent"
+  "narrator_v4": "male, young adult"
  },
  "cast": {
-  "narrator": "narrator_v3"
+  "narrator": "narrator_v4"
  },
- "speed": 0.95,
- "note": "narrator_v3 = cloned from refs/narrator_v3.wav (Maddy's clip, 13 Nov 2026), English, speed 0.95. Older refs kept: narrator_v2, narrator_epic."
+ "speed": 1.0,
+ "note": "narrator_v4 = cloned from refs/narrator_v4.wav (Maddy's narrator_1 clip, 13 Nov 2026), English, speed 1.0 (normal). Older refs kept: v3, v2, epic."
 }

@@ -1,0 +1,94 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Claude, this faceless channel got a million views last month and made two thousand six hundred dollars. And you've been starting a YouTube channel for two years. Oh wait, do I need to code? No, you need to wait a few minutes without touching anything."
+ },
+ "voices": {
+  "narrator_v4": "male, young adult"
+ },
+ "cast": {
+  "narrator": "narrator_v4"
+ },
+ "speed": 1,
+ "note": "narrator_v4 = cloned from refs/narrator_v4.wav (Maddy's narrator_1 clip, 13 Nov 2026), English, speed 1.0 (normal). Older refs kept: v3, v2, epic.",
+ "jobs": [
+  {
+   "voice": "narrator_v4",
+   "text": "Legend says, Hanu-maan once tore the top off this mountain... and flew it across India.",
+   "speed": 1,
+   "file": "01.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "This is Drona giri, in Uttaraakhand. It stands over seven thousand metres tall.",
+   "speed": 1,
+   "file": "02.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "In the Raamaayan, Lakshman is badly wounded, in the war at Lanka.",
+   "speed": 1,
+   "file": "03.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "Only herbs from a Himalayan mountain can save him. So Hanu-maan is sent to bring them.",
+   "speed": 1,
+   "file": "04.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "But when he arrives, he can't tell which herb is which.",
+   "speed": 1,
+   "file": "05.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "So he grows as big as a mountain, grabs the peak... and tears it off.",
+   "speed": 1,
+   "file": "06.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "Even just the top kilometre of a mountain like this would weigh around two point eight billion tonnes.",
+   "speed": 1,
+   "file": "07.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "That's more than five times the weight of every human on Earth.",
+   "speed": 1,
+   "file": "08.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "Then he carries it about two thousand three hundred kilometres to Lanka, in a single night.",
+   "speed": 1,
+   "file": "09.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "To do that in ten hours, he'd have to fly at around two hundred and thirty kilometres an hour, with a mountain in his hand.",
+   "speed": 1,
+   "file": "10.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "The herbs work, and Lakshman wakes up.",
+   "speed": 1,
+   "file": "11.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "And to this day, many people in Drona giri village don't worship Hanu-maan, because they believe he took their sacred mountain.",
+   "speed": 1,
+   "file": "12.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "Follow for more legends, at real scale.",
+   "speed": 1,
+   "file": "13.wav"
+  }
+ ]
+}
