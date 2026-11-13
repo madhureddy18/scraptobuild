@@ -11,7 +11,7 @@ window.SCENE = {
     const THREE = window.THREE, S = K.scene;
     const ease = K.ease, eo = K.easeOut, prog = K.prog, clamp = K.clamp, lerp = K.lerp;
     K.cam.far = 4000; K.cam.updateProjectionMatrix();
-    K.renderer.shadowMap.enabled = true; K.renderer.shadowMap.type = THREE.PCFSoftShadowMap; K.renderer.toneMappingExposure = 1.05;
+    K.renderer.shadowMap.enabled = false; K.renderer.shadowMap.type = THREE.PCFSoftShadowMap; K.renderer.toneMappingExposure = 1.05;
     const inLine = (t, a, b) => t >= B(a) - 0.12 && t < (b ? B(b) : 1e9) - 0.12;   // t inside lines a..(b exclusive), cut-aligned
 
     // ---------------------------------------------------------------- skies (screen-space gradients + stars)
@@ -28,7 +28,7 @@ window.SCENE = {
     S.background = SKY.dusk;
     const hemi = new THREE.HemisphereLight(0xb8c8ff, 0x3a2a40, 0.9); S.add(hemi);
     const amb = new THREE.AmbientLight(0xffffff, 0.15); S.add(amb);
-    const sun = new THREE.DirectionalLight(0xffc89a, 2.4); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.6;
+    const sun = new THREE.DirectionalLight(0xffc89a, 2.4); sun.castShadow = false; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.6;
     Object.assign(sun.shadow.camera, { left: -140, right: 140, top: 140, bottom: -140, near: 1, far: 700 }); S.add(sun); S.add(sun.target);
 
     // ---------------------------------------------------------------- materials
@@ -37,7 +37,7 @@ window.SCENE = {
     const GOLD = std(0xffc845, { emissive: 0x7a4a00, emissiveIntensity: 0.6, roughness: 0.4, metalness: 0.6, flatShading: false });
     const SAFF = std(0xe8742a, { emissive: 0x5a1c00, emissiveIntensity: 0.35, roughness: 0.6, flatShading: false });
     const RED = std(0xc1121f, { roughness: 0.7, flatShading: false }), DARKM = std(0x241a22);
-    const mesh = (geo, m, x, y, z, parent = S, sh = true) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = o.receiveShadow = sh; parent.add(o); return o; };
+    const mesh = (geo, m, x, y, z, parent = S, sh = true) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = o.receiveShadow = false; parent.add(o); return o; };
     const snowColor = (geo, snowY, jitter = 3, seed = 1) => { const p = geo.attributes.position, c = new Float32Array(p.count * 3), r = K.rng(seed), wp = new THREE.Vector3();
       for (let i = 0; i < p.count; i++) { wp.fromBufferAttribute(p, i); const n = r() * jitter; const snow = wp.y + n > snowY; const g = snow ? 0.92 + r() * 0.08 : 0.32 + r() * 0.12;
         c[i * 3] = snow ? g : g * 1.05; c[i * 3 + 1] = snow ? g : g * 0.95; c[i * 3 + 2] = snow ? Math.min(1, g * 1.06) : g * 1.1; } geo.setAttribute('color', new THREE.BufferAttribute(c, 3)); };
@@ -278,7 +278,7 @@ window.SCENE = {
       if (z === 'A') { const day = t >= B('twist') - 0.12; sun.color.setHex(day ? 0xfff2de : 0xffb27a); sun.intensity = day ? 2.6 : 2.2; sun.position.set(-160, day ? 220 : 90, 140); sun.target.position.set(0, 20, 0); hemi.color.setHex(day ? 0xdfeaff : 0xb0a8ff); hemi.intensity = day ? 1.1 : 0.85; S.fog.color.setHex(day ? 0xcfe0ff : 0x6a4f8a); S.fog.near = 300; S.fog.far = 1100; }
       if (z === 'C') { sun.color.setHex(0x8aa0ff); sun.intensity = 0.5; sun.position.set(CX - 60, 120, 60); sun.target.position.set(CX, 0, 0); hemi.color.setHex(0x5a6aa8); hemi.intensity = 0.35; S.fog.color.setHex(0x0b1440); S.fog.near = 40; S.fog.far = 220; }
       if (z === 'D') { const c = new THREE.Color(0xff9a6a).lerp(new THREE.Color(0xffd9a0), dawnK); sun.color.copy(c); sun.intensity = 2.2 + dawnK * 0.8; const fx = han.position.x; sun.position.set(fx + 300, 90 + dawnK * 40, DZ - 400); sun.target.position.set(fx, 120, DZ); hemi.color.setHex(0xc8c0ff); hemi.intensity = 0.9 + dawnK * 0.3;
-        S.fog.color.copy(new THREE.Color(0x7a6aa8).lerp(new THREE.Color(0xffc4a0), dawnK)); S.fog.near = 350; S.fog.far = 1600; }
+        S.fog.color.copy(new THREE.Color(0x7a6aa8).lerp(new THREE.Color(0xffc4a0), dawnK)); S.fog.near = 700; S.fog.far = 2600; }
       return z; };
 
     // ---------------------------------------------------------------- camera
@@ -286,23 +286,23 @@ window.SCENE = {
     const V3 = (v, t) => typeof v === 'function' ? v(t) : v;
     const HP = new THREE.Vector3(), SP = new THREE.Vector3();
     const fx = t => flightX(t);
-    shot(0, B('hook2'), [-24, 4, 175], [-30, 46, 0], [-36, 10, 150], [-30, 40, 0]);                                                  // hook1: low valley, mountain + Burj stack
-    shot(B('hook2'), B('src'), t => [fx(t) - 60, 150, DZ + 175], t => [fx(t) + 10, 152, DZ], t => [fx(t) + 40, 175, DZ + 160], t => [fx(t), 150, DZ]);   // hook2: tracking flight
+    shot(0, B('hook2'), [-14, 5, 300], [-18, 42, 0], [-26, 9, 262], [-20, 40, 0]);                                                  // hook1: low valley, mountain + Burj stack
+    shot(B('hook2'), B('src'), t => [fx(t) - 170, 175, DZ + 300], t => [fx(t) + 10, 150, DZ], t => [fx(t) + 60, 190, DZ + 320], t => [fx(t), 150, DZ]);   // hook2: tracking flight
     shot(B('src'), B('herb'), [CX + 6.5, 2.2, 7.5], [CX, 0.3, 0], [CX + 4.2, 1.6, 5.2], [CX, 0.2, 0]);                                 // src: night camp push-in
     shot(B('herb'), B('loc'), [14, 70, 26], [0, 63, 0], [10, 68, 20], [0, 64, 0]);                                                    // herb: glowing summit close
     shot(B('loc'), B('height'), [120, 260, 380], [0, 30, 0], [80, 230, 330], [0, 30, 0]);                                              // loc: aerial (map on top)
-    shot(B('height'), B('lift'), [-10, 6, 190], [-20, 8, 0], [-10, 75, 190], [-20, 52, 0]);                                           // height: tilt up the ruler
-    shot(B('lift'), B('giant'), [40, 30, 240], [-20, 52, 0], [20, 45, 230], [-25, 62, 0]);                                            // lift: wide, giant beside mountain
-    shot(B('giant'), B('weight'), [HANA.x + 22, 2, HANA.z + 34], [HANA.x, 50, HANA.z], [HANA.x + 30, 3, HANA.z + 40], [HANA.x, 70, HANA.z]);   // giant: worm's-eye up at him
-    shot(B('weight'), B('me'), t => [SP.x + 20, SP.y + 6, SP.z + 34], t => [SP.x, SP.y + 3, SP.z], t => [SP.x + 10, SP.y + 12, SP.z + 30], t => [SP.x, SP.y + 4, SP.z]);   // weight+humans: orbit the carried summit
-    shot(B('me'), B('dist'), t => [SP.x - 30, SP.y - 10, SP.z + 70], t => [HANA.x, 50, HANA.z], t => [SP.x - 40, SP.y - 14, SP.z + 80], t => [HANA.x, 52, HANA.z]);
-    shot(B('dist'), B('dawn'), t => [fx(t) - 30, 300, DZ + 220], t => [fx(t), 140, DZ], t => [fx(t) - 10, 240, DZ + 200], t => [fx(t), 145, DZ]);   // dist: high chase
-    shot(B('dawn'), B('speed'), t => [fx(t) - 150, 160, DZ + 40], t => [fx(t) + 200, 150, DZ - 200], t => [fx(t) - 120, 158, DZ + 60], t => [fx(t) + 220, 150, DZ - 200]);   // dawn: behind him, sun ahead
-    shot(B('speed'), B('food'), t => [fx(t) + 70, 135, DZ + 70], t => [fx(t), 155, DZ], t => [fx(t) + 30, 140, DZ + 100], t => [fx(t), 155, DZ]);   // speed: low fast side
-    shot(B('food'), B('twist'), t => [fx(t) - 40, 200, DZ + 230], t => [fx(t), 150, DZ]);
+    shot(B('height'), B('lift'), [-14, 6, 250], [-18, 10, 0], [-14, 70, 250], [-18, 50, 0]);                                           // height: tilt up the ruler
+    shot(B('lift'), B('giant'), [10, 30, 400], [-24, 50, 0], [0, 40, 370], [-26, 58, 0]);                                            // lift: wide, giant beside mountain
+    shot(B('giant'), B('weight'), [HANA.x + 70, 3, HANA.z + 120], [HANA.x, 48, HANA.z], [HANA.x + 85, 4, HANA.z + 135], [HANA.x, 62, HANA.z]);   // giant: worm's-eye up at him
+    shot(B('weight'), B('me'), t => [SP.x + 34, SP.y + 16, SP.z + 66], t => [SP.x, SP.y + 3, SP.z], t => [SP.x + 14, SP.y + 22, SP.z + 74], t => [SP.x, SP.y + 3, SP.z]);   // weight+humans: orbit the carried summit
+    shot(B('me'), B('dist'), t => [HANA.x + 120, 30, HANA.z + 260], t => [HANA.x, 50, HANA.z], t => [HANA.x + 100, 34, HANA.z + 280], t => [HANA.x, 52, HANA.z]);
+    shot(B('dist'), B('dawn'), t => [fx(t) - 60, 420, DZ + 320], t => [fx(t), 140, DZ], t => [fx(t) - 20, 360, DZ + 300], t => [fx(t), 145, DZ]);   // dist: high chase
+    shot(B('dawn'), B('speed'), t => [fx(t) - 230, 175, DZ + 70], t => [fx(t) + 200, 150, DZ - 200], t => [fx(t) - 200, 172, DZ + 90], t => [fx(t) + 220, 150, DZ - 200]);   // dawn: behind him, sun ahead
+    shot(B('speed'), B('food'), t => [fx(t) + 150, 120, DZ + 230], t => [fx(t), 155, DZ], t => [fx(t) + 70, 130, DZ + 270], t => [fx(t), 155, DZ]);   // speed: low fast side
+    shot(B('food'), B('twist'), t => [fx(t) - 80, 260, DZ + 330], t => [fx(t), 150, DZ]);
     shot(B('twist'), B('why'), [VX + 22, VY + 4, VZ + 26], [VX - 10, VY + 6, VZ - 10], [VX + 16, VY + 3.5, VZ + 20], [VX - 12, VY + 8, VZ - 12]);  // village with the peak behind
     shot(B('why'), B('cta'), [VX + 16, VY + 3.5, VZ + 20], [VX - 12, VY + 8, VZ - 12], [VX + 30, VY + 6, VZ + 40], [0, 60, 0]);       // tilt from village to the peak
-    shot(B('cta'), D + 1, t => [fx(t) + 90, 160, DZ + 150], t => [fx(t), 150, DZ], t => [fx(t) + 140, 190, DZ + 230], t => [fx(t), 150, DZ]);
+    shot(B('cta'), D + 1, t => [fx(t) + 170, 120, DZ + 260], t => [fx(t), 165, DZ], t => [fx(t) + 260, 150, DZ + 380], t => [fx(t), 165, DZ]);
     K.shoot = t => { let s = shots[shots.length - 1]; for (const q of shots) if (t >= q.a - 0.12 && t < q.b - 0.12) { s = q; break; }
       const k = (s.ease || K.ease)(prog(t, s.a, s.b)), p0 = V3(s.p0, t), p1 = V3(s.p1, t), l0 = V3(s.l0, t), l1 = V3(s.l1, t);
       K.cam.position.set(lerp(p0[0], p1[0], k), lerp(p0[1], p1[1], k), lerp(p0[2], p1[2], k)); K.cam.lookAt(lerp(l0[0], l1[0], k), lerp(l0[1], l1[1], k), lerp(l0[2], l1[2], k)); };

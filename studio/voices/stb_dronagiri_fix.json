@@ -1,0 +1,52 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Hi guys, this is Madhu. This is my simple trick. If you try this at the same time, trust me guys, this is very useful for you."
+ },
+ "voices": {
+  "narrator_v3": "male, young adult, indian accent"
+ },
+ "cast": {
+  "narrator": "narrator_v3"
+ },
+ "speed": 0.95,
+ "note": "narrator_v3 = cloned from refs/narrator_v3.wav (Maddy's clip, 13 Nov 2026), English, speed 0.95. Older refs kept: narrator_v2, narrator_epic.",
+ "jobs": [
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "02a.wav",
+   "text": "Legend says, Hanu-maan carried it, all the way to Lanka."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "02b.wav",
+   "text": "Legend says, Hanu-maan flew with it, all the way to Lanka."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "02c.wav",
+   "text": "And legend says, Hanu-maan flew this mountain all the way to Lanka."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "05a.wav",
+   "text": "Tradition says that mountain is Drona giri, in Chamolee, Uttaraakhand."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "05b.wav",
+   "text": "Tradition says that mountain is Drona giri, in Chamolee, Uttarakhand."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "05c.wav",
+   "text": "Tradition says that mountain is Drona giri, in Chamolee district, Uttaraakhand."
+  }
+ ]
+}
