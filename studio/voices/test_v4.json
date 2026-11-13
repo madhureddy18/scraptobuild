@@ -1,0 +1,29 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Claude, this faceless channel got a million views last month and made two thousand six hundred dollars. And you've been starting a YouTube channel for two years. Oh wait, do I need to code? No, you need to wait a few minutes without touching anything."
+ },
+ "voices": {
+  "narrator_v4": "male, young adult"
+ },
+ "jobs": [
+  {
+   "voice": "narrator_v4",
+   "speed": 1.0,
+   "file": "v4_1_hook.wav",
+   "text": "This mountain is taller than eight Burj Kha-lee-fas. And legend says, Hanu-maan flew with it, all the way to Lanka."
+  },
+  {
+   "voice": "narrator_v4",
+   "speed": 1.0,
+   "file": "v4_2_names.wav",
+   "text": "Vaalmeeki's Raamaayan. Lakshman. Drona giri, in Chamolee district, Uttaraakhand."
+  },
+  {
+   "voice": "narrator_v4",
+   "speed": 1.0,
+   "file": "v4_3_fact.wav",
+   "text": "Even just the top one kilometre would weigh about two point eight billion tonnes. That's heavier than every human on Earth, five times over."
+  }
+ ]
+}
