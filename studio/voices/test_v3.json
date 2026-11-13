@@ -1,0 +1,35 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Hi guys, this is Madhu. This is my simple trick. If you try this at the same time, trust me guys, this is very useful for you."
+ },
+ "voices": {
+  "narrator_v3": "male, young adult, indian accent"
+ },
+ "jobs": [
+  {
+   "voice": "narrator_v3",
+   "speed": 1.0,
+   "file": "t1_en_hook.wav",
+   "text": "The Ramayana says Hanuman lifted an entire mountain, and carried it across India."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 0.95,
+   "file": "t2_en_slow.wav",
+   "text": "That mountain is Dronagiri. Today it stands more than seven thousand metres tall. Now, imagine it resting on one palm."
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 1.0,
+   "file": "t3_en_names.wav",
+   "text": "Brahmastra, Sudarshan Chakra, Kumbhakarna, Vasuki. What if they were real?"
+  },
+  {
+   "voice": "narrator_v3",
+   "speed": 1.0,
+   "file": "t4_hi.wav",
+   "text": "रामायण में लिखा है कि हनुमान जी पूरा द्रोणागिरी पर्वत उठाकर ले आए। लेकिन वह पर्वत असल में कितना बड़ा है?"
+  }
+ ]
+}
