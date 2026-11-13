@@ -1,0 +1,124 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Hi guys, this is Madhu. This is my simple trick. If you try this at the same time, trust me guys, this is very useful for you."
+ },
+ "voices": {
+  "narrator_v3": "male, young adult, indian accent"
+ },
+ "cast": {
+  "narrator": "narrator_v3"
+ },
+ "speed": 0.95,
+ "note": "narrator_v3 = cloned from refs/narrator_v3.wav (Maddy's clip, 13 Nov 2026), English, speed 0.95. Older refs kept: narrator_v2, narrator_epic.",
+ "jobs": [
+  {
+   "voice": "narrator_v3",
+   "text": "This mountain is taller than eight Burj Kha-lee-fas.",
+   "speed": 0.95,
+   "file": "01.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "Legend says, Hanu-maan flew it, all the way to Lanka.",
+   "speed": 0.95,
+   "file": "02.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "In Vaalmeeki's Raamaayan, Lakshman is struck down, in the war at Lanka.",
+   "speed": 0.95,
+   "file": "03.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "The cure? Herbs, from a mountain in the Himalayas.",
+   "speed": 0.95,
+   "file": "04.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "Tradition says that mountain is Drona giri, in Chamolee, Utta-raa-khand.",
+   "speed": 0.95,
+   "file": "05.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "Today it stands seven thousand and sixty-six metres tall.",
+   "speed": 0.95,
+   "file": "06.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "Hanu-maan can't tell which herb is which. So he lifts, the whole peak.",
+   "speed": 0.95,
+   "file": "07.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "The epic says he grew as big as a mountain.",
+   "speed": 0.95,
+   "file": "08.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "Even just the top one kilometre would weigh about two point eight billion tonnes.",
+   "speed": 0.95,
+   "file": "09.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "That's heavier than every human on Earth. Five times over.",
+   "speed": 0.95,
+   "file": "10.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "[sigh] And I get tired, carrying two grocery bags up the stairs.",
+   "speed": 0.95,
+   "file": "11.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "Then he flies it about two thousand three hundred kilometres to Lanka.",
+   "speed": 0.95,
+   "file": "12.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "Most retellings say: before sunrise.",
+   "speed": 0.95,
+   "file": "13.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "Give him ten hours. That's two hundred and thirty kilometres an hour. Faster than any train in India.",
+   "speed": 0.95,
+   "file": "14.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "[dissatisfaction-hnn] Meanwhile, my food delivery takes forty minutes, from two kilometres away.",
+   "speed": 0.95,
+   "file": "15.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "And in Drona giri village, many still don't worship Hanu-maan.",
+   "speed": 0.95,
+   "file": "16.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "They believe he took away their sacred mountain.",
+   "speed": 0.95,
+   "file": "17.wav"
+  },
+  {
+   "voice": "narrator_v3",
+   "text": "Follow for more legends, at real scale.",
+   "speed": 0.95,
+   "file": "18.wav"
+  }
+ ]
+}

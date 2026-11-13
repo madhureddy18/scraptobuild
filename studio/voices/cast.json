@@ -1,14 +1,14 @@
 {
  "seed": 7,
  "ref_text": {
-  "narrator": "This temple was not built, it was carved from a single rock. Twelve hundred years ago, workers cut straight down into a mountain."
+  "narrator": "Hi guys, this is Madhu. This is my simple trick. If you try this at the same time, trust me guys, this is very useful for you."
  },
  "voices": {
-  "narrator_v2": "male, young adult, moderate pitch, indian accent"
+  "narrator_v3": "male, young adult, indian accent"
  },
  "cast": {
-  "narrator": "narrator_v2"
+  "narrator": "narrator_v3"
  },
- "speed": 1.0,
- "note": "narrator_v2 = cloned from studio/voices/refs/narrator_v2.wav (Maddy's clip, Nov 2026). Old Epic Documentary ref kept as refs/narrator_epic.wav."
+ "speed": 0.95,
+ "note": "narrator_v3 = cloned from refs/narrator_v3.wav (Maddy's clip, 13 Nov 2026), English, speed 0.95. Older refs kept: narrator_v2, narrator_epic."
 }
