@@ -12,7 +12,7 @@ window.STB_LINES = [
   LN('narrator', 'Then he carries it about *2,300 kilometres* to Lanka, in a *single night*.', 'Then he carries it about two thousand three hundred kilometres to Lanka, in a single night.', { id: 'dist', gap: 0.25 }),
   LN('narrator', 'To do that in ten hours, he\'d have to fly at around *230 km/h*, with a mountain in his hand.', 'To do that in ten hours, he\'d have to fly at around two hundred and thirty kilometres an hour, with a mountain in his hand.', { id: 'speed', gap: 0.25 }),
   LN('narrator', 'The herbs work, and *Lakshmana wakes up*.', null, { omni: 'The herbs work, and Lakshman wakes up.', id: 'wake', gap: 0.3 }),
-  LN('narrator', 'And to this day, many people in *Dronagiri village* don\'t worship Hanuman, because they believe he took their *sacred mountain*.', null, { omni: 'And to this day, many people in Drona giri village don\'t worship Hanu-maan, because they believe he took their sacred mountain.', id: 'village', gap: 0.3 }),
+  LN('narrator', 'And to this day, many people in *Dronagiri village* don\'t worship Hanuman, because they believe he took their *sacred mountain*.', null, { omni: 'And to this day, many people in Dhrona giri village don\'t worship Hanu-maan, because they believe he took their sacred mountain.', id: 'village', gap: 0.3 }),
   LN('narrator', '*Follow* for more legends, at *real scale*.', null, { id: 'cta', gap: 0.2 }),
 ].map(l => ({ ...l, omniSpeed: l.omniSpeed || 1.0 }));
 if (!window.SCENE) window.SCENE = { lines: window.STB_LINES };

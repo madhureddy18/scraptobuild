@@ -146,17 +146,17 @@ window.SCENE = {
       for (let i = 0; i < 6; i++) { const a = i / 6 * 6.28 + 0.4, d = 4.2, x = Math.cos(a) * d, z = Math.sin(a) * d - 1; mesh(new THREE.CylinderGeometry(0.05, 0.07, 1.8, 8), mat(0x3a2a1a), x, 0.9, z, C);
         const fl = new THREE.Mesh(new THREE.SphereGeometry(0.15, 14, 10), new THREE.MeshBasicMaterial({ color: 0xffa040 })); fl.position.set(x, 1.9, z); C.add(fl); torchFl.push(fl); }
       for (const [x, z] of [[2.5, 1.5], [-2.5, -1]]) { const pl = new THREE.PointLight(0xff8a3a, 14, 14, 1.5); pl.position.set(x, 2.2, z); C.add(pl); torchLights.push(pl); } }
-    mesh(new THREE.BoxGeometry(2.6, 0.08, 1.2), mat(0x9a7a4a), 0, 0.04, 0, C);
+    mesh(new THREE.BoxGeometry(1.3, 0.08, 2.8), mat(0x9a7a4a), -0.4, 0.04, 0, C);
     const lak = makeHuman(0xe0a878, 0xe2b13a); lak.root.position.set(-0.9, 0.18, 0); C.add(lak.root);
     const rama = makeHuman(0x4a6a9a, 0xf0b020); rama.root.position.set(0.3, 0, 1.0); rama.root.rotation.y = Math.PI; C.add(rama.root);
-    const vanaras = Array.from({ length: 5 }, (_, i) => { const v = makeHuman(0x7a5a3a, [0x6a4a2a, 0x8a5a2a][i % 2], { crown: false, hairLong: false }); const a = 0.5 + i * 0.5, d = 3.0; v.root.position.set(Math.cos(a) * d, 0, Math.sin(a) * d); v.root.rotation.y = Math.atan2(-v.root.position.x, -v.root.position.z); C.add(v.root); return v; });
+    const vanaras = Array.from({ length: 5 }, (_, i) => { const v = makeHuman(0x7a5a3a, [0x6a4a2a, 0x8a5a2a][i % 2], { crown: false, hairLong: false }); const a = -0.8 + i * 0.45, d = 3.0; v.root.position.set(Math.cos(a) * d, 0, Math.sin(a) * d); v.root.rotation.y = Math.atan2(-v.root.position.x, -v.root.position.z); C.add(v.root); return v; });
     const herbGlow = new THREE.PointLight(0x9dffb0, 0, 6, 1.5); herbGlow.position.set(0, 1, 0); C.add(herbGlow);
 
     // ================================================================ ZONE H: herb slope close-up
     const HZ = 1600, Hg = new THREE.Group(); Hg.position.set(0, 0, HZ); S.add(Hg);
     { const g = new THREE.PlaneGeometry(80, 80, 40, 40); const p = g.attributes.position, r = K.rng(12); for (let i = 0; i < p.count; i++) p.setZ(i, (r() - 0.5) * 0.25 + Math.max(0, p.getY(i) - 8) * 0.3); g.computeVertexNormals(); fixNormals(g);
       const o = mesh(g, mat(0x6a6676, { roughness: 1 }), 0, 0, 0, Hg); o.rotation.x = -Math.PI / 2;
-      for (let i = 0; i < 40; i++) { const rk = mesh(new THREE.DodecahedronGeometry(0.4 + r() * 1.4, 1), mat(0x6d6a78, { roughness: 1 }), (r() - 0.5) * 30, 0, (r() - 0.5) * 30 - 6, Hg); rk.scale.y = 0.6; }
+      for (let i = 0; i < 40; i++) { const rx = (r() - 0.5) * 30, rz = (r() - 0.5) * 30 - 6, rs = 0.4 + r() * 1.4; if (Math.abs(rx) < 9 && rz > -7) continue; const rk = mesh(new THREE.DodecahedronGeometry(rs, 1), mat(0x6d6a78, { roughness: 1 }), rx, 0, rz, Hg); rk.scale.y = 0.6; }
       for (let i = 0; i < 120; i++) { const sn = mesh(new THREE.SphereGeometry(0.6 + r(), 12, 8), mat(0xdfe4f4), (r() - 0.5) * 40, -0.3, (r() - 0.5) * 30 - 18, Hg); sn.scale.y = 0.25; } }
     const HERBC = [0x9dffb0, 0xfff27a, 0x8ae9ff, 0xffb0f0], herbBulbs = [];
     for (let i = 0; i < 26; i++) { const r = K.rng(700 + i), x = (r() - 0.5) * 5, z = (r() - 0.5) * 3 + 1.2, g = new THREE.Group(); g.position.set(x, 0, z); g.scale.setScalar(1.9); Hg.add(g);
@@ -224,7 +224,7 @@ window.SCENE = {
     const SH = {
       hook: [[-6, 6, 120], [0, 64, 0], [-4, 12, 96], [0, 66, 0]],
       loc: [[10, 16, 175], [0, 30, 0], [6, 72, 135], [0, 64, 0]],
-      war: [[CX - 2.4, 1.9, -4.6], [CX - 0.4, 0.4, 0.4], [CX - 1.8, 1.4, -3.8], [CX - 0.4, 0.4, 0.4]],
+      war: [[CX - 3.6, 1.6, 0.9], [CX - 0.1, 0.45, -0.2], [CX - 2.9, 1.2, 0.6], [CX - 0.1, 0.4, -0.3]],
       sent: [[CX + 0.6, 0.5, 2.6], [CX - 3, 1.3, -2], [CX + 0.9, 0.4, 3.0], [CX - 3, 7, -2]],
       herbs: [[1.4, 0.7, HZ + 5.2], [0.2, 0.9, HZ + 0.5], [-0.8, 0.8, HZ + 4.6], [0.2, 1.2, HZ]],
       tear: [[30, 22, 300], [-24, 52, 0], [14, 30, 270], [-26, 60, 0]],
@@ -232,7 +232,7 @@ window.SCENE = {
       humans: [[BX + 4, 13, 62], [BX, 12, 0], [BX - 3, 15, 57], [BX, 12, 0]],
       dist: [t => [flightX(t) - 70, 175, DZ + 120], t => [flightX(t) + 18, 135, DZ], t => [flightX(t) - 30, 165, DZ + 125], t => [flightX(t) + 18, 135, DZ]],
       speed: [t => [flightX(t) + 30, 128, DZ + 100], t => [flightX(t) + 18, 137, DZ], t => [flightX(t) + 5, 130, DZ + 92], t => [flightX(t) + 18, 137, DZ]],
-      wake: [[CX - 2.6, 1.7, -4.6], [CX - 0.4, 0.7, 0.4], [CX - 2.0, 1.6, -3.9], [CX - 0.4, 0.9, 0.4]],
+      wake: [[CX - 3.4, 1.3, 1.1], [CX - 0.2, 0.6, -0.2], [CX - 2.8, 1.25, 0.9], [CX - 0.2, 0.8, -0.2]],
       village: [[VX + 20, VY + 3.5, VZ + 24], [VX - 10, VY + 6, VZ - 10], [VX + 26, VY + 6, VZ + 36], [0, 58, 0]],
       cta: [t => [flightX(t) - 90, 150, DZ + 110], t => [flightX(t) + 30, 138, DZ], t => [flightX(t) - 150, 165, DZ + 150], t => [flightX(t) + 40, 140, DZ]],
     };
@@ -279,9 +279,10 @@ window.SCENE = {
       dust.material.opacity = dOn ? 0.35 * Math.max(0, 1 - dt / 1.6) : 0; dust.scale.setScalar(rAt(HB) * (1.2 + (dOn ? dt * 4 : 0))); dust.scale.y *= 0.35;
       // ---- camp: Lakshmana lying (or waking), Rama kneeling
       const wake = id === 'wake' ? eo(prog(t, F('wake', 0.35), F('wake', 0.85))) : 0;
-      lak.root.rotation.set(0, Math.PI / 2, lerp(-Math.PI / 2, -0.15, wake)); lak.root.position.set(-0.9 + wake * 0.2, 0.2 + wake * 0.1, 0);
-      pose(lak, { rA: [0, 0, 0.1], lA: [0, 0, -0.1], legA: [[-wake * 1.5, 0, 0], [-wake * 1.5, 0, 0]], legB: [[wake * 1.4, 0, 0], [wake * 1.4, 0, 0]], head: [0, wake * 0.3, 0] });
-      rama.root.position.set(0.25, -0.42 * (1 - wake), 0.9); rama.root.rotation.set(0, Math.PI + 0.3, 0);
+      // Lakshmana lies along z on the mat (pivot at the hips), head toward -z; on "wake" he sits up
+      lak.fig.position.y = -0.95; lak.root.position.set(-0.4, 0.2, 0.15); lak.root.rotation.set(lerp(-Math.PI / 2, -0.2, wake), 0, 0);
+      pose(lak, { rA: [0.1, 0, 0.12 + wake * 0.2], lA: [0.1, 0, -0.12 - wake * 0.2], legA: [[-(Math.PI / 2 - 0.2) * wake, 0, 0], [-(Math.PI / 2 - 0.2) * wake, 0, 0]], head: [wake * 0.2, 0, 0] });
+      rama.root.position.set(0.75, -0.42 * (1 - wake), -0.3); rama.root.rotation.set(0, -Math.PI / 2, 0);
       pose(rama, { rA: [-0.8 - wake * 0.6, 0, 0.2], rB: [-0.6, 0, 0], lA: [-0.4, 0, -0.2], lB: [-0.8, 0, 0], legA: [[-1.4 * (1 - wake), 0, 0], [-0.2 * (1 - wake), 0, 0]], legB: [[1.5 * (1 - wake), 0, 0], [1.8 * (1 - wake), 0, 0]], head: [0.5 * (1 - wake), 0, 0] });
       vanaras.forEach((v, k) => { pose(v, { rA: [-0.2, 0, 0.1], lA: [-0.2, 0, -0.1], head: [0.3, 0, 0] }); v.fig.position.y = Math.sin(t * 2 + k) * 0.01; });
       torchFl.forEach((f, k) => f.scale.setScalar(0.8 + 0.35 * Math.abs(Math.sin(t * 13 + k * 2.1)))); torchLights.forEach((l, k) => { l.intensity = (id === 'wake' ? 6 : 14) + 4 * Math.sin(t * 11 + k); });
