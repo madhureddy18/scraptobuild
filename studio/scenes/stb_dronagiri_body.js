@@ -33,7 +33,7 @@ window.SCENE = {
 
     // ---------------------------------------------------------------- materials
     const std = (c, o = {}) => new THREE.MeshStandardMaterial(Object.assign({ color: c, roughness: 0.9, metalness: 0, flatShading: true }, o));
-    const ROCK = std(0xffffff, { vertexColors: true }), GROUND = std(0x4a4256), OCEAN = std(0x1b3d78, { roughness: 0.35, metalness: 0.1 });
+    const ROCK = std(0xffffff, { vertexColors: true, flatShading: false }), GROUND = std(0x4a4256), OCEAN = std(0x1b3d78, { roughness: 0.35, metalness: 0.1 });
     const GOLD = std(0xffc845, { emissive: 0x7a4a00, emissiveIntensity: 0.6, roughness: 0.4, metalness: 0.6, flatShading: false });
     const SAFF = std(0xe8742a, { emissive: 0x5a1c00, emissiveIntensity: 0.35, roughness: 0.6, flatShading: false });
     const RED = std(0xc1121f, { roughness: 0.7, flatShading: false }), DARKM = std(0x241a22);
@@ -45,7 +45,12 @@ window.SCENE = {
     const crag = (rTop, rBot, h, seg, hseg, seed, amp, keepRings = true) => { const g = new THREE.CylinderGeometry(rTop, rBot, h, seg, hseg, false).toNonIndexed(); const p = g.attributes.position, r = K.rng(seed), cache = {};
       for (let i = 0; i < p.count; i++) { const x = p.getX(i), y = p.getY(i), z = p.getZ(i), key = `${x.toFixed(3)},${y.toFixed(3)},${z.toFixed(3)}`;
         if (keepRings && (Math.abs(y - h / 2) < 1e-4 || Math.abs(y + h / 2) < 1e-4)) continue; if (!cache[key]) { const rad = Math.hypot(x, z); cache[key] = rad < 1e-4 ? [0, 0, 0] : [(r() - 0.5) * amp, (r() - 0.5) * amp * 0.6, (r() - 0.5) * amp]; }
-        const d = cache[key]; p.setXYZ(i, x + d[0], y + d[1], z + d[2]); } g.computeVertexNormals(); return g; };
+        const d = cache[key]; p.setXYZ(i, x + d[0], y + d[1], z + d[2]); }
+      // drop near-zero-area triangles (collapsed apex/cap): their normals are NaN and bloom spreads them into black blocks
+      const src = p.array, keep = [], va = new THREE.Vector3(), vb = new THREE.Vector3(), vc = new THREE.Vector3();
+      for (let i = 0; i < src.length; i += 9) { va.set(src[i], src[i + 1], src[i + 2]); vb.set(src[i + 3], src[i + 4], src[i + 5]); vc.set(src[i + 6], src[i + 7], src[i + 8]);
+        if (vb.clone().sub(va).cross(vc.clone().sub(va)).length() > 1e-3) for (let k = 0; k < 9; k++) keep.push(src[i + k]); }
+      const out = new THREE.BufferGeometry(); out.setAttribute('position', new THREE.Float32BufferAttribute(keep, 3)); out.computeVertexNormals(); return out; };
 
     // ================================================================ ZONE A: Himalaya
     const A = new THREE.Group(); S.add(A);
