@@ -1,0 +1,94 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Claude, this faceless channel got a million views last month and made two thousand six hundred dollars. And you've been starting a YouTube channel for two years. Oh wait, do I need to code? No, you need to wait a few minutes without touching anything."
+ },
+ "voices": {
+  "narrator_v4": "male, young adult"
+ },
+ "cast": {
+  "narrator": "narrator_v4"
+ },
+ "speed": 1,
+ "note": "narrator_v4 = cloned from refs/narrator_v4.wav (Maddy's narrator_1 clip, 13 Nov 2026), English, speed 1.0 (normal). Older refs kept: v3, v2, epic.",
+ "jobs": [
+  {
+   "voice": "narrator_v4",
+   "text": "According to the Mahaabhaarat, this serpent was used as a rope... to turn a mountain taller than ten Earths, stacked on top of each other.",
+   "speed": 1,
+   "file": "01.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "This is Vaasuki, king of the serpents, who coils around Lord Shiva's neck.",
+   "speed": 1,
+   "file": "02.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "The dayvaas and the asuraas sought amrit, the nectar of immortality, hidden within the ocean of milk.",
+   "speed": 1,
+   "file": "03.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "To churn it out, they used Mount Mandaraa as the churning rod, and Vaasuki as the rope.",
+   "speed": 1,
+   "file": "04.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "The dayvaas held one end. The asuraas held the other.",
+   "speed": 1,
+   "file": "05.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "The Mahaabhaarat says Mandaraa rose eleven thousand yojanaas above the ground.",
+   "speed": 1,
+   "file": "06.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "If one yojanaa is about thirteen kilometres, that's around a hundred and forty-three thousand kilometres. More than eleven Earths stacked up.",
+   "speed": 1,
+   "file": "07.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "The mountain was so heavy it began to sink. So Vishnu became Koorma, a giant tortoise, and held it on his back.",
+   "speed": 1,
+   "file": "08.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "And Vaasuki had to coil around its entire height.",
+   "speed": 1,
+   "file": "09.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "Even if Mandaraa were only as wide as Earth, one single coil would be forty thousand kilometres long. The entire equator.",
+   "speed": 1,
+   "file": "10.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "As they churned, poison poured out. Lord Shiva drank it to save the world, and it turned his throat blue.",
+   "speed": 1,
+   "file": "11.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "In Baanka, Bihar, stands a granite hill called Mandaar. Spiral grooves run around it, which local tradition attributes to Vaasuki.",
+   "speed": 1,
+   "file": "12.wav"
+  },
+  {
+   "voice": "narrator_v4",
+   "text": "Follow for more of India's epics, measured at real scale.",
+   "speed": 1,
+   "file": "13.wav"
+  }
+ ]
+}
