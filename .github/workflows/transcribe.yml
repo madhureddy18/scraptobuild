@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
     inputs:
       path: { description: 'Optional audio file in the repo to transcribe instead of the voices-out branches', default: '' }
+      model: { description: 'faster-whisper model (small.en, small, medium)', default: 'small.en' }
+      lang: { description: 'Language code for multilingual models (e.g. te), empty = auto', default: '' }
 jobs:
   t:
     runs-on: ubuntu-latest
@@ -11,19 +13,21 @@ jobs:
         with: { path: repo }
       - env:
           ONE: ${{ github.event.inputs.path }}
+          MODEL: ${{ github.event.inputs.model }}
+          LANG_: ${{ github.event.inputs.lang }}
         run: |
           for i in 0 1 2; do git clone -q --depth 1 -b voices-out-$i https://github.com/${{ github.repository }}.git s$i; done
           pip install -q faster-whisper soundfile
           python - <<'P'
           import glob, subprocess, soundfile as sf
           from faster_whisper import WhisperModel
-          m = WhisperModel('small.en', device='cpu', compute_type='int8')
           import os
+          m = WhisperModel(os.environ.get('MODEL') or 'small.en', device='cpu', compute_type='int8')
           one = os.environ.get('ONE', '')
-          files = ['repo/' + one] if one else sorted(glob.glob('s*/[0-9][0-9]*.wav'), key=lambda p: p[-6:])
+          files = ['repo/' + one] if one else sorted(glob.glob('s*/[0-9][0-9]*.wav') + glob.glob('s*/te_*.wav'), key=lambda p: p[-6:])
           for f in files:
               import numpy as np; x,sr = sf.read(f, dtype='float32'); x = x if x.ndim == 1 else x.mean(1); a = np.interp(np.arange(0, len(x), sr / 16000), np.arange(len(x)), x).astype('float32')
-              segs, _ = m.transcribe(a, word_timestamps=True)
+              segs, _ = m.transcribe(a, word_timestamps=True, language=(os.environ.get('LANG_') or None))
               ws = [f"{w.word.strip()}@{w.start:.2f}" for s in segs for w in s.words]
               print(f.split('/')[-1], ' '.join(ws), flush=True)
           P

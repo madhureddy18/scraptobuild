@@ -1,0 +1,49 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "narrator": "Claude, this faceless channel got a million views last month and made two thousand six hundred dollars. And you've been starting a YouTube channel for two years. Oh wait, do I need to code? No, you need to wait a few minutes without touching anything.",
+  "tela": "సముద్ర మథనంలో, వాసుకి అనే సర్పాన్ని తాడుగా వాడారు. మందర పర్వతాన్ని కవ్వంగా చేసి, దేవతలు ఒక వైపు, రాక్షసులు మరో వైపు లాగారు.",
+  "telb": "సముద్ర మథనంలో, వాసుకి అనే సర్పాన్ని తాడుగా వాడారు. మందర పర్వతాన్ని కవ్వంగా చేసి, దేవతలు ఒక వైపు, రాక్షసులు మరో వైపు లాగారు.",
+  "telc": "సముద్ర మథనంలో, వాసుకి అనే సర్పాన్ని తాడుగా వాడారు. మందర పర్వతాన్ని కవ్వంగా చేసి, దేవతలు ఒక వైపు, రాక్షసులు మరో వైపు లాగారు.",
+  "teld": "సముద్ర మథనంలో, వాసుకి అనే సర్పాన్ని తాడుగా వాడారు. మందర పర్వతాన్ని కవ్వంగా చేసి, దేవతలు ఒక వైపు, రాక్షసులు మరో వైపు లాగారు."
+ },
+ "voices": {
+  "narrator_v4": "male, young adult",
+  "tela_deep": "male, middle-aged, low pitch, indian accent",
+  "telb_young": "male, young adult, moderate pitch, indian accent",
+  "telc_story": "male, elderly, low pitch, indian accent",
+  "teld_female": "female, young adult, moderate pitch, indian accent"
+ },
+ "jobs": [
+  {
+   "voice": "narrator_v4",
+   "speed": 1.0,
+   "file": "te_narrator_v4.wav",
+   "text": "ఇప్పటికీ చాలా మందికి తెలియని విషయం ఇది. మహాభారతం ప్రకారం, మందర పర్వతం పదకొండు వేల యోజనాల ఎత్తు. అంటే, భూమి కంటే పది రెట్లు పెద్దది."
+  },
+  {
+   "voice": "tela_deep",
+   "speed": 1.0,
+   "file": "te_tela_deep.wav",
+   "text": "ఇప్పటికీ చాలా మందికి తెలియని విషయం ఇది. మహాభారతం ప్రకారం, మందర పర్వతం పదకొండు వేల యోజనాల ఎత్తు. అంటే, భూమి కంటే పది రెట్లు పెద్దది."
+  },
+  {
+   "voice": "telb_young",
+   "speed": 1.0,
+   "file": "te_telb_young.wav",
+   "text": "ఇప్పటికీ చాలా మందికి తెలియని విషయం ఇది. మహాభారతం ప్రకారం, మందర పర్వతం పదకొండు వేల యోజనాల ఎత్తు. అంటే, భూమి కంటే పది రెట్లు పెద్దది."
+  },
+  {
+   "voice": "telc_story",
+   "speed": 1.0,
+   "file": "te_telc_story.wav",
+   "text": "ఇప్పటికీ చాలా మందికి తెలియని విషయం ఇది. మహాభారతం ప్రకారం, మందర పర్వతం పదకొండు వేల యోజనాల ఎత్తు. అంటే, భూమి కంటే పది రెట్లు పెద్దది."
+  },
+  {
+   "voice": "teld_female",
+   "speed": 1.0,
+   "file": "te_teld_female.wav",
+   "text": "ఇప్పటికీ చాలా మందికి తెలియని విషయం ఇది. మహాభారతం ప్రకారం, మందర పర్వతం పదకొండు వేల యోజనాల ఎత్తు. అంటే, భూమి కంటే పది రెట్లు పెద్దది."
+  }
+ ]
+}
