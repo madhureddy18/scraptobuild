@@ -173,9 +173,9 @@ window.SCENE = {
     const look = (sky, kc, ki, kp, tgt, hc, hi, fogc, fn, ff) => { S.background = sky; key.color.setHex(kc); key.intensity = ki; key.position.set(...kp); key.target.position.set(...tgt);
       rim.position.set(2 * tgt[0] - kp[0], kp[1] * 0.5, 2 * tgt[2] - kp[2]); rim.target.position.set(...tgt); hemi.color.setHex(hc); hemi.intensity = hi; S.fog.color.setHex(fogc); S.fog.near = fn; S.fog.far = ff; };
     const setLook = (t, id) => { const z = ZONE[id]; O.visible = z === 'O'; Sg.visible = z === 'S'; Kg.visible = z === 'K'; Rg.visible = z === 'R';
-      if (z === 'O') { if (id === 'poison') look(SKY.storm, 0xd8c0ff, 2.0, [-300, 400, 500], [0, 60, 0], 0xb0a0d0, 0.7, 0x5a4a62, 300, 2000); else look(SKY.gold, 0xffe0b8, 2.8, [-400, 500, 600], [0, 60, 0], 0xe0e4ff, 0.95, 0xe8dcd0, 500, 2600); }
+      if (z === 'O') { if (id === 'poison') look(SKY.storm, 0xd8c0ff, 1.5, [300, 300, 600], [150, 20, 230], 0xb0a0d0, 0.7, 0x5a4a62, 300, 2000); else look(SKY.gold, 0xffe0b8, 2.8, [-400, 500, 600], [0, 60, 0], 0xe0e4ff, 0.95, 0xe8dcd0, 500, 2600); }
       if (z === 'S') look(SKY.space, 0xfff0d8, 3.0, [-900, 300, SZ - 1600 + 2600], [0, 100, SZ], 0x6070a0, 0.35, 0x000006, 4000, 9000);
-      if (z === 'K') look(SKY.milk, 0xe8f4ff, 1.6, [KX, 200, 100], [KX, 0, 0], 0xdff0ff, 1.0, 0xa8c8d8, 30, 260);
+      if (z === 'K') look(SKY.milk, 0xe8f4ff, 2.0, [KX - 100, 200, 160], [KX, 0, 0], 0xdff0ff, 1.1, 0x9cc0d4, 60, 520);
       if (z === 'R') look(SKY.day, 0xfff4e4, 2.8, [RX - 200, 260, 200], [RX, 10, 0], 0xe0ecff, 1.1, 0xd6e6ff, 300, 1600);
       return z; };
 
@@ -203,7 +203,7 @@ window.SCENE = {
     // ---------------------------------------------------------------- per-frame update
     const M4 = new THREE.Matrix4(), Q = new THREE.Quaternion(), V = new THREE.Vector3(), SC = new THREE.Vector3(), EU = new THREE.Euler();
     const update = t => {
-      const id = lineAt(t), z = setLook(t, id);
+      const id = lineAt(t), z = setLook(t, id); oceanM.material.roughness = id === 'poison' ? 0.9 : 0.22; oceanM.material.color.setHex(id === 'poison' ? 0x9a8a9a : 0xf6f1e6);
       // milk waves
       if (z === 'O') { for (let i = 0; i < OP.count; i++) { const x = O0[i * 3], y = O0[i * 3 + 1]; OP.setZ(i, Math.sin(x * 0.012 + t * 1.1) * 1.4 + Math.cos(y * 0.015 + t * 0.9) * 1.2); } OP.needsUpdate = true; ocean.computeVertexNormals(); }
       // Mandara: lowered into the ocean during "churn", spinning while churned
