@@ -1,0 +1,34 @@
+{
+ "seed": 7,
+ "ref_text": {
+  "tel": "నమస్కారం. ఈ రోజు మనం ఒక గొప్ప పురాణ కథ గురించి తెలుసుకుందాం. ఈ కథ వేల సంవత్సరాల క్రితం జరిగింది."
+ },
+ "voices": {
+  "tel_m": "male, middle-aged, low pitch, indian accent"
+ },
+ "cast": {
+  "narrator": "tel_m"
+ },
+ "speed": 1,
+ "note": "tel_m = designed Telugu narrator (refs/tel_m.wav), picked by Maddy 17 Nov 2026; Telugu narration, speed 1.0. Older refs kept: narrator_v4 (English), v3, v2, epic.",
+ "jobs": [
+  {
+   "voice": "tel_m",
+   "speed": 1.0,
+   "file": "10a.wav",
+   "text": "మందర పర్వతం వెడల్పు భూమి అంతే అనుకున్నా, ఒక్క చుట్టు పొడవే నలభై వేల కిలోమీటర్లు. అంటే భూమధ్యరేఖ మొత్తం పొడవు."
+  },
+  {
+   "voice": "tel_m",
+   "speed": 1.0,
+   "file": "10b.wav",
+   "text": "మందర పర్వతం, భూమి అంత వెడల్పు ఉందనుకున్నా, వాసుకి ఒక్క చుట్టు, నలభై వేల కిలోమీటర్లు. అది భూమధ్యరేఖ పొడవుతో సమానం."
+  },
+  {
+   "voice": "tel_m",
+   "speed": 1.0,
+   "file": "10c.wav",
+   "text": "పర్వతం భూమి అంత వెడల్పే అనుకుందాం. అప్పుడు కూడా, ఒక్క చుట్టుకే నలభై వేల కిలోమీటర్లు కావాలి. అంటే భూమధ్యరేఖ అంత."
+  }
+ ]
+}
