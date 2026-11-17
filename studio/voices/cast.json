@@ -1,14 +1,14 @@
 {
  "seed": 7,
  "ref_text": {
-  "narrator": "Claude, this faceless channel got a million views last month and made two thousand six hundred dollars. And you've been starting a YouTube channel for two years. Oh wait, do I need to code? No, you need to wait a few minutes without touching anything."
+  "tel": "నమస్కారం. ఈ రోజు మనం ఒక గొప్ప పురాణ కథ గురించి తెలుసుకుందాం. ఈ కథ వేల సంవత్సరాల క్రితం జరిగింది."
  },
  "voices": {
-  "narrator_v4": "male, young adult"
+  "tel_m": "male, middle-aged, low pitch, indian accent"
  },
  "cast": {
-  "narrator": "narrator_v4"
+  "narrator": "tel_m"
  },
  "speed": 1.0,
- "note": "narrator_v4 = cloned from refs/narrator_v4.wav (Maddy's narrator_1 clip, 13 Nov 2026), English, speed 1.0 (normal). Older refs kept: v3, v2, epic."
+ "note": "tel_m = designed Telugu narrator (refs/tel_m.wav), picked by Maddy 17 Nov 2026; Telugu narration, speed 1.0. Older refs kept: narrator_v4 (English), v3, v2, epic."
 }
