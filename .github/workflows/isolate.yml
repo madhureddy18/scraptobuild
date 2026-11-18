@@ -1,0 +1,22 @@
+name: isolate vocals (demucs)
+on:
+  workflow_dispatch:
+    inputs:
+      path: { description: 'Audio file in the repo', default: 'studio/voices/source/maddy_ramayana_ref.wav' }
+permissions:
+  contents: write
+jobs:
+  sep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu && pip install -q demucs soundfile
+      - run: |
+          python -m demucs --two-stems=vocals -n htdemucs -o sep "${{ github.event.inputs.path }}"
+          mkdir -p out && cp sep/htdemucs/*/vocals.wav out/vocals.wav
+          cd out && mkdir -p autodm && echo '{"git":{"deploymentEnabled":false}}' > autodm/vercel.json && git init -q && git checkout -q -b vocals-out
+          git -c user.name=bot -c user.email=bot@users.noreply.github.com add -A && git -c user.name=bot -c user.email=bot@users.noreply.github.com commit -qm vocals
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" vocals-out
