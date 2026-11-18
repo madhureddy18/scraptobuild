@@ -73,9 +73,9 @@ window.SCENE = {
       poly([[-160, -180], [140, -180], [150, -100], [-170, -100]], '#8a3a1a'); poly([[-160, -180], [140, -180], [140, -160], [-160, -160]], '#e0a83a'); poly([[-170, -360], [-150, -360], [-150, -180], [-170, -180]], '#6a3a1a');
       seg(-160, -330, -160, -520, 8, '#6a4a2a'); poly([[-156, -520], [-40 + wig(t * 4, 1, 10), -495], [-156, -470]], flag);
       wheel(-20, -90 + sink, 110, -t * 1.2 * run, '#6a3a1a', '#d8a03a'); X.restore(); };
-    const cow = (x, y, s, fall = 0) => { X.save(); X.translate(x, y); X.scale(s, s); X.rotate(fall * PI / 2 * 0.95); X.translate(0, -fall * 20);
-      [[-70], [-40], [50], [80]].forEach(([lx]) => seg(lx, -40, lx, 80, 18, '#e8e2d4')); ell(0, -70, 130, 70, '#f4efe4'); ell(-30, -90, 40, 28, '#8a6a4a', 0.3); ell(60, -50, 30, 22, '#8a6a4a');
-      seg(110, -100, 160, -150, 40, '#f4efe4'); ell(185, -150, 46, 34, '#f4efe4', 0.4); ell(215, -128, 18, 14, '#e8a8a0'); poly([[160, -180], [150, -220], [175, -186]], '#d8c8a0'); ell(178, -158, 5, 5, '#222');
+    const cow = (x, y, s, fall = 0) => { X.save(); X.translate(x, y); X.scale(s, s); X.translate(0, fall * 70); X.rotate(fall * 0.08);
+      [[-70], [-40], [50], [80]].forEach(([lx], i) => seg(lx, -40, lx + fall * (i % 2 ? 50 : -30), 80 - fall * 70, 18, '#e8e2d4')); ell(0, -70, 130, 70, '#f4efe4'); ell(-30, -90, 40, 28, '#8a6a4a', 0.3); ell(60, -50, 30, 22, '#8a6a4a');
+      X.save(); X.translate(110, -100); X.rotate(fall * 1.0); seg(0, 0, 50, -50, 40, '#f4efe4'); ell(75, -50, 46, 34, '#f4efe4', 0.4); ell(105, -28, 18, 14, '#e8a8a0'); poly([[50, -80], [40, -120], [65, -86]], '#d8c8a0'); if (fall > 0.6) seg(62, -58, 76, -56, 3, '#222'); else ell(68, -58, 5, 5, '#222'); X.restore();
       seg(-130, -80, -150, 20, 6, '#e8e2d4'); X.restore(); };
     const beetle = (x, y, s, t) => { X.save(); X.translate(x, y); X.scale(s, s); X.rotate(wig(t, 6, 0.1)); for (let i = -1; i <= 1; i++) { seg(i * 14, 0, i * 18 - 6, 26 + wig(t * 9 + i, 1, 4), 3, '#111'); seg(i * 14, 0, i * 18 - 6, -26 - wig(t * 9 + i, 1, 4), 3, '#111'); }
       ell(0, 0, 30, 18, '#1a1414'); ell(-8, -4, 14, 6, 'rgba(255,255,255,0.25)'); ell(32, 0, 10, 9, '#8a1010'); X.restore(); };
@@ -144,92 +144,95 @@ window.SCENE = {
       leg(8, hy, p.lF[0], p.lF[1], c.skin, c.cloth);
       X.restore(); };
     // sitting cross-legged (legs folded in front, drawn as a cloth mound) — used for Karna under the tree
-    const seated = (x, y, s, who, pz, t, o = {}) => { const c = CAST[who]; X.save(); X.translate(x, y); X.scale(s * (o.f || 1), s);
-      ell(10, 4, 130, 16, 'rgba(0,0,0,0.22)'); ell(30, -40, 120, 46, c.clothD); ell(40, -50, 110, 40, c.cloth); ell(120, -22, 26, 12, c.skin); X.restore();
-      puppet(x, y - 150 * s, s, who, { ...pz, lB: [1.6, -1.6], lF: [1.6, -1.6] }, t, { ...o, shadow: false }); };
+    const seated = (x, y, s, who, pz, t, o = {}) => { const c = CAST[who]; X.save(); X.translate(x, y); X.scale(s * (o.f || 1), s); ell(20, 4, 140, 16, 'rgba(0,0,0,0.22)'); X.restore();
+      puppet(x, y, s, who, { ...pz, crouch: 150, lB: [1.5, -1.7], lF: [1.6, -1.7] }, t, { ...o, shadow: false });
+      X.save(); X.translate(x, y); X.scale(s * (o.f || 1), s); ell(40, -26, 120, 34, c.clothD); ell(46, -34, 108, 28, c.cloth); ell(150, -10, 24, 11, c.skin); ell(-60, -8, 22, 10, c.skinD); X.restore(); };
+    // guru lying on his back with his head on Karna's lap (feet at fx, ground fy)
+    const lying = (fx, fy, s, who, pz, t) => puppet(fx, fy, s, who, { lB: [0.05, 0], lF: [0.1, 0], aB: [0.2, 0.2], aF: [0.5, 0.6], ...pz }, t, { rot: -1.34, shadow: false });
 
     // ================================================================ camera
-    const cam = (cx, cy, z, fn) => { X.save(); X.translate(540, 960); X.scale(z, z); X.translate(-cx, -cy); fn(); X.restore(); };
+    const cam = (cx, cy, z, fn) => { X.save(); X.translate(540, 960); X.scale(z, z); X.translate(-cx, -(cy - 110)); fn(); X.restore(); };
     const shake = (t, a) => [Math.sin(t * 61) * a, Math.cos(t * 47) * a];
 
     // ================================================================ one shot per line (t = time, u = 0..1 through the line)
     const bowHold = d => tt => { X.save(); X.rotate(-PI / 2); bow(d); X.restore(); };
     const C = {
-      hook: (t, u) => { const sk = shake(t, u > 0.72 ? 6 : 0); cam(540 + sk[0], 1050 + sk[1], sm(1.0, 1.18, u), () => {
+      hook: (t, u) => { const sk = shake(t, u > 0.72 ? 6 : 0); cam(380 + sk[0], 1300 + sk[1], sm(1.35, 1.55, u), () => {
         sunset(t, 1020, 1); hills(1180, '#5a1a1e', 60, 2); army(1230, '#3a0e14', t, 8); dust(t, 0.8); X.fillStyle = grad(1240, H, [[0, '#7a3a22'], [1, '#2a1208']]); X.fillRect(-300, 1240, W + 600, 900);
         const sink = 70 * eo(clamp((u - 0.7) / 0.3)); chariot(330, 1600, 1.0, { sink, t, run: 1 - clamp((u - 0.7) * 4), tilt: -sink * 0.0012 });
-        puppet(250, 1500 + sink * 0.3, 1.0, 'karnaW', { aF: [1.45, 0.05], aB: [1.3, -1.6], head: -0.08, eyes: u > 0.75 ? 'wide' : 'open' }, t, { holdF: bowHold(0.2), glowA: 0.25 });
+        puppet(250, 1424 + sink * 0.25, 1.0, 'karnaW', { aF: [1.45, 0.05], aB: [1.3, -1.6], head: -0.08, eyes: u > 0.75 ? 'wide' : 'open' }, t, { holdF: bowHold(0.2), glowA: 0.25 });
         if (u > 0.7) { X.strokeStyle = 'rgba(40,10,5,0.8)'; X.lineWidth = 6; X.beginPath(); X.moveTo(240, 1600); X.lineTo(180, 1680); X.lineTo(210, 1760); X.moveTo(380, 1600); X.lineTo(450, 1700); X.stroke(); } }); },
       two: (t, u) => { cam(540, 960, sm(1.05, 1.0, u), () => { sky([[0, '#05030a'], [1, '#1a0a14']]); motes(t, 50, 3, 'rgba(255,200,150,0.25)');
-        X.save(); X.globalAlpha = 0.9; puppet(540, 1560, 1.5, 'karnaW', { head: 0.15, eyes: 'sad', aF: [0.1, 0.2] }, t); X.restore(); X.fillStyle = 'rgba(5,3,10,0.72)'; X.fillRect(-300, 0, W + 600, H + 300);
+        X.save(); X.globalAlpha = 0.9; puppet(540, 1700, 2.0, 'karnaW', { head: 0.15, eyes: 'sad', aF: [0.1, 0.2] }, t); X.restore(); X.fillStyle = 'rgba(5,3,10,0.72)'; X.fillRect(-300, 0, W + 600, H + 300);
         const k1 = eo(clamp((u - 0.25) * 4)), k2 = eo(clamp((u - 0.6) * 4)); [[320, k1, '255,80,60'], [760, k2, '255,170,60']].forEach(([x, k, c]) => { if (k <= 0) return; glow(x, 820, 240 * k, `rgba(${c},0.55)`); ell(x, 820, 46 * k, 46 * k, `rgba(${c},1)`); glow(x, 820, 90 * k, 'rgba(255,255,230,0.9)'); }); }); },
       drona: (t, u) => { const a = clamp(u / 0.42), b = clamp((u - 0.42) / 0.58);
-        if (u < 0.42) cam(540, 1100, sm(1.0, 1.08, a), () => { forest(t, 1); X.fillStyle = 'rgba(160,110,40,0.18)'; X.fillRect(-300, -300, W + 600, H + 600);
+        if (u < 0.42) cam(540, 1300, sm(1.3, 1.4, a), () => { forest(t, 1); X.fillStyle = 'rgba(160,110,40,0.18)'; X.fillRect(-300, -300, W + 600, H + 600);
           puppet(760, 1500, 1.15, 'drona', { aF: [sm(0.2, 1.7, a * 2), sm(0.2, -0.3, a * 2)], head: 0.05, eyes: 'open' }, t, { f: -1 });
           puppet(330, 1500, 1.15, 'karna', { aF: [0.9, 1.0], aB: [0.7, 1.2], head: -0.1, eyes: 'sad' }, t); });
-        else cam(sm(560, 600, b), 1080, sm(1.0, 1.12, b), () => { forest(t); leaves(t, 10, 2); trunk(-40, 160);
+        else cam(sm(500, 560, b), 1300, sm(1.25, 1.35, b), () => { forest(t); leaves(t, 10, 2); trunk(-40, 160);
           X.fillStyle = '#7a5a3a'; poly([[760, 1240], [1000, 1240], [1040, 1180], [880, 1040], [720, 1180]], '#b08a52'); X.fillRect(780, 1240, 200, 120); X.fillStyle = '#4a3220'; X.fillRect(860, 1270, 50, 90);
           const walk = clamp(b * 2.4), wx = lerp(120, 430, eo(walk)), st = Math.sin(t * 7) * (1 - walk) * 0.5, bowd = eo(clamp((b - 0.45) * 3));
           puppet(720, 1520, 1.2, 'guru', { aB: [0.3, 0.2], aF: [0.8 + bowd * 0.2, -0.6], head: -0.05 }, t, { f: -1, holdF: () => { X.save(); X.rotate(PI / 2); axe(); X.restore(); } });
           puppet(wx, 1520, 1.2, 'karna', { lean: bowd * 0.45, head: bowd * 0.25, lB: [-0.3 * st, 0], lF: [0.3 * st + 0.1, -0.05], aF: [lerp(0.2, 1.2, bowd), lerp(0.2, 1.4, bowd)], aB: [lerp(0.1, 1.1, bowd), lerp(0.2, 1.5, bowd)] }, t); }); },
-      lap: (t, u) => { cam(sm(520, 560, u), 1300, sm(1.0, 1.2, u), () => { sky([[0, '#f8e2a8'], [0.5, '#d8c486'], [1, '#8fa86a']]); treeBlobs(1120, 7, 140, ['#9ab87a', '#aac68a', '#7a9460'], 4, 4, t); godRays(t, 'rgba(255,240,200,0.2)', 6, 300);
+      lap: (t, u) => { cam(sm(600, 640, u), 1380, sm(1.25, 1.45, u), () => { sky([[0, '#f8e2a8'], [0.5, '#d8c486'], [1, '#8fa86a']]); treeBlobs(1120, 7, 140, ['#9ab87a', '#aac68a', '#7a9460'], 4, 4, t); godRays(t, 'rgba(255,240,200,0.2)', 6, 300);
         grass(1200, t, '#7a9a54', '#4a6a34', 'rgba(50,80,30,0.5)'); trunk(250, 230); ell(250, 220, 520, 300, '#4f7a3c'); ell(120, 320, 300, 200, '#5f8a46'); leaves(t, 6, 9);
         seated(430, 1560, 1.15, 'karna', { aF: [0.9, 0.9], aB: [0.6, 0.9], head: 0.18, eyes: 'open' }, t);
-        puppet(640, 1500, 1.05, 'guru', { eyes: 'closed', aF: [0.4, 0.3], aB: [0.3, 0.3], lB: [0.1, 0], lF: [0.2, 0] }, t, { rot: -PI / 2 * 0.96, f: -1, shadow: false });
+        lying(908, 1584, 1.05, 'guru', { eyes: 'closed' }, t);
         X.font = '600 44px Poppins'; X.fillStyle = 'rgba(80,60,40,0.7)'; for (let i = 0; i < 3; i++) { const k = ((t * 0.6 + i / 3) % 1); X.globalAlpha = 1 - k; X.fillText('z', 760 + k * 60 + i * 10, 1300 - k * 140); } X.globalAlpha = 1; }); },
-      bite: (t, u) => { const z = sm(1.25, 2.2, u * 1.5), drip = eo(clamp((u - 0.2) / 0.6)), sk = shake(t, 1.5); cam(lerp(520, 470, clamp(u * 1.5)) + sk[0], lerp(1300, 1450, clamp(u * 1.5)) + sk[1], z, () => {
+      bite: (t, u) => { const z = u < 0.55 ? sm(1.4, 2.4, u / 0.55) : sm(2.4, 2.1, (u - 0.55) / 0.45), drip = eo(clamp((u - 0.2) / 0.5)), sk = shake(t, 1.5); cam(lerp(520, 470, clamp(u * 2)) + sk[0], (u < 0.55 ? lerp(1400, 1505, clamp(u * 2)) : sm(1505, 1310, (u - 0.55) / 0.45)) + sk[1], z, () => {
         sky([[0, '#f8e2a8'], [0.5, '#d8c486'], [1, '#8fa86a']]); treeBlobs(1120, 7, 140, ['#9ab87a', '#aac68a', '#7a9460'], 4, 4, t); grass(1200, t, '#7a9a54', '#4a6a34', 'rgba(50,80,30,0.5)'); trunk(250, 230);
         seated(430, 1560, 1.15, 'karna', { aF: [0.9, 0.9], aB: [0.6, 0.9], head: 0.1 + wig(t, 9, 0.01), eyes: u > 0.25 ? 'pain' : 'open' }, t);
-        puppet(640, 1500, 1.05, 'guru', { eyes: 'closed' }, t, { rot: -PI / 2 * 0.96, f: -1, shadow: false });
-        const bx = lerp(330, 440, clamp(u * 3)), by = 1500; beetle(bx, by, 0.8, t); if (drip > 0) { ell(445, 1508, 10, 8, '#a01010'); X.fillStyle = '#b01414'; X.beginPath(); X.moveTo(438, 1510); X.quadraticCurveTo(445, 1510 + 70 * drip, 452, 1510); X.fill(); ell(445, 1512 + 70 * drip, 7, 9, '#b01414'); }
+        lying(908, 1584, 1.05, 'guru', { eyes: 'closed' }, t);
+        const bx = lerp(560, 470, clamp(u * 3)), by = 1500; if (drip > 0) { ell(470, 1505, 10, 8, '#a01010'); X.fillStyle = '#b01414'; X.beginPath(); X.moveTo(463, 1507); X.quadraticCurveTo(470, 1507 + 60 * drip, 477, 1507); X.fill(); ell(470, 1509 + 60 * drip, 6, 8, '#b01414'); } beetle(bx, by - 6, 0.55, t);
         X.fillStyle = `rgba(160,0,0,${0.18 * Math.max(0, Math.sin(t * 6)) * clamp(u * 3)})`; X.fillRect(0, 900, W, 1200); }); },
-      wake: (t, u) => { const up = eo(clamp(u * 2.5)), red = clamp((u - 0.45) * 3); cam(560, 1250, sm(1.15, 1.3, u), () => {
+      wake: (t, u) => { const red = clamp((u - 0.45) * 3); cam(600, 1330, sm(1.3, 1.4, u), () => {
         sky([[0, '#f8e2a8'], [0.5, '#d8c486'], [1, '#8fa86a']]); treeBlobs(1120, 7, 140, ['#9ab87a', '#aac68a', '#7a9460'], 4, 4, t); grass(1200, t, '#7a9a54', '#4a6a34', 'rgba(50,80,30,0.5)'); trunk(250, 230); ell(250, 220, 520, 300, '#4f7a3c');
-        seated(430, 1560, 1.15, 'karna', { aF: [0.9, 0.9], aB: [0.6, 0.9], head: -0.05, eyes: 'sad' }, t); ell(445, 1512, 9, 9, '#a01010');
-        puppet(lerp(640, 720, up), 1540, 1.1, 'guru', { eyes: red > 0.2 ? 'angry' : up > 0.2 ? 'wide' : 'closed', aF: [lerp(0.4, 1.6, red), 0], head: lerp(0, -0.12, up) }, t, { rot: lerp(-PI / 2 * 0.96, 0, up), f: -1, shadow: up > 0.8 });
+        seated(430, 1560, 1.15, 'karna', { aF: [0.9, 0.9], aB: [0.6, 0.9], head: -0.05, eyes: 'sad' }, t); ell(470, 1512, 9, 9, '#a01010');
+        const sa = clamp((u - 0.3) * 6); if (sa < 1) { X.save(); X.globalAlpha *= 1 - sa; lying(908, 1584, 1.05, 'guru', { eyes: u > 0.12 ? 'wide' : 'closed' }, t); X.restore(); }
+        if (sa > 0) { X.save(); X.globalAlpha *= sa; puppet(760, 1580, 1.25, 'guru', { eyes: red > 0.2 ? 'angry' : 'wide', aF: [lerp(0.4, 1.6, red), 0], head: -0.1, mouth: u > 0.45 ? 0.4 + 0.4 * Math.abs(Math.sin(t * 9)) : 0 }, t, { f: -1 }); X.restore(); }
         if (red > 0) { X.fillStyle = `rgba(170,20,10,${0.32 * red})`; X.fillRect(-400, -400, W + 800, H + 800); } }); },
-      curse1: (t, u) => { const sk = shake(t, 4 + 4 * K.pulse(t, F('curse1', 0.3), 0.4)); cam(540 + sk[0], 1150 + sk[1], sm(1.0, 1.12, u), () => {
+      curse1: (t, u) => { const sk = shake(t, 4 + 4 * K.pulse(t, F('curse1', 0.3), 0.4)); cam(500 + sk[0], 1300 + sk[1], sm(1.2, 1.3, u), () => {
         sky([[0, '#1a0408'], [0.5, '#6a0e12'], [1, '#c8401a']]); const fl = Math.max(0, Math.sin(t * 3.3) * Math.sin(t * 7.1)); lightning(200, -50, Math.floor(t * 2), fl * 0.9); lightning(880, -50, Math.floor(t * 2) + 5, fl * 0.7);
         X.fillStyle = `rgba(255,220,255,${fl * 0.15})`; X.fillRect(-300, -300, W + 600, H + 600); trunk(-60, 180, '#2a0e0a', '#150604'); grass(1300, t, '#4a2a18', '#1a0a06', 'rgba(20,0,0,0.5)');
         motes(t, 40, 6, 'rgba(255,140,60,0.6)', [0, 600, W, 1300], 60);
         puppet(700, 1580, 1.35, 'guru', { aF: [2.6, 0.15], aB: [1.5, 0.1], eyes: 'angry', mouth: 0.6 + 0.4 * Math.abs(Math.sin(t * 9)), lean: -0.06 }, t, { f: -1, holdF: () => { X.save(); X.rotate(PI / 2); axe(); X.restore(); } });
         glow(560, 900, 180 + 20 * Math.sin(t * 8), 'rgba(255,90,40,0.35)');
         puppet(300, 1600, 1.2, 'karna', { crouch: 70, lean: 0.35, head: 0.2, lB: [0.1, -1.4], lF: [1.4, -1.5], aF: [1.4, 1.2], aB: [1.2, 1.3], eyes: 'sad' }, t); }); },
-      cow: (t, u) => { const shoot = clamp((u - 0.25) / 0.2), fly = clamp((u - 0.45) / 0.18), fall = eo(clamp((u - 0.62) / 0.25)); cam(sm(420, 620, u), 1200, 1.0, () => {
+      cow: (t, u) => { const shoot = clamp((u - 0.25) / 0.2), fly = clamp((u - 0.45) / 0.18), fall = eo(clamp((u - 0.62) / 0.25)); cam(sm(380, 700, u), 1380, 1.3, () => {
         sky([[0, '#2a1a4a'], [0.45, '#9a4a6a'], [0.7, '#f0905a'], [1, '#f8c88a']]); glow(540, 1000, 300, 'rgba(255,180,120,0.5)'); ell(540, 1010, 80, 80, '#ffd8a0'); sea(t, 1060);
         X.fillStyle = grad(1400, H, [[0, '#d8a87a'], [1, '#9a6a44']]); X.fillRect(-400, 1380, W + 1000, 900); X.fillStyle = 'rgba(255,255,255,0.35)'; X.beginPath(); for (let k = -400; k <= W + 600; k += 30) X.lineTo(k, 1384 + Math.sin(k * 0.02 + t * 2) * 8); X.lineTo(W + 600, 1376); X.lineTo(-400, 1376); X.fill();
         const draw = shoot < 1 ? eo(shoot) : 0; puppet(200, 1640, 1.1, 'karna', { aF: [1.55, 0.02], aB: [1.5, -2.0 + 0.6 * (1 - draw)], head: 0.05 }, t, { holdF: bowHold(draw) });
         if (fly > 0 && fly < 1) { X.save(); X.translate(lerp(360, 820, fly), 1430 - Math.sin(fly * PI) * 30); arrow(160, 0.3); X.restore(); }
         cow(900, 1620, 0.95, fall); if (fall > 0.9) { X.save(); X.translate(820, 1560); X.rotate(0.6); arrow(120); X.restore(); } }); },
-      curse2: (t, u) => { const st = eo(clamp((u - 0.45) * 3)); cam(sm(640, 560, u), 1250, sm(1.15, 1.25, u), () => {
+      curse2: (t, u) => { const st = eo(clamp((u - 0.45) * 3)); cam(sm(560, 480, u), 1380, sm(1.35, 1.45, u), () => {
         sky([[0, '#1a0a2a'], [0.45, '#6a2a4a'], [0.7, '#c05a3a'], [1, '#e8a06a']]); sea(t, 1060); X.fillStyle = grad(1400, H, [[0, '#b8885a'], [1, '#6a4428']]); X.fillRect(-400, 1380, W + 1000, 900);
         cow(820, 1630, 0.95, 1); puppet(lerp(640, 600, st), 1640, 1.2, 'brahmin', { crouch: lerp(80, 0, st), lean: lerp(0.5, -0.05, st), head: lerp(0.4, -0.1, st), aF: [lerp(0.8, 1.7, st), lerp(1.0, 0, st)], aB: [lerp(0.7, 0.4, st), lerp(1.2, 0.2, st)], lB: [lerp(0.1, -0.1, st), lerp(-1.4, 0, st)], lF: [lerp(1.3, 0.1, st), lerp(-1.4, 0, st)], eyes: st > 0.5 ? 'angry' : 'sad', mouth: st > 0.5 ? 0.5 + 0.4 * Math.abs(Math.sin(t * 8)) : 0 }, t, { f: -1 });
         if (st < 0.5) { const r = rng(Math.floor(t * 3)); for (let i = 0; i < 3; i++) ell(600 - 30 + r() * 30, 1220 + ((t * 120 + i * 40) % 120), 4, 7, 'rgba(160,210,255,0.9)'); }
         puppet(160, 1660, 1.05, 'karna', { aF: [0.9, 1.1], aB: [0.7, 1.2], eyes: 'sad', head: 0.12 }, t);
         if (st > 0) { glow(560, 1150, 360 * st, 'rgba(255,60,30,0.3)'); X.fillStyle = `rgba(120,10,10,${0.25 * st})`; X.fillRect(-400, -400, W + 800, H + 800); } }); },
-      kuru: (t, u) => { cam(540, 1120, sm(0.92, 1.05, u), () => { sunset(t, 980, 1); hills(1150, '#4a1218', 50, 7); army(1210, '#2a080e', t, 3, 60); dust(t, 1.0, 9);
+      kuru: (t, u) => { cam(540, 1420, sm(1.25, 1.35, u), () => { sunset(t, 980, 1); hills(1150, '#4a1218', 50, 7); army(1210, '#2a080e', t, 3, 60); dust(t, 1.0, 9);
         X.fillStyle = grad(1220, H, [[0, '#7a3a22'], [1, '#2a1208']]); X.fillRect(-300, 1220, W + 600, 900);
-        chariot(150, 1640, 0.62, { t, run: 0.3, flag: '#d83020' }); puppet(130, 1580, 0.75, 'karnaW', { aF: [1.45, 0.05], aB: [1.3, -1.6] }, t, { holdF: bowHold(0.1), glowA: 0.2 });
-        X.save(); X.translate(930, 0); X.scale(-1, 1); X.translate(-930, 0); chariot(930, 1640, 0.62, { t: t + 1, run: 0.3, flag: '#f0c020', horses: '#f4f0e6' }); X.restore();
-        puppet(860, 1580, 0.75, 'krishna', { aF: [1.3, 0.3], aB: [1.2, 0.4] }, t, { f: -1 }); puppet(960, 1580, 0.75, 'arjuna', { aF: [1.45, 0.05], aB: [1.3, -1.6] }, t, { f: -1, holdF: bowHold(0.1) }); dust(t * 1.3, 0.6, 11); }); },
-      stuck: (t, u) => { const sink = 90 * eo(clamp(u / 0.4)), fade = clamp((u - 0.5) / 0.4), sk = shake(t, u < 0.45 ? 8 * (1 - u / 0.45) : 1); cam(380 + sk[0], 1420 + sk[1], sm(1.25, 1.45, u), () => {
+        chariot(190, 1640, 0.62, { t, run: 0.3, flag: '#d83020' }); puppet(170, 1530, 0.75, 'karnaW', { aF: [1.45, 0.05], aB: [1.3, -1.6] }, t, { holdF: bowHold(0.1), glowA: 0.2 });
+        X.save(); X.translate(890, 0); X.scale(-1, 1); X.translate(-890, 0); chariot(890, 1640, 0.62, { t: t + 1, run: 0.3, flag: '#f0c020', horses: '#f4f0e6' }); X.restore();
+        puppet(830, 1530, 0.75, 'krishna', { aF: [1.3, 0.3], aB: [1.2, 0.4] }, t, { f: -1 }); puppet(920, 1530, 0.75, 'arjuna', { aF: [1.45, 0.05], aB: [1.3, -1.6] }, t, { f: -1, holdF: bowHold(0.1) }); dust(t * 1.3, 0.6, 11); }); },
+      stuck: (t, u) => { const sink = 90 * eo(clamp(u / 0.4)), fade = clamp((u - 0.5) / 0.4), sk = shake(t, u < 0.45 ? 8 * (1 - u / 0.45) : 1); cam(330 + sk[0], 1360 + sk[1], sm(1.5, 1.75, u), () => {
         sunset(t, 980, 1); hills(1180, '#5a1a1e', 60, 2); dust(t, 0.9); X.fillStyle = grad(1240, H, [[0, '#7a3a22'], [1, '#2a1208']]); X.fillRect(-300, 1240, W + 600, 900);
         chariot(330, 1600, 1.0, { sink, t, run: 0, tilt: -sink * 0.0014 });
-        puppet(250, 1500 + sink * 0.35, 1.0, 'karnaW', { aF: [lerp(1.4, 1.0, fade), lerp(0.1, 0.7, fade)], aB: [0.6, 0.8], head: 0.2 * fade, eyes: fade > 0.3 ? 'pain' : 'wide' }, t, { glowA: 0.2,
+        puppet(250, 1424 + sink * 0.3, 1.0, 'karnaW', { aF: [lerp(1.4, 1.0, fade), lerp(0.1, 0.7, fade)], aB: [0.6, 0.8], head: 0.2 * fade, eyes: fade > 0.3 ? 'pain' : 'wide' }, t, { glowA: 0.2,
           holdF: () => { if (fade < 1) { X.save(); X.globalAlpha *= 1 - fade; glow(0, -40, 90, 'rgba(255,230,140,0.9)'); X.strokeStyle = '#fff2c0'; X.lineWidth = 4; X.beginPath(); X.arc(0, -40, 30 + fade * 40, 0, TAU); X.stroke(); X.restore(); } } });
         X.strokeStyle = 'rgba(30,8,4,0.85)'; X.lineWidth = 7; const cr = eo(clamp(u / 0.35)); X.beginPath(); X.moveTo(300, 1610); X.lineTo(300 - 90 * cr, 1700 * 1 + 40 * cr); X.moveTo(320, 1610); X.lineTo(320 + 150 * cr, 1690 + 60 * cr); X.moveTo(310, 1612); X.lineTo(330, 1612 + 160 * cr); X.stroke();
         const r = rng(3); for (let i = 0; i < 18; i++) { const k = clamp(u * 3 - r()); if (k <= 0 || k >= 1) continue; ell(310 + (r() - 0.5) * 300 * k, 1600 - 140 * Math.sin(k * PI) * r(), 8, 6, '#5a2a14'); } }); },
-      plea: (t, u) => { const tug = Math.sin(t * 5) * 0.08, turn = clamp((u - 0.35) * 3); cam(sm(420, 520, u), 1380, sm(1.2, 1.1, u), () => {
+      plea: (t, u) => { const tug = Math.sin(t * 5) * 0.08, turn = clamp((u - 0.35) * 3); cam(sm(380, 440, u), 1400, sm(1.55, 1.4, u), () => {
         sunset(t, 980, 1); hills(1180, '#5a1a1e', 60, 2); dust(t, 1.0); X.fillStyle = grad(1240, H, [[0, '#7a3a22'], [1, '#2a1208']]); X.fillRect(-300, 1240, W + 600, 900);
         chariot(330, 1600, 1.0, { sink: 90, t, run: 0, tilt: -0.12 });
         puppet(420, 1640, 1.15, 'karnaW', { crouch: 50, lean: 0.55 - tug, lB: [-0.4, 0.3], lF: [0.9, -1.1], aF: [lerp(2.2, 1.9, turn) + tug, lerp(0.3, -0.3, turn)], aB: [2.3 + tug, 0.3], head: lerp(0.3, -0.35, turn), eyes: turn > 0.4 ? 'wide' : 'pain', mouth: turn > 0.4 ? 0.4 + 0.4 * Math.abs(Math.sin(t * 9)) : 0 }, t, { f: -1, glowA: 0.15 }); }); },
-      arrow: (t, u) => { const draw = eo(clamp(u / 0.4)), fly = clamp((u - 0.55) / 0.2), flash = K.pulse(t, F('arrow', 0.76), 0.3); cam(sm(700, 560, u), 1150, sm(1.15, 1.0, u), () => {
+      arrow: (t, u) => { const draw = eo(clamp(u / 0.4)), fly = clamp((u - 0.55) / 0.2), flash = K.pulse(t, F('arrow', 0.76), 0.3); cam(sm(780, 600, u), 1300, sm(1.45, 1.2, u), () => {
         sunset(t, 980, 1); hills(1150, '#4a1218', 50, 7); dust(t, 0.9, 9); X.fillStyle = grad(1220, H, [[0, '#7a3a22'], [1, '#2a1208']]); X.fillRect(-300, 1220, W + 600, 900);
         X.save(); X.translate(820, 0); X.scale(-1, 1); X.translate(-820, 0); chariot(820, 1640, 0.85, { t, run: 0, flag: '#f0c020', horses: '#f4f0e6' }); X.restore();
-        puppet(700, 1550, 0.98, 'krishna', { aF: [lerp(1.0, 1.75, eo(clamp(u * 3))), 0], aB: [1.2, 0.4], head: -0.05 }, t, { f: -1 });
-        puppet(880, 1550, 1.02, 'arjuna', { aF: [1.55, 0.02], aB: [1.5, -2.0 + 0.6 * (1 - draw)], head: 0.04, eyes: 'angry' }, t, { f: -1, holdF: bowHold(fly > 0 ? 0 : draw) });
-        if (fly > 0 && fly < 1) { X.save(); X.translate(lerp(640, -500, fly), 1395); X.scale(-1, 1); for (let k = 1; k < 6; k++) { X.globalAlpha = 0.18; X.translate(-50, 0); arrow(160, 0); } X.globalAlpha = 1; X.restore();
-          X.save(); X.translate(lerp(640, -500, fly), 1395); X.scale(-1, 1); arrow(190, 0.8); X.restore(); } });
+        puppet(700, 1490, 0.98, 'krishna', { aF: [lerp(1.0, 1.75, eo(clamp(u * 3))), 0], aB: [1.2, 0.4], head: -0.05 }, t, { f: -1 });
+        puppet(880, 1490, 1.02, 'arjuna', { aF: [1.55, 0.02], aB: [1.5, -2.0 + 0.6 * (1 - draw)], head: 0.04, eyes: 'angry' }, t, { f: -1, holdF: bowHold(fly > 0 ? 0 : draw) });
+        if (fly > 0 && fly < 1) { X.save(); X.translate(lerp(640, -500, fly), 1330); X.scale(-1, 1); for (let k = 1; k < 6; k++) { X.globalAlpha = 0.18; X.translate(-50, 0); arrow(160, 0); } X.globalAlpha = 1; X.restore();
+          X.save(); X.translate(lerp(640, -500, fly), 1330); X.scale(-1, 1); arrow(190, 0.8); X.restore(); } });
         if (flash > 0) { X.fillStyle = `rgba(255,250,235,${flash * 0.9})`; X.fillRect(0, 0, W, H); } },
       end: (t, u) => { cam(540, 1100, sm(1.0, 1.1, u), () => { sky([[0, '#1a0410'], [0.4, '#7a1424'], [0.7, '#e0502a'], [1, '#ffb060']]); glow(540, 1150, 600, 'rgba(255,170,90,0.6)'); ell(540, 1160, 230, 230, '#ffd090'); glow(540, 1160, 300, 'rgba(255,240,200,0.6)');
         X.fillStyle = '#1a0608'; X.fillRect(-300, 1380, W + 600, 900); chariot(780, 1400, 0.8, { sink: 90, t: 0, tilt: -0.1, horses: '#1a0608', flag: '#1a0608' });
