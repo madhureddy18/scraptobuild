@@ -1,14 +1,15 @@
 {
  "seed": 7,
  "ref_text": {
-  "tel": "నమస్కారం. ఈ రోజు మనం ఒక గొప్ప పురాణ కథ గురించి తెలుసుకుందాం. ఈ కథ వేల సంవత్సరాల క్రితం జరిగింది."
+  "tel": "నమస్కారం. ఈ రోజు మనం ఒక గొప్ప పురాణ కథ గురించి తెలుసుకుందాం. ఈ కథ వేల సంవత్సరాల క్రితం జరిగింది.",
+  "maddy2": "ఒకసారి రాక్షసుడితో యుద్ధం చేస్తూ, గుహలోకి వెళ్ళిన వాలి తిరిగి రాలేదు. అన్న చనిపోయాడు అనుకుని, సుగ్రీవుడు గుహను మూసేశాడు."
  },
  "voices": {
-  "tel_m": "male, middle-aged, low pitch, indian accent"
+  "maddy2_te2": "male"
  },
  "cast": {
-  "narrator": "tel_m"
+  "narrator": "maddy2_te2"
  },
  "speed": 1.0,
- "note": "tel_m = designed Telugu narrator (refs/tel_m.wav), picked by Maddy 17 Nov 2026; Telugu narration, speed 1.0. Older refs kept: narrator_v4 (English), v3, v2, epic."
+ "note": "maddy2_te2 = Maddy's own voice (refs/maddy2_te2.wav, cut from his Vali reel with demucs). Used from 18 Nov 2026 (Karna reel). Old designed narrator tel_m kept in refs."
 }
