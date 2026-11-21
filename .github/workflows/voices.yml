@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       config: { description: 'Voice config JSON in the repo', default: 'studio/voices/samples.json' }
+      tag: { description: 'Optional suffix for the voices-out branches (lets several runs go in parallel)', default: '' }
 permissions:
   contents: write
 jobs:
@@ -24,7 +25,7 @@ jobs:
       - run: mkdir -p out && cp -r studio/voices/refs out/ 2>/dev/null || true; SHARD=${{ matrix.shard }} NSHARDS=3 python studio/voices/omnivoice_gen.py "${{ github.event.inputs.config }}" out
       - name: Push results to the voices-out branch
         run: |
-          cd out && rm -f option?.wav && mkdir -p autodm && echo '{"git":{"deploymentEnabled":false}}' > autodm/vercel.json && git init -q && git checkout -q -b voices-out-${{ matrix.shard }}
+          cd out && rm -f option?.wav && mkdir -p autodm && echo '{"git":{"deploymentEnabled":false}}' > autodm/vercel.json && git init -q && git checkout -q -b voices-out-${{ matrix.shard }}${{ github.event.inputs.tag }}
           git -c user.name=voices-bot -c user.email=bot@users.noreply.github.com add -A
           git -c user.name=voices-bot -c user.email=bot@users.noreply.github.com commit -qm "voices ${{ github.run_id }}"
-          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" voices-out-${{ matrix.shard }}
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" voices-out-${{ matrix.shard }}${{ github.event.inputs.tag }}
