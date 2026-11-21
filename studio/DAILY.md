@@ -22,6 +22,7 @@ Karna, Ekalavya and Barbarika all reused the same green forest with god rays, or
 | Karna | orange/red sunset, green forest | forest, ashram, Kurukshetra sunset, seashore | silhouette on sunset |
 | Ekalavya | green forest, dusk orange, red storm | forest with god rays, ashram, red storm | silhouette on sunset |
 | Barbarika | red sunset, green forest, night blue | Kurukshetra sunset hill, forest + peepal tree, night, temple | silhouette on sunset hill |
+| Abhimanyu 1/3 | royal purple + gold, moonlit indigo/silver, teal + gold sea, steel-blue mist | Indraprastha pillared hall, moonlit bedchamber (arched window, curtains, incense), womb glow, top-down ochre Chakravyuha, Dwaraka sea terrace, misty Kurukshetra dawn, war tent | glowing gold Chakravyuha from above on a starry indigo sky, a light-dot spiralling in |
 - **Voice = Maddy's own cloned voice**: voice `maddy2_te2` (ref `studio/voices/refs/maddy2_te2.wav`, cut from his own reel) — see `studio/voices/cast.json`. Very expressive storytelling: use `...` for pauses, `!` and `?` for drama, short dramatic sentences, dialogue lines in the characters' voice ("నాతో అబద్ధం చెప్పావు!").
 - **Subtitles ON, in Tinglish** (Telugu in English letters, the way people type: "ippatiki", "ela", "ekkada", "Karnudu", "shaapam"). `text` = Tinglish subtitle of exactly what is spoken, 1–2 key words in `*stars*` (turn yellow). Body returns `capFont: 'Fredoka Light', capMarginV: 520, capSize: 64`.
 - 12 to 15 lines, 60 to 75 seconds. Line 1 = a question hook ("…enduku…?"). Story told dramatically, then the answer.

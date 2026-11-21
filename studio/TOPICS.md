@@ -8,7 +8,7 @@ Maddy can add, remove or reorder rows any time.
 | 1 | Karna's chariot wheel: two curses | single | done 2026-11-18 |
 | 2 | Ekalavya: why did Drona ask for his thumb? | single | done 2026-11-19 |
 | 3 | Barbarika: the warrior who could end Kurukshetra in a minute (folk / Skanda Purana) | single | done 2026-11-20 |
-| 4 | Abhimanyu and the Chakravyuha — how he learned it in the womb | series: Abhimanyu 1/3 | todo |
+| 4 | Abhimanyu and the Chakravyuha — how he learned it in the womb | series: Abhimanyu 1/3 | done 2026-11-21 |
 | 5 | Abhimanyu — the 13th day, alone inside the Chakravyuha | series: Abhimanyu 2/3 | todo |
 | 6 | Abhimanyu — the end, and Arjuna's vow | series: Abhimanyu 3/3 | todo |
 | 7 | Why does Ganesha have an elephant head? | single | todo |
