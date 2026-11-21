@@ -4,6 +4,7 @@ on:
     inputs:
       scene: { description: 'Scene name in studio/scenes (without _lines/_body)', default: 'stb_kailasa' }
       music: { description: 'Music bed in the repo', default: 'studio/music/epic_bed.mp3' }
+      tag: { description: 'Optional suffix for the render-out branch (lets several renders go in parallel)', default: '' }
 permissions:
   contents: write
 jobs:
@@ -44,6 +45,6 @@ jobs:
           cd kit/codevid && CHROME_PATH=/usr/bin/google-chrome VIDEO_IN=$GITHUB_WORKSPACE/all.mp4 MUSIC_FILE=$GITHUB_WORKSPACE/${{ github.event.inputs.music }} node render.js scenes/${{ github.event.inputs.scene }}.js
       - name: Push the finished reel to the render-out branch
         run: |
-          mkdir pub && cp kit/codevid/out/${{ github.event.inputs.scene }}.mp4 pub/ && cd pub && mkdir -p autodm && echo '{"git":{"deploymentEnabled":false}}' > autodm/vercel.json && git init -q && git checkout -q -b render-out
+          mkdir pub && cp kit/codevid/out/${{ github.event.inputs.scene }}.mp4 pub/ && cd pub && mkdir -p autodm && echo '{"git":{"deploymentEnabled":false}}' > autodm/vercel.json && git init -q && git checkout -q -b render-out${{ github.event.inputs.tag }}
           git -c user.name=render-bot -c user.email=bot@users.noreply.github.com add -A && git -c user.name=render-bot -c user.email=bot@users.noreply.github.com commit -qm "render ${{ github.run_id }}"
-          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" render-out
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" render-out${{ github.event.inputs.tag }}

@@ -9,10 +9,10 @@ Maddy can add, remove or reorder rows any time.
 | 2 | Ekalavya: why did Drona ask for his thumb? | single | done 2026-11-19 |
 | 3 | Barbarika: the warrior who could end Kurukshetra in a minute (folk / Skanda Purana) | single | done 2026-11-20 |
 | 4 | Abhimanyu and the Chakravyuha — how he learned it in the womb | series: Abhimanyu 1/3 | done 2026-11-21 |
-| 5 | Abhimanyu — the 13th day, alone inside the Chakravyuha | series: Abhimanyu 2/3 | todo |
-| 6 | Abhimanyu — the end, and Arjuna's vow | series: Abhimanyu 3/3 | todo |
-| 7 | Why does Ganesha have an elephant head? | single | todo |
-| 8 | Kumbhakarna: why he slept for six months | single | todo |
+| 5 | Abhimanyu — the 13th day, alone inside the Chakravyuha | series: Abhimanyu 2/3 | done 2026-11-21 (batch) |
+| 6 | Abhimanyu — the end, and Arjuna's vow | series: Abhimanyu 3/3 | done 2026-11-21 (batch) |
+| 7 | Why does Ganesha have an elephant head? | single | done 2026-11-21 (batch) |
+| 8 | Kumbhakarna: why he slept for six months | single | done 2026-11-21 (batch) |
 | 9 | Why did Karna give away his kavacha-kundalas to Indra? | single | todo |
 | 10 | Bhishma's vow — Devavrata becomes Bhishma | series: Bhishma 1/3 | todo |
 | 11 | Bhishma — Amba's revenge and Shikhandi | series: Bhishma 2/3 | todo |
