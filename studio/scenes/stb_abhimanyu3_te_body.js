@@ -245,6 +245,7 @@ window.SCENE = {
     // ================================================================ Abhimanyu 3/3 look: ash-grey + deep crimson dusk, then night camp blue + torch fire, fire-on-black vow
     Object.assign(CAST, {
       karna:   { skin: '#8a5a3a', skinD: '#6c4228', cloth: '#c8501a', clothD: '#963a10', hair: '#140c08', crown: 'gold', armour: true, kundal: true },
+      jaya:    { skin: '#a07048', skinD: '#7e5434', cloth: '#2a5a3a', clothD: '#1a3a26', hair: '#140c08', crown: 'gold' },
       dsson:   { skin: '#9a6a44', skinD: '#7a5030', cloth: '#4a4a5a', clothD: '#2e2e3a', hair: '#120c08', crown: 'gold' },
       parik:   { skin: '#a8784e', skinD: '#86583a', cloth: '#e8e0f0', clothD: '#c0b8d0', hair: '#120c08', crown: 'gold', thin: true },
       soldier: { skin: '#8a5a3a', skinD: '#6c4228', cloth: '#5a5a6a', clothD: '#3a3a4a', hair: '#1a120e', armour: true },
