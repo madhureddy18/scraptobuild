@@ -17,5 +17,5 @@ window.STB_LINES = [
   LN('ashtami', 'ఆ రోజునే ఇప్పటికీ, భీష్మ అష్టమిగా గుర్తు చేసుకుంటారు.', 'Aa rojune ippatiki, *Bheeshma Ashtami*ga gurthu chesukuntaaru.'),
   LN('source', 'ఇది మహాభారతం భీష్మ పర్వం, అనుశాసన పర్వాల్లో ఉన్న కథ.', 'Idi Mahabharatam *Bheeshma parvam*, Anushaasana parvaallo unna katha.'),
   LN('cta', 'ఇంకా ఇలాంటి కథల కోసం... ఫాలో అవ్వండి!', 'Inka ilaanti kathala kosam... *follow* avvandi!', { gap: 0.2 }),
-].map(l => ({ ...l, omniSpeed: l.omniSpeed || 1.0 }));
+].map(l => ({ ...l, gap: l.gap + 0.28, omniSpeed: l.omniSpeed || 1.0 }));  // slower, sadder pacing for this part
 if (!window.SCENE) window.SCENE = { lines: window.STB_LINES };
