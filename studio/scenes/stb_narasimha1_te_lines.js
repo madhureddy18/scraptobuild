@@ -3,7 +3,7 @@
 const LN = (id, omni, text, o = {}) => ({ who: 'narrator', id, text, say: omni, omni, gap: 0.3, ...o });
 window.STB_LINES = [
   LN("hook", "దేవుడు కూడా తనను చంపలేనంత వరం సంపాదించిన రాక్షసుడు ఎవరో తెలుసా?", "Devudu kuda thananu champalenantha *varam* sampaadinchina raakshasudu evaro thelusaa?"),
-  LN("who", "హిరణ్యకశిపుడు! అతని తమ్ముడు హిరణ్యాక్షుడిని, విష్ణువు వరాహ అవతారంలో చంపాడు.", "*Hiranyakashipudu*! Athani thammudu Hiranyaakshudini, Vishnuvu Varaaha avathaaramlo champaadu."),
+  LN("who", "అతనే హిరణ్యకశిపుడు! అతని తమ్ముడు హిరణ్యాక్షుడిని, వరాహ అవతారంలో విష్ణువు చంపాడు.", "Athane *Hiranyakashipudu*! Athani thammudu Hiranyaakshudini, Varaaha avathaaramlo Vishnuvu champaadu."),
   LN("vow", "ప్రతీకారం తీర్చుకుంటా! అని, అతను మందర పర్వతం మీద ఘోర తపస్సు మొదలుపెట్టాడు.", "*Pratheekaaram* theerchukuntaa! Ani, athanu Mandara parvatham meeda ghora thapassu modalupettaadu."),
   LN("tapas", "ఒంటి కాలి మీద నిలబడి, సంవత్సరాల తరబడి... కదలకుండా!", "Onti kaali meeda nilabadi, samvathsaraala tharabadi... *kadalakundaa*!"),
   LN("anthill", "అతని శరీరం మీద పుట్ట కట్టింది. చీమలు అతని మాంసాన్ని తినేశాయి!", "Athani shareeram meeda *putta* kattindi. Cheemalu athani maamsaanni thinesaayi!"),

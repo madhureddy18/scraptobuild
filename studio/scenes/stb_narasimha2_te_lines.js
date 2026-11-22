@@ -11,10 +11,10 @@ window.STB_LINES = [
   LN("answer", "విష్ణువును నమ్మడమే, అన్నిటికంటే గొప్ప విద్య, నాన్నా!", "*Vishnuvunu* nammadame, annitikante goppa vidya, naannaa!"),
   LN("rage", "తన శత్రువు పేరు, తన కొడుకు నోట్లో! హిరణ్యకశిపుడు అరిచాడు. వీణ్ణి చంపేయండి!", "Thana shathruvu peru, thana koduku notlo! Hiranyakashipudu arichaadu. Veenni *champeyandi*!"),
   LN("spears", "రాక్షసులు శూలాలతో పొడిచారు. ఒక్క గాయం కూడా కాలేదు!", "Raakshasulu shoolaalatho podichaaru. Okka *gaayam* kuda kaaledu!"),
-  LN("eleph", "ఏనుగులతో తొక్కించారు. విషసర్పాలతో కాటు వేయించారు.", "*Enugulatho* thokkinchaaru. Vishasarpaalatho kaatu veyinchaaru."),
-  LN("cliff", "కొండ మీద నుంచి తోసేశారు. విషం తాగించారు. మంటల్లో పడేశారు!", "Konda meeda nunchi thosesaaru. *Visham* thaaginchaaru. Mantallo padesaaru!"),
+  LN("eleph", "పెద్ద ఏనుగులతో తొక్కించారు. విషపు పాములతో కరిపించారు.", "Pedda *enugulatho* thokkinchaaru. Vishapu paamulatho karipinchaaru."),
+  LN("cliff", "ఎత్తైన కొండ మీద నుంచి తోసేశారు. విషం ఇచ్చారు. అగ్నిలో పడేశారు!", "Etthaina konda meeda nunchi thosesaaru. *Visham* ichaaru. Agnilo padesaaru!"),
   LN("safe", "ప్రతిసారీ, ప్రహ్లాదుడు నవ్వుతూ... నారాయణ నామం జపిస్తూనే ఉన్నాడు.", "Prathisaaree, Prahlaadudu *navvuthoo*... Naaraayana naamam japisthoone unnaadu."),
   LN("fear", "మొదటిసారి, హిరణ్యకశిపుడికి భయం వేసింది. వీడి బలం ఎక్కడ నుంచి వస్తోంది?", "Modatisaari, Hiranyakashipudiki *bhayam* vesindi. Veedi balam ekkada nunchi vasthondi?"),
-  LN("cta", "మిగతా కథ రేపు Part 3 లో... ఫాలో అవ్వండి!", "Migathaa katha repu *Part 3* lo... follow avvandi!"),
+  LN("cta", "మిగతా కథ, రేపు Part 3 లో! ఫాలో అవ్వండి.", "Migathaa katha, repu *Part 3* lo! Follow avvandi."),
 ].map(l => ({ ...l, omniSpeed: l.omniSpeed || 1.0 }));
 if (!window.SCENE) window.SCENE = { lines: window.STB_LINES };

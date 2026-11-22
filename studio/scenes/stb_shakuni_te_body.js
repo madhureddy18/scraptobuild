@@ -324,7 +324,7 @@ window.SCENE = {
         followBtn(t, B('cta') + 0.6); },
     };
     function marigoldSwagsS(t) { for (let i = 0; i < 4; i++) { const x0 = 70 + i * 235; for (let q = 0; q <= 1.001; q += 0.08) ell(lerp(x0, x0 + 235, q), 360 + Math.sin(q * PI) * 70, 11, 11, 'rgba(120,40,10,0.7)'); } }
-    const SFX = [['bass', 0.05, 0.6], ['thud', F('hook', 0.3), 0.5], ['thud', F('hook', 0.5), 0.5], ['chime', F('truth', 0.3), 0.5], ['whoosh', B('folk'), 0.5], ['chime', F('goat', 0.4), 0.4], ['bass', F('anger', 0.4), 0.8], ['thud', F('prison', 0.3), 0.8],
+    const SFX = [['bass', 0.05, 0.6], ['thud', F('hook', 0.3), 0.5], ['thud', F('hook', 0.5), 0.5], ['chime', F('truth', 0.3), 0.5], ['whoosh', B('folk'), 0.5], ['chime', F('goat', 0.4), 0.4], ['thud', F('prison', 0.3), 0.8],
       ['chime', F('rice', 0.4), 0.4], ['whoosh', F('choose', 0.4), 0.3], ['bass', F('die', 0.5), 0.6], ['thud', F('leg', 0.38), 1.0], ['riser', B('bones'), 0.5], ['chime', F('bones', 0.6), 0.6], ['thud', F('game', 0.3), 0.5], ['bass', F('game', 0.7), 0.8], ['thud', F('cta', 0.3), 0.5], ['pop', B('cta') + 0.6, 0.5], ['ding', B('cta') + 1.7, 0.55]];
     const card = (i, t, alpha) => { const l = L[i], a = l.t - XF, b = i + 1 < N ? L[i + 1].t : D, u = prog(t, a, b), id = LINES[i].id; X.save(); X.globalAlpha = alpha; C[id](t, u); X.restore(); };
     const update = t => { tex.redraw((x) => { X = x; X.globalAlpha = 1; X.fillStyle = '#000'; X.fillRect(0, 0, W, H);
