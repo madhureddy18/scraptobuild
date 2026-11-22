@@ -13,7 +13,7 @@ Maddy can add, remove or reorder rows any time.
 | 6 | Abhimanyu — the end, and Arjuna's vow | series: Abhimanyu 3/3 | done 2026-11-21 (batch) |
 | 7 | Why does Ganesha have an elephant head? | single | done 2026-11-21 (batch) |
 | 8 | Kumbhakarna: why he slept for six months | single | done 2026-11-21 (batch) |
-| 9 | Why did Karna give away his kavacha-kundalas to Indra? | single | todo |
+| 9 | Why did Karna give away his kavacha-kundalas to Indra? | single | in progress 2026-11-22 |
 | 10 | Bhishma's vow — Devavrata becomes Bhishma | series: Bhishma 1/3 | done 2026-11-22 (batch) |
 | 11 | Bhishma — Amba's revenge and Shikhandi | series: Bhishma 2/3 | done 2026-11-22 (batch) |
 | 12 | Bhishma — the bed of arrows | series: Bhishma 3/3 | done 2026-11-22 (batch) |
