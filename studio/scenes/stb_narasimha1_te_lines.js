@@ -8,7 +8,7 @@ window.STB_LINES = [
   LN("tapas", "ఒంటి కాలి మీద నిలబడి, సంవత్సరాల తరబడి... కదలకుండా!", "Onti kaali meeda nilabadi, samvathsaraala tharabadi... *kadalakundaa*!"),
   LN("anthill", "అతని శరీరం మీద పుట్ట కట్టింది. చీమలు అతని మాంసాన్ని తినేశాయి!", "Athani shareeram meeda *putta* kattindi. Cheemalu athani maamsaanni thinesaayi!"),
   LN("heat", "అతని తపస్సు వేడికి, లోకాలన్నీ కాలిపోతున్నాయి. దేవతలు భయపడ్డారు.", "Athani thapassu *vediki*, lokaalanni kaalipothunnaayi. Devathalu bhayapaddaaru."),
-  LN("brahma", "చివరికి బ్రహ్మ దేవుడు వచ్చాడు. కమండలం నీళ్ళు చల్లగానే, అతని శరీరం మళ్ళీ బంగారంలా మెరిసింది!", "Chivariki *Brahma* devudu vachaadu. Kamandalam neellu challagaane, athani shareeram malli bangaaramlaa merisindi!"),
+  LN("brahma", "బ్రహ్మ దేవుడు వచ్చి, కమండలం నీళ్ళు చల్లాడు. అతని శరీరం మళ్ళీ బంగారంలా మెరిసింది!", "*Brahma* devudu vachi, kamandalam neellu challaadu. Athani shareeram malli bangaaramlaa merisindi!"),
   LN("ask", "హిరణ్యకశిపుడు తెలివిగా అడిగాడు...", "Hiranyakashipudu *thelivigaa* adigaadu..."),
   LN("b1", "మనిషి వల్ల కానీ, జంతువు వల్ల కానీ, నాకు మరణం రాకూడదు!", "Manishi valla kaani, *janthuvu* valla kaani, naaku maranam raakoodadu!"),
   LN("b2", "ఇంట్లో కానీ, బయట కానీ. పగలు కానీ, రాత్రి కానీ!", "Intlo kaani, bayata kaani. *Pagalu* kaani, raathri kaani!"),

@@ -7,8 +7,8 @@ window.STB_LINES = [
   LN("every", "నారాయణుడు అంతటా ఉన్నాడు నాన్నా. నీలో, నాలో, అన్నిటిలో!", "Naaraayanudu *anthataa* unnaadu naannaa. Neelo, naalo, annitilo!"),
   LN("pillar", "అయితే... ఈ స్తంభంలో ఉన్నాడా?", "Aithe... ee *sthambhamlo* unnaadaa?"),
   LN("yes", "ఉన్నాడు నాన్నా!", "*Unnaadu* naannaa!"),
-  LN("strike", "హిరణ్యకశిపుడు, ఆ స్తంభాన్ని బలంగా కొట్టాడు!", "Hiranyakashipudu, aa sthambhaanni *balamgaa* kottaadu!"),
-  LN("burst", "భయంకరమైన గర్జన! స్తంభం పగిలి, సగం మనిషి, సగం సింహం... నరసింహుడు బయటకు వచ్చాడు!", "Bhayankaramaina garjana! Sthambham pagili, sagam manishi, sagam simham... *Narasimhudu* bayataku vachaadu!"),
+  LN("strike", "కోపంతో, ఆ స్తంభాన్ని గట్టిగా కొట్టాడు!", "Kopamtho, aa sthambhaanni *gattigaa* kottaadu!"),
+  LN("burst", "స్తంభం పగిలి, భయంకరమైన గర్జనతో... నరసింహుడు బయటకు వచ్చాడు!", "Sthambham pagili, bhayankaramaina garjanatho... *Narasimhudu* bayataku vachaadu!"),
   LN("door", "మనిషీ కాదు, జంతువూ కాదు. అతన్ని ఎత్తుకుని, గుమ్మం దగ్గరకు తీసుకెళ్ళాడు.", "Manishee kaadu, janthuvoo kaadu. Athanni etthukuni, *gummam* daggaraku theesukellaadu."),
   LN("dusk", "ఇంట్లోనూ కాదు, బయటా కాదు. సరిగ్గా సంధ్యా సమయం. పగలూ కాదు, రాత్రీ కాదు.", "Intlonoo kaadu, bayataa kaadu. Sarigga *sandhyaa* samayam. Pagaloo kaadu, raathree kaadu."),
   LN("lap", "తన ఒడిలో పడుకోబెట్టాడు. భూమీ కాదు, ఆకాశమూ కాదు.", "Thana *odilo* padukobettaadu. Bhoomee kaadu, aakaashamoo kaadu."),
@@ -16,6 +16,6 @@ window.STB_LINES = [
   LN("calm", "ఆయన కోపం ఎవరికీ తగ్గలేదు. చివరికి, చిన్న ప్రహ్లాదుడే వెళ్ళి, ఆయన పాదాల దగ్గర కూర్చున్నాడు.", "Aayana kopam evarikee thaggaledu. Chivariki, chinna *Prahlaadude* velli, aayana paadaala daggara koorchunnaadu."),
   LN("soft", "స్వామి చేయి అతని తల మీద పెట్టాడు. కోపం కరిగి, కరుణగా మారింది.", "Swaami cheyi athani thala meeda pettaadu. Kopam karigi, *karunagaa* maarindi."),
   LN("end", "నిజమైన భక్తి ఉంటే... దేవుడు స్తంభంలో నుంచి కూడా వస్తాడు!", "Nijamaina *bhakthi* unte... devudu sthambhamlo nunchi kuda vasthaadu!"),
-  LN("cta", "ఇంకా ఇలాంటి కథల కోసం... ఫాలో అవ్వండి!", "Inka ilaanti kathala kosam... *follow* avvandi!"),
+  LN("cta", "ఇలాంటి మరిన్ని కథల కోసం, ఫాలో అవ్వండి!", "Ilaanti marinni kathala kosam, *follow* avvandi!"),
 ].map(l => ({ ...l, omniSpeed: l.omniSpeed || 1.0 }));
 if (!window.SCENE) window.SCENE = { lines: window.STB_LINES };
