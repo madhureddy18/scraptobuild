@@ -14,11 +14,11 @@ Maddy can add, remove or reorder rows any time.
 | 7 | Why does Ganesha have an elephant head? | single | done 2026-11-21 (batch) |
 | 8 | Kumbhakarna: why he slept for six months | single | done 2026-11-21 (batch) |
 | 9 | Why did Karna give away his kavacha-kundalas to Indra? | single | todo |
-| 10 | Bhishma's vow — Devavrata becomes Bhishma | series: Bhishma 1/3 | todo |
-| 11 | Bhishma — Amba's revenge and Shikhandi | series: Bhishma 2/3 | todo |
-| 12 | Bhishma — the bed of arrows | series: Bhishma 3/3 | todo |
-| 13 | Why is Brahma rarely worshipped? (Pushkar story) | single | todo |
-| 14 | Ashwatthama: the curse that keeps him alive | single | todo |
+| 10 | Bhishma's vow — Devavrata becomes Bhishma | series: Bhishma 1/3 | building (batch 22 Nov) |
+| 11 | Bhishma — Amba's revenge and Shikhandi | series: Bhishma 2/3 | building (batch 22 Nov) |
+| 12 | Bhishma — the bed of arrows | series: Bhishma 3/3 | building (batch 22 Nov) |
+| 13 | Why is Brahma rarely worshipped? (Pushkar story) | single | building (batch 22 Nov) |
+| 14 | Ashwatthama: the curse that keeps him alive | single | building (batch 22 Nov) |
 | 15 | Why did Gandhari blindfold herself for life? | single | todo |
 | 16 | Narasimha — Hiranyakashipu's boon | series: Narasimha 1/3 | todo |
 | 17 | Narasimha — Prahlada can't be killed | series: Narasimha 2/3 | todo |
