@@ -19,11 +19,11 @@ Maddy can add, remove or reorder rows any time.
 | 12 | Bhishma — the bed of arrows | series: Bhishma 3/3 | done 2026-11-22 (batch) |
 | 13 | Why is Brahma rarely worshipped? (Pushkar story) | single | done 2026-11-22 (batch) |
 | 14 | Ashwatthama: the curse that keeps him alive | single | done 2026-11-22 (batch) |
-| 15 | Why did Gandhari blindfold herself for life? | single | todo |
-| 16 | Narasimha — Hiranyakashipu's boon | series: Narasimha 1/3 | todo |
-| 17 | Narasimha — Prahlada can't be killed | series: Narasimha 2/3 | todo |
-| 18 | Narasimha — the pillar, at dusk, on the threshold | series: Narasimha 3/3 | todo |
-| 19 | Shakuni's dice: why he hated the Kauravas' family (folk version, say so) | single | todo |
+| 15 | Why did Gandhari blindfold herself for life? | single | in progress 2026-11-22 (batch) |
+| 16 | Narasimha — Hiranyakashipu's boon | series: Narasimha 1/3 | in progress 2026-11-22 (batch) |
+| 17 | Narasimha — Prahlada can't be killed | series: Narasimha 2/3 | in progress 2026-11-22 (batch) |
+| 18 | Narasimha — the pillar, at dusk, on the threshold | series: Narasimha 3/3 | in progress 2026-11-22 (batch) |
+| 19 | Shakuni's dice: why he hated the Kauravas' family (folk version, say so) | single | in progress 2026-11-22 (batch) |
 | 20 | Arjuna as Brihannala: Urvashi's curse | single | todo |
 | 21 | Why did Hanuman burn Lanka? | single | todo |
 | 22 | Draupadi's Akshaya Patra and Durvasa's visit | single | todo |
