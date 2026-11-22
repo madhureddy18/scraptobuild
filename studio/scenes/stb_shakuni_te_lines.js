@@ -1,6 +1,6 @@
 // Shakuni's dice — the folk revenge story (Telugu daily reel, batch 22 Nov 2026). Narrator = Maddy's cloned voice (maddy2_te2). text = Tinglish subtitle (*word* = yellow).
 // Source: In Vyasa's Mahabharata (Sabha Parva) Shakuni is Gandhari's brother and Duryodhana's ally who wins the dice game. The prison / one-handful-of-rice / dice-from-his-father's-bones revenge story is LATER FOLKLORE (popular retellings; the bone-dice appears in Sarala Dasa's Odia Mahabharata) — said as 'jaanapada kathallo' / 'konni kathala prakaaram'.
-const LN = (id, omni, text, o = {}) => ({ who: 'narrator', id, text, say: omni, omni, gap: 0.22, ...o });
+const LN = (id, omni, text, o = {}) => ({ who: 'narrator', id, text, say: omni, omni, gap: 0.35, ...o });
 window.STB_LINES = [
   LN("hook", "శకుని, సొంత మేనల్లుళ్ళ వంశాన్నే నాశనం చేశాడు. ఎందుకు?", "Shakuni, sontha menallulla *vamshaanne* naasanam chesaadu. Enduku?"),
   LN("truth", "ముందు ఒక నిజం. వ్యాస మహాభారతంలో, శకుని దుర్యోధనుడి మేనమామ, అతని ఆప్తుడు మాత్రమే.", "Mundu oka *nijam*. Vyaasa Mahaabhaarathamlo, Shakuni Duryodhanudi menamaama, athani aapthudu maathrame."),

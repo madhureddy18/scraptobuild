@@ -1,6 +1,6 @@
 // Narasimha Part 2/3 — Prahlada can't be killed (Telugu daily reel, batch 22 Nov 2026). Narrator = Maddy's cloned voice (maddy2_te2). text = Tinglish subtitle (*word* = yellow).
 // Source: Bhagavata Purana, Canto 7 ch. 5 & 7 (Indra seizes Kayadhu, Narada protects her in his ashram where the unborn Prahlada hears Narada's teaching; Prahlada's answer on his father's lap; the attempts to kill him: weapons, elephants, serpents, cliff, poison, fire, all fail). Series Narasimha 2/3.
-const LN = (id, omni, text, o = {}) => ({ who: 'narrator', id, text, say: omni, omni, gap: 0.22, ...o });
+const LN = (id, omni, text, o = {}) => ({ who: 'narrator', id, text, say: omni, omni, gap: 0.45, ...o });
 window.STB_LINES = [
   LN("recap", "నిన్న చూశాం... హిరణ్యకశిపుడికి, దాదాపు చావే లేని వరం వచ్చింది.", "Ninna choosaam... Hiranyakashipudiki, daadaapu *chaave* leni varam vachindi."),
   LN("kayadhu", "అతను తపస్సులో ఉన్నప్పుడు, ఇంద్రుడు అతని భార్య కయాధును ఎత్తుకెళ్ళాడు.", "Athanu thapassulo unnappudu, Indrudu athani bhaarya *Kayaadhunu* etthukellaadu."),

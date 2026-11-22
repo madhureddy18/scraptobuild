@@ -1,6 +1,6 @@
 // Narasimha Part 1/3 — Hiranyakashipu's boon (Telugu daily reel, batch 22 Nov 2026). Narrator = Maddy's cloned voice (maddy2_te2). text = Tinglish subtitle (*word* = yellow).
 // Source: Bhagavata Purana, Canto 7 ch. 2-4 (Hiranyaksha killed by Varaha; Hiranyakashipu's tapas on Mandara, anthill and ants eating his flesh, the heat scorching the worlds; Brahma revives him with kamandalu water; boon: not by man or animal, not inside or outside, not by day or night, not on ground or in sky, not by any weapon; conquers the three worlds, takes Indra's seat). Series Narasimha 1/3.
-const LN = (id, omni, text, o = {}) => ({ who: 'narrator', id, text, say: omni, omni, gap: 0.22, ...o });
+const LN = (id, omni, text, o = {}) => ({ who: 'narrator', id, text, say: omni, omni, gap: 0.3, ...o });
 window.STB_LINES = [
   LN("hook", "దేవుడు కూడా తనను చంపలేనంత వరం సంపాదించిన రాక్షసుడు ఎవరో తెలుసా?", "Devudu kuda thananu champalenantha *varam* sampaadinchina raakshasudu evaro thelusaa?"),
   LN("who", "హిరణ్యకశిపుడు! అతని తమ్ముడు హిరణ్యాక్షుడిని, విష్ణువు వరాహ అవతారంలో చంపాడు.", "*Hiranyakashipudu*! Athani thammudu Hiranyaakshudini, Vishnuvu Varaaha avathaaramlo champaadu."),

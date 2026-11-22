@@ -1,6 +1,6 @@
 // Why did Gandhari blindfold herself for life? (Telugu daily reel, batch 22 Nov 2026). Narrator = Maddy's cloned voice (maddy2_te2). text = Tinglish subtitle (*word* = yellow).
 // Source: Mahabharata, Adi Parva (Sambhava parva: Gandhari worships Shiva, boon of 100 sons; Bhishma asks for her for Dhritarashtra; she learns he is blind and bandages her eyes with a cloth folded many times, resolving not to surpass her husband); Stri Parva (she glances from under the blindfold at Yudhishthira's toes, his nails turn dark; she curses Krishna that his race will perish in the 36th year).
-const LN = (id, omni, text, o = {}) => ({ who: 'narrator', id, text, say: omni, omni, gap: 0.22, ...o });
+const LN = (id, omni, text, o = {}) => ({ who: 'narrator', id, text, say: omni, omni, gap: 0.5, ...o });
 window.STB_LINES = [
   LN("hook", "కళ్ళు ఉన్నా... జీవితాంతం కళ్ళకు గంతలు కట్టుకుంది ఒక రాణి. ఎందుకు?", "Kallu unna... jeevithaantham kallaku *ganthalu* kattukundi oka raani. Enduku?"),
   LN("who", "ఆమె గాంధార రాకుమారి, గాంధారి. శివుడి భక్తురాలు, ఎంతో అందమైనది.", "Aame Gaandhaara raakumaari, *Gaandhaari*. Shivudi bhakthuraalu, entho andhamainadi."),

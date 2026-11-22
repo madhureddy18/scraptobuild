@@ -1,6 +1,6 @@
 // Narasimha Part 3/3 — the pillar, at dusk, on the threshold (Telugu daily reel, batch 22 Nov 2026). Narrator = Maddy's cloned voice (maddy2_te2). text = Tinglish subtitle (*word* = yellow).
 // Source: Bhagavata Purana, Canto 7 ch. 8-9 ("is He in this pillar?"; Narasimha bursts from the pillar, neither man nor animal; at the doorway (threshold), at dusk, on his lap, with his nails; the devas and Lakshmi cannot calm him, Brahma sends Prahlada, Narasimha places his hand on Prahlada's head). Series Narasimha 3/3.
-const LN = (id, omni, text, o = {}) => ({ who: 'narrator', id, text, say: omni, omni, gap: 0.22, ...o });
+const LN = (id, omni, text, o = {}) => ({ who: 'narrator', id, text, say: omni, omni, gap: 0.45, ...o });
 window.STB_LINES = [
   LN("recap", "నిన్న చూశాం... ఎన్ని చేసినా, ప్రహ్లాదుడు చావలేదు.", "Ninna choosaam... enni chesinaa, *Prahlaadudu* chaavaledu."),
   LN("roar", "హిరణ్యకశిపుడు గర్జించాడు. ఎవరి బలంతో, నువ్వు నన్ను ఎదిరిస్తున్నావు?", "Hiranyakashipudu *garjinchaadu*. Evari balamtho, nuvvu nannu edhiristhunnaavu?"),
