@@ -95,6 +95,12 @@ window.STORYBOOK = (K, T) => {
         const gs = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexH(), color: o.gem === 'wound' ? 0xff4040 : 0x8af4ff, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true })); gs.scale.set(0.5, 0.5, 1); gs.position.set(0, 0.2, 0.42); g.add(gs); g.userData.gemGlow = gs; }
       { const bf = add(new THREE.CylinderGeometry(0.43, 0.43, 0.11, 48, 1, true), mat(o.blindCol || 0x6a2a5a, { side: THREE.DoubleSide, roughness: 0.8 }), 0, 0.06, -0.01); bf.scale.set(0.83, 1, 0.97); bf.visible = false; g.userData.blind = bf;
         const kn = add(new THREE.SphereGeometry(0.06, 12, 8), mat(o.blindCol || 0x6a2a5a), 0, 0.06, -0.42); kn.visible = false; g.userData.blindKnot = kn; }
+      if (o.boar) { const bm = mat(o.skin, { roughness: 0.6 }); const sn = add(new THREE.CylinderGeometry(0.13, 0.2, 0.42, 20), bm, 0, -0.12, 0.42); sn.rotation.x = PI / 2 - 0.25;
+        add(new THREE.CircleGeometry(0.12, 20), mat(0x3a2a2a), 0, -0.17, 0.635).rotation.x = -0.25;
+        for (const sx of [-1, 1]) { const tk = add(new THREE.ConeGeometry(0.03, 0.22, 10), mat(0xf6f0e0), sx * 0.14, -0.12, 0.5); tk.rotation.set(-0.4, 0, -sx * 0.5); const er = add(new THREE.ConeGeometry(0.09, 0.22, 12), bm, sx * 0.3, 0.32, -0.05); er.rotation.z = -sx * 0.6; } }
+      if (o.lion) { const mn = mat(o.mane || 0xc8782a, { roughness: 0.8 }); for (let i = 0; i < 26; i++) { const a = i / 26 * TAU; const m = add(new THREE.SphereGeometry(0.17, 12, 10), mn, Math.cos(a) * 0.4, Math.sin(a) * 0.48 + 0.02, -0.06); m.scale.set(1, 1, 0.8); }
+        const sn = add(new THREE.SphereGeometry(0.16, 20, 14), mat(o.skin), 0, -0.14, 0.36); sn.scale.set(1.2, 0.8, 0.9); add(new THREE.SphereGeometry(0.05, 12, 8), mat(0x2a1a1a), 0, -0.08, 0.5);
+        for (const sx of [-1, 1]) { const f = add(new THREE.ConeGeometry(0.022, 0.1, 8), mat(0xf6f0e0), sx * 0.05, -0.27, 0.45); f.rotation.x = PI; } }
       if (o.bindi) add(new THREE.SphereGeometry(0.018, 12, 8), mat(0xc0101a), 0, 0.17, 0.392).scale.z = 0.4;
       if (o.earrings) for (const sx of [-1, 1]) { const er = add(new THREE.TorusGeometry(0.035, 0.008, 8, 20), GOLD, sx * 0.335, -0.12, 0.0); er.rotation.y = PI / 2; add(new THREE.SphereGeometry(0.018, 10, 8), GOLD, sx * 0.335, -0.17, 0.0); }
       if (o.tilak) { const tw = add(new THREE.TorusGeometry(0.03, 0.007, 6, 20, PI), mat(0xf2ede0, { roughness: 0.6 }), 0, 0.2, 0.392); tw.rotation.z = PI; tw.scale.y = 1.7;
