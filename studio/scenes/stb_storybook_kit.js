@@ -145,6 +145,11 @@ window.STORYBOOK = (K, T) => {
       } else if (o.crown === 'turban') {
         const tc = new THREE.Color(o.turban || 0xf2ede0); for (let i = 0; i < 4; i++) { const tr = add(new THREE.TorusGeometry(0.4 - i * 0.05, 0.075, 12, 40), mat(tc.getHex(), { roughness: 0.8 }), 0, 0.26 + i * 0.09, -0.02); tr.rotation.x = PI / 2 + 0.08 * (i % 2 ? 1 : -1); tr.scale.set(0.86, 0.96, 1); }
         add(new THREE.SphereGeometry(0.22, 20, 14), mat(tc.getHex(), { roughness: 0.8 }), 0, 0.5, -0.03).scale.set(1.1, 0.7, 1);
+      } else if (o.crown === 'jata') {                                               // sage / Shiva: tall coiled hair knot on top
+        const hm = mat(o.hair, { roughness: 0.6 }); for (let i = 0; i < 4; i++) { const tr = add(new THREE.TorusGeometry(0.2 - i * 0.035, 0.07, 10, 28), hm, 0, 0.5 + i * 0.1, -0.05); tr.rotation.x = PI / 2 + (i % 2 ? 0.15 : -0.15); }
+        add(new THREE.SphereGeometry(0.1, 14, 10), hm, 0, 0.92, -0.05);
+        if (o.moon) { const cm = add(new THREE.TorusGeometry(0.1, 0.025, 8, 20, PI * 1.2), mat(0xf6f4ea, { emissive: new THREE.Color(0x504830) }), 0.12, 0.78, 0.08); cm.rotation.z = -0.6; }
+        if (o.ganga) { const gm = add(new THREE.CylinderGeometry(0.02, 0.05, 0.4, 8), mat(0xbfe4ff, { transparent: true, opacity: 0.8 }), -0.05, 1.08, -0.05); }
       } else if (o.crown === 'bun') {
         const bn = add(new THREE.SphereGeometry(0.19, 24, 16), mat(o.hair, { roughness: 0.55 }), 0, 0.05, -0.43); bn.scale.set(1, 0.9, 0.8);
         if (o.flower) for (let i = 0; i < 7; i++) add(new THREE.SphereGeometry(0.04, 10, 8), mat(0xf6f2e6), Math.cos(i / 7 * TAU) * 0.19, 0.05 + Math.sin(i / 7 * TAU) * 0.17, -0.38);
@@ -555,6 +560,14 @@ window.STORYBOOK = (K, T) => {
       bless: { UpperArmR: [0, 0.6, 1.25], LowerArmR: [0, 0, 0.9] }, namaste: { UpperArmR: [0, 0.1, 0.7], LowerArmR: [0, 0, 1.55], UpperArmL: [0, -0.1, 0.7], LowerArmL: [0, 0, 1.55] }, bowHead: { Neck: [0.45, 0, 0], Torso: [0.15, 0, 0] },
       armsOut: { UpperArmR: [0, 1.2, 0.5], UpperArmL: [0, -1.2, 0.5] }, sad: { Neck: [0.5, 0, 0], Torso: [0.2, 0, 0], UpperArmR: [0, 0.1, 0.4], UpperArmL: [0, -0.1, 0.4] } };
     const mix_ = (...o) => Object.assign({}, ...o);
+    const bonfire = (parent, x, z, s = 1, light = true) => { const g = new THREE.Group(); g.position.set(x, 0, z); g.scale.setScalar(s); parent.add(g);
+      for (let i = 0; i < 6; i++) { const lg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.07, 1.1, 8), mat(0x4a2a14)); lg.rotation.set(PI / 2 - 0.3, i / 6 * TAU, 0); lg.position.y = 0.2; g.add(lg); }
+      for (let i = 0; i < 7; i++) { const f = new THREE.Sprite(new THREE.SpriteMaterial({ map: flameTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true })); f.scale.set(0.7, 1.4, 1); f.position.set(Math.cos(i * 0.9) * 0.25 * (i ? 1 : 0), 0.7, Math.sin(i * 0.9) * 0.25 * (i ? 1 : 0)); g.add(f); flames.push({ f, s: x + i * 1.7, big: 2 }); }
+      const gl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.8 })); gl.scale.set(2.6, 2.6, 1); gl.material.opacity = 0.45; gl.position.y = 0.8; g.add(gl);
+      if (light) { const pl = new THREE.PointLight(0xff8a30, 8, 12, 1.5); pl.position.y = 1.2; g.add(pl); flames.push({ f: { scale: {} }, pl, s: x, big: 1 }); } return g; };
+    const snake = (M) => { const sn = new THREE.Mesh(new THREE.TorusGeometry(0.15, 0.025, 8, 32), mat(0x3a7a4a)); sn.rotation.x = PI / 2 - 0.4; const g = new THREE.Group(); g.add(sn); const hd = new THREE.Mesh(new THREE.SphereGeometry(0.04, 12, 8), mat(0x3a7a4a)); hd.position.set(0.12, 0.08, 0.1); g.add(hd);
+      M.g.updateMatrixWorld(true); const nk = M.B.Neck; nk.add(g); const ws = nk.getWorldScale(V3(0, 0, 0)).x; g.scale.setScalar(1 / ws * 0.86); g.position.set(0, -0.02 / ws, 0.02 / ws); return g; };
+
     const regs = [chariot, banners, debris, burst, sparks, petals]; const reg = (...o) => { regs.push(...o); return o[0]; };
     const worldObjs = () => [hills1, hills2, ground, grassIM, ...treeIM, tents];
     const outdoor = v => worldObjs().forEach(o => { if (o) o.visible = v; });
@@ -565,7 +578,7 @@ window.STORYBOOK = (K, T) => {
       // flags + flames + dust
       bannerFlags.forEach(([fl, base, ph]) => { const p = fl.geometry.attributes.position; for (let k = 0; k < p.count; k++) { const x0 = base[k * 3], y0 = base[k * 3 + 1]; p.setZ(k, Math.sin(x0 * 6 - t * 5 + ph) * 0.1 * x0); } p.needsUpdate = true; });
       if (chariot.visible) waveFlag(chariot.userData.flag, chariot.userData.flagBase, t, 0.1);
-      flames.forEach(F => { const fl = 0.85 + 0.15 * Math.sin(t * 17 + F.s) * Math.sin(t * 7.3 + F.s * 2); F.f.scale.y = (F.big ? 0.6 : 0.15) * fl; if (F.pl) F.pl.intensity = (F.big ? 6 : 2.2) * (0.8 + 0.2 * fl); });
+      flames.forEach(F => { const fl = 0.85 + 0.15 * Math.sin(t * 17 + F.s) * Math.sin(t * 7.3 + F.s * 2); F.f.scale.y = (F.big === 2 ? 1.4 : F.big ? 0.6 : 0.15) * fl; if (F.pl) F.pl.intensity = (F.big ? 6 : 2.2) * (0.8 + 0.2 * fl); });
       if (dust.visible) fly(dust, t, { c: cam.l.clone(), sx: 7, sz: 7, sy: 3.5, vy: 0.06, vx: 0.08 });
       K.cam.position.copy(cam.p); K.cam.up.set(cam.up ? -1 : 0, cam.up ? 0 : 1, 0); K.cam.lookAt(cam.l); K.cam.fov = cam.fov; K.cam.updateProjectionMatrix();
       R.setRenderTarget(target); R.render(S, K.cam); R.setRenderTarget(null); return A.HUD; };
@@ -602,6 +615,6 @@ window.STORYBOOK = (K, T) => {
     Object.assign(A, { THREE, S, R, PI, TAU, clamp, lerp, ease, eo, prog, L, LINES, N, IDX, Bt, Et, F, D, XF, V3, rng, mat, GOLD, GOLD2, RUBY, PEARL, SILVER, cloth, strandTex, clothTex, makeHead, hero, heroes, pose, place,
       makeBow, handBow, arrowField, singleArrow, SKIES, skyTex, setSky, key, hemi, sky, sky2, groupOf, shadowAll, wheel, chariot, horseLegs, waveFlag, banners, bannerFlags, debris, tents, flameTex, glowTex, flames, diya, torch,
       ptsTex, cloud, fly, dust, sparks, petals, stars, burst, label, tag, pill, cam, C, narr, reg, outdoor, finish,
-      waterTex, makeWater, lotus, makeBoat, makeHut, makePalace, makeHeaven, makeBook, endCard, titleCard, P_, mix_ });
+      waterTex, makeWater, lotus, makeBoat, makeHut, makePalace, makeHeaven, makeBook, endCard, titleCard, P_, mix_, bonfire, snake });
     return A;
 };
