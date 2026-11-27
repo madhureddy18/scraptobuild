@@ -50,6 +50,7 @@ window.STORYBOOK = (K, T) => {
         if (border) { x.fillStyle = border; x.fillRect(0, h - 34, w, 22); x.fillRect(0, 0, w, 6); x.fillStyle = '#d8a63a'; x.fillRect(0, h - 40, w, 5); x.fillRect(0, h - 10, w, 4); } });
       t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(...rep); return t; };
 
+    let _gt = null; const glowTexH = () => _gt || (_gt = K.canvasTex(128, 128, (x, w, h) => { const g = x.createRadialGradient(w / 2, h / 2, 1, w / 2, h / 2, w / 2); g.addColorStop(0, 'rgba(255,255,255,0.95)'); g.addColorStop(0.3, 'rgba(255,255,255,0.3)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, w, h); }));
     function makeHead(o) {
       const g = new THREE.Group(), skinM = mat(o.skin, { roughness: 0.48, emissive: new THREE.Color(o.skin).multiplyScalar(0.08) });
       const add = (geo, m, x, y, z) => { const q = new THREE.Mesh(geo, m); q.position.set(x, y, z); q.castShadow = true; g.add(q); return q; };
@@ -90,6 +91,8 @@ window.STORYBOOK = (K, T) => {
       for (const sx of [-1, 1]) { const pk = add(new THREE.SphereGeometry(0.014, 12, 8), lipM, sx * 0.014, -0.19, 0.366); pk.scale.set(1.3, 0.8, 0.8); }
       const lo = add(new THREE.CapsuleGeometry(0.015, 0.058, 6, 12), lipM, 0, -0.226, 0.352); lo.rotation.z = PI / 2;
       const gap = add(new THREE.SphereGeometry(0.04, 16, 10), mat(0x2a0c08), 0, -0.21, 0.355); gap.scale.set(1.0, 0.08, 0.3);
+      if (o.gem) { const gm = add(new THREE.SphereGeometry(0.035, 16, 12), new THREE.MeshBasicMaterial({ color: o.gem === 'wound' ? 0xc0303a : 0x8af4ff }), 0, 0.2, 0.39); gm.scale.z = 0.5; g.userData.gem = gm;
+        const gs = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexH(), color: o.gem === 'wound' ? 0xff4040 : 0x8af4ff, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true })); gs.scale.set(0.5, 0.5, 1); gs.position.set(0, 0.2, 0.42); g.add(gs); g.userData.gemGlow = gs; }
       if (o.bindi) add(new THREE.SphereGeometry(0.018, 12, 8), mat(0xc0101a), 0, 0.17, 0.392).scale.z = 0.4;
       if (o.earrings) for (const sx of [-1, 1]) { const er = add(new THREE.TorusGeometry(0.035, 0.008, 8, 20), GOLD, sx * 0.335, -0.12, 0.0); er.rotation.y = PI / 2; add(new THREE.SphereGeometry(0.018, 10, 8), GOLD, sx * 0.335, -0.17, 0.0); }
       if (o.tilak) { const tw = add(new THREE.TorusGeometry(0.03, 0.007, 6, 20, PI), mat(0xf2ede0, { roughness: 0.6 }), 0, 0.2, 0.392); tw.rotation.z = PI; tw.scale.y = 1.7;
@@ -162,7 +165,7 @@ window.STORYBOOK = (K, T) => {
         const r = add(new THREE.TorusGeometry(0.4, 0.016, 10, 48), GOLD, 0, 0.27, 0); r.rotation.x = PI / 2 - 0.12; r.scale.set(0.84, 0.97, 1);
         add(new THREE.SphereGeometry(0.022, 12, 10), RUBY, 0, 0.3, 0.37);
       }
-      g.userData = { eyes, brows, gap, lo };
+      Object.assign(g.userData, { eyes, brows, gap, lo });
       g.update = (t, { talk = 0, close = 0, look = [0, 0], brow = 0 } = {}) => {
         const blink = ((t + (o.seed || 0)) % 3.7) < 0.12 ? 1 : 0, cl = Math.max(close, blink * (1 - close));
         eyes.forEach(E => { E.lid.rotation.x = lerp(-0.75, 1.52, cl); E.lash.rotation.x = E.lid.rotation.x + PI / 2; E.ir.visible = cl < 0.9;
@@ -578,13 +581,29 @@ window.STORYBOOK = (K, T) => {
       for (let i = 0; i < 6; i++) { const t = new THREE.Mesh(new THREE.CylinderGeometry(1.0 - i * 0.15, 1.1 - i * 0.15, 0.55, 4), c); t.rotation.y = PI / 4; t.position.y = 2.75 + i * 0.5; g.add(t); }
       const kl = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 12), GOLD); kl.position.y = 5.8; g.add(kl); const fp = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 1.2, 6), mat(0x6a4a2a)); fp.position.y = 6.5; g.add(fp);
       const fl = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.35), mat(0xe8862a, { side: THREE.DoubleSide })); fl.position.set(0.3, 6.9, 0); g.add(fl); shadowAll(g); return g; };
+    const makeForest = (cx, cz, n = 40, rad = 10, seed = 61, col = 0x2f6a32) => { const g = groupOf(); const r = rng(seed), tg = new THREE.CylinderGeometry(0.14, 0.2, 3.2, 10), bg = new THREE.SphereGeometry(1.1, 18, 12);
+      for (let i = 0; i < n; i++) { const a = r() * TAU, d = 3.5 + r() * rad; const x = cx + Math.cos(a) * d, z = cz + Math.sin(a) * d; const tr = new THREE.Mesh(tg, mat(0x5a3a22)); tr.position.set(x, 1.6, z); g.add(tr);
+        for (let j = 0; j < 4; j++) { const b = new THREE.Mesh(bg, mat(col)); b.position.set(x + (r() - 0.5) * 1.2, 3.4 + r() * 0.9, z + (r() - 0.5) * 1.2); b.scale.setScalar(0.8 + r() * 0.4); g.add(b); } } shadowAll(g); return g; };
+    const bird = (col = 0x141414, s = 1, owl = false) => { const g = new THREE.Group(); g.scale.setScalar(s); const m = mat(col);
+      const b = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 12), m); b.scale.set(owl ? 1.1 : 0.8, owl ? 1.2 : 0.9, owl ? 1 : 1.5); g.add(b);
+      const h = new THREE.Mesh(new THREE.SphereGeometry(owl ? 0.1 : 0.07, 14, 10), m); h.position.set(0, owl ? 0.17 : 0.09, owl ? 0.02 : 0.14); g.add(h);
+      const bk = new THREE.Mesh(new THREE.ConeGeometry(0.02, 0.07, 8), mat(owl ? 0xd8a030 : 0x2a2a2a)); bk.rotation.x = PI / 2; bk.position.set(0, owl ? 0.15 : 0.09, owl ? 0.12 : 0.22); g.add(bk);
+      if (owl) for (const sx of [-1, 1]) { const e = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffd040 })); e.position.set(sx * 0.045, 0.19, 0.1); g.add(e); }
+      const wings = [-1, 1].map(sx => { const w = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 8), m); w.scale.set(1.6, 0.2, 0.9); const p = new THREE.Group(); p.position.set(sx * 0.08, 0.03, 0); w.position.x = sx * 0.14; p.add(w); g.add(p); return p; });
+      g.flap = (t, k = 1) => wings.forEach((w, i) => { w.rotation.z = (i ? -1 : 1) * Math.sin(t * 14) * 0.7 * k; }); return g; };
+    const makeSword = () => { const g = new THREE.Group(); const bl = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.85, 0.012), mat(0xd8dce4, { metalness: 0.8, roughness: 0.25 })); bl.position.y = 0.5; g.add(bl);
+      const gd = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.03, 0.04), GOLD); gd.position.y = 0.07; g.add(gd); const hd = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.14, 8), mat(0x3a2414)); g.add(hd); return g; };
+    const holdR = (M, obj, dy = 0.05) => { M.g.updateMatrixWorld(true); const h = M.B.PalmR; h.add(obj); const ws = h.getWorldScale(V3(0, 0, 0)).x; obj.scale.setScalar(1 / ws * 0.86); obj.position.set(0, dy / ws, 0); return obj; };
+    const fireball = (col = 0xffa040, s = 1) => { const g = groupOf(); const c = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexH(), color: 0xffffff, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true })); c.scale.set(2.2 * s, 2.2 * s, 1); g.add(c);
+      const o = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexH(), color: col, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true })); o.scale.set(7 * s, 7 * s, 1); g.add(o);
+      const pl = new THREE.PointLight(col, 12, 18, 1.5); g.add(pl); g.userData.pl = pl; return g; };
     const snake = (M) => { const sn = new THREE.Mesh(new THREE.TorusGeometry(0.15, 0.025, 8, 32), mat(0x3a7a4a)); sn.rotation.x = PI / 2 - 0.4; const g = new THREE.Group(); g.add(sn); const hd = new THREE.Mesh(new THREE.SphereGeometry(0.04, 12, 8), mat(0x3a7a4a)); hd.position.set(0.12, 0.08, 0.1); g.add(hd);
       M.g.updateMatrixWorld(true); const nk = M.B.Neck; nk.add(g); const ws = nk.getWorldScale(V3(0, 0, 0)).x; g.scale.setScalar(1 / ws * 0.86); g.position.set(0, -0.02 / ws, 0.02 / ws); return g; };
 
     const regs = [chariot, banners, debris, burst, sparks, petals]; const reg = (...o) => { regs.push(...o); return o[0]; };
     const worldObjs = () => [hills1, hills2, ground, grassIM, ...treeIM, tents];
     const outdoor = v => worldObjs().forEach(o => { if (o) o.visible = v; });
-    const hideAll = () => { heroes.forEach(M => { M.root.visible = false; }); regs.forEach(o => { o.visible = false; }); dust.visible = true; stars.visible = false; outdoor(true); sky.visible = true; sky2.visible = true; A.HUD = null; };
+    const hideAll = () => { S.fog.near = 30; S.fog.far = 230; heroes.forEach(M => { M.root.visible = false; }); regs.forEach(o => { o.visible = false; }); dust.visible = true; stars.visible = false; outdoor(true); sky.visible = true; sky2.visible = true; A.HUD = null; };
     let SH = null, SRC = null, onFrame = null;
     const shotAt = i => { const l = L[i], a = l.t - XF, b = i + 1 < N ? L[i + 1].t : D; return { id: LINES[i].id, a, b }; };
     const renderShot = (i, t, target) => { const s = shotAt(i); hideAll(); cam.up = 0; SH[s.id](t, prog(t, s.a, s.b)); if (onFrame) onFrame(t);
@@ -628,6 +647,6 @@ window.STORYBOOK = (K, T) => {
     Object.assign(A, { THREE, S, R, PI, TAU, clamp, lerp, ease, eo, prog, L, LINES, N, IDX, Bt, Et, F, D, XF, V3, rng, mat, GOLD, GOLD2, RUBY, PEARL, SILVER, cloth, strandTex, clothTex, makeHead, hero, heroes, pose, place,
       makeBow, handBow, arrowField, singleArrow, SKIES, skyTex, setSky, key, hemi, sky, sky2, groupOf, shadowAll, wheel, chariot, horseLegs, waveFlag, banners, bannerFlags, debris, tents, flameTex, glowTex, flames, diya, torch,
       ptsTex, cloud, fly, dust, sparks, petals, stars, burst, label, tag, pill, cam, C, narr, reg, outdoor, finish,
-      waterTex, makeWater, lotus, makeBoat, makeHut, makePalace, makeHeaven, makeBook, endCard, titleCard, P_, mix_, bonfire, snake, bigLotus, makeTemple, frontOf });
+      waterTex, makeWater, lotus, makeBoat, makeHut, makePalace, makeHeaven, makeBook, endCard, titleCard, P_, mix_, bonfire, snake, bigLotus, makeTemple, frontOf, makeForest, bird, makeSword, holdR, fireball, glowTexH });
     return A;
 };
