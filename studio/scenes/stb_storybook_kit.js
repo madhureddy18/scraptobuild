@@ -560,11 +560,24 @@ window.STORYBOOK = (K, T) => {
       bless: { UpperArmR: [0, 0.6, 1.25], LowerArmR: [0, 0, 0.9] }, namaste: { UpperArmR: [0, 0.1, 0.7], LowerArmR: [0, 0, 1.55], UpperArmL: [0, -0.1, 0.7], LowerArmL: [0, 0, 1.55] }, bowHead: { Neck: [0.45, 0, 0], Torso: [0.15, 0, 0] },
       armsOut: { UpperArmR: [0, 1.2, 0.5], UpperArmL: [0, -1.2, 0.5] }, sad: { Neck: [0.5, 0, 0], Torso: [0.2, 0, 0], UpperArmR: [0, 0.1, 0.4], UpperArmL: [0, -0.1, 0.4] } };
     const mix_ = (...o) => Object.assign({}, ...o);
+    const frontOf = (M, dist = 1.2, dy = 0, side = 0) => { M.root.updateMatrixWorld(true); const h = M.head.getWorldPosition(V3(0, 0, 0)), ry = M.root.rotation.y, f = V3(Math.sin(ry), 0, Math.cos(ry)), sd = V3(Math.cos(ry), 0, -Math.sin(ry));
+      return { h, p: h.clone().addScaledVector(f, dist).addScaledVector(sd, side).add(V3(0, dy, 0)) }; };
     const bonfire = (parent, x, z, s = 1, light = true) => { const g = new THREE.Group(); g.position.set(x, 0, z); g.scale.setScalar(s); parent.add(g);
       for (let i = 0; i < 6; i++) { const lg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.07, 1.1, 8), mat(0x4a2a14)); lg.rotation.set(PI / 2 - 0.3, i / 6 * TAU, 0); lg.position.y = 0.2; g.add(lg); }
       for (let i = 0; i < 7; i++) { const f = new THREE.Sprite(new THREE.SpriteMaterial({ map: flameTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true })); f.scale.set(0.7, 1.4, 1); f.position.set(Math.cos(i * 0.9) * 0.25 * (i ? 1 : 0), 0.7, Math.sin(i * 0.9) * 0.25 * (i ? 1 : 0)); g.add(f); flames.push({ f, s: x + i * 1.7, big: 2 }); }
       const gl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.8 })); gl.scale.set(2.6, 2.6, 1); gl.material.opacity = 0.45; gl.position.y = 0.8; g.add(gl);
       if (light) { const pl = new THREE.PointLight(0xff8a30, 8, 12, 1.5); pl.position.y = 1.2; g.add(pl); flames.push({ f: { scale: {} }, pl, s: x, big: 1 }); } return g; };
+    const bigLotus = (s = 1, pink = 0xf2a0be) => { const g = new THREE.Group(); g.scale.setScalar(s);
+      for (const [n, r, tilt, col] of [[12, 0.55, 1.05, 0x6aa84a], [10, 0.42, 0.75, pink], [8, 0.3, 0.45, 0xf8d6e2]]) for (let i = 0; i < n; i++) { const a = i / n * TAU + r; const pt = new THREE.Mesh(new THREE.SphereGeometry(0.22, 14, 10), mat(col, { side: THREE.DoubleSide }));
+        pt.scale.set(0.55, 1.2, 0.22); const h = new THREE.Group(); h.rotation.y = a; pt.position.set(0, 0.2, r * 0.55); pt.rotation.x = tilt; h.add(pt); g.add(h); }
+      const c = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.12, 0.12, 20), mat(0xf2c83a)); c.position.y = 0.16; g.add(c); return g; };
+    // small hindu temple: plinth + sanctum + tiered spire (shikhara) + flag
+    const makeTemple = (col = 0xc0402a, s = 1) => { const g = groupOf(); g.scale.setScalar(s); const w = mat(0xf2e6d0), c = mat(col);
+      const pl = new THREE.Mesh(new THREE.BoxGeometry(3.2, 0.5, 3.2), w); pl.position.y = 0.25; g.add(pl); const sa = new THREE.Mesh(new THREE.BoxGeometry(2.2, 2.0, 2.2), w); sa.position.y = 1.5; g.add(sa);
+      const door = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 1.3), mat(0x3a2414)); door.position.set(0, 1.15, 1.11); g.add(door);
+      for (let i = 0; i < 6; i++) { const t = new THREE.Mesh(new THREE.CylinderGeometry(1.0 - i * 0.15, 1.1 - i * 0.15, 0.55, 4), c); t.rotation.y = PI / 4; t.position.y = 2.75 + i * 0.5; g.add(t); }
+      const kl = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 12), GOLD); kl.position.y = 5.8; g.add(kl); const fp = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 1.2, 6), mat(0x6a4a2a)); fp.position.y = 6.5; g.add(fp);
+      const fl = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.35), mat(0xe8862a, { side: THREE.DoubleSide })); fl.position.set(0.3, 6.9, 0); g.add(fl); shadowAll(g); return g; };
     const snake = (M) => { const sn = new THREE.Mesh(new THREE.TorusGeometry(0.15, 0.025, 8, 32), mat(0x3a7a4a)); sn.rotation.x = PI / 2 - 0.4; const g = new THREE.Group(); g.add(sn); const hd = new THREE.Mesh(new THREE.SphereGeometry(0.04, 12, 8), mat(0x3a7a4a)); hd.position.set(0.12, 0.08, 0.1); g.add(hd);
       M.g.updateMatrixWorld(true); const nk = M.B.Neck; nk.add(g); const ws = nk.getWorldScale(V3(0, 0, 0)).x; g.scale.setScalar(1 / ws * 0.86); g.position.set(0, -0.02 / ws, 0.02 / ws); return g; };
 
@@ -580,7 +593,7 @@ window.STORYBOOK = (K, T) => {
       if (chariot.visible) waveFlag(chariot.userData.flag, chariot.userData.flagBase, t, 0.1);
       flames.forEach(F => { const fl = 0.85 + 0.15 * Math.sin(t * 17 + F.s) * Math.sin(t * 7.3 + F.s * 2); F.f.scale.y = (F.big === 2 ? 1.4 : F.big ? 0.6 : 0.15) * fl; if (F.pl) F.pl.intensity = (F.big ? 6 : 2.2) * (0.8 + 0.2 * fl); });
       if (dust.visible) fly(dust, t, { c: cam.l.clone(), sx: 7, sz: 7, sy: 3.5, vy: 0.06, vx: 0.08 });
-      K.cam.position.copy(cam.p); K.cam.up.set(cam.up ? -1 : 0, cam.up ? 0 : 1, 0); K.cam.lookAt(cam.l); K.cam.fov = cam.fov; K.cam.updateProjectionMatrix();
+      sky.position.copy(cam.p); sky2.position.copy(cam.p); K.cam.position.copy(cam.p); K.cam.up.set(cam.up ? -1 : 0, cam.up ? 0 : 1, 0); K.cam.lookAt(cam.l); K.cam.fov = cam.fov; K.cam.updateProjectionMatrix();
       R.setRenderTarget(target); R.render(S, K.cam); R.setRenderTarget(null); return A.HUD; };
     K.draw = () => {};
     const update = t => {
@@ -615,6 +628,6 @@ window.STORYBOOK = (K, T) => {
     Object.assign(A, { THREE, S, R, PI, TAU, clamp, lerp, ease, eo, prog, L, LINES, N, IDX, Bt, Et, F, D, XF, V3, rng, mat, GOLD, GOLD2, RUBY, PEARL, SILVER, cloth, strandTex, clothTex, makeHead, hero, heroes, pose, place,
       makeBow, handBow, arrowField, singleArrow, SKIES, skyTex, setSky, key, hemi, sky, sky2, groupOf, shadowAll, wheel, chariot, horseLegs, waveFlag, banners, bannerFlags, debris, tents, flameTex, glowTex, flames, diya, torch,
       ptsTex, cloud, fly, dust, sparks, petals, stars, burst, label, tag, pill, cam, C, narr, reg, outdoor, finish,
-      waterTex, makeWater, lotus, makeBoat, makeHut, makePalace, makeHeaven, makeBook, endCard, titleCard, P_, mix_, bonfire, snake });
+      waterTex, makeWater, lotus, makeBoat, makeHut, makePalace, makeHeaven, makeBook, endCard, titleCard, P_, mix_, bonfire, snake, bigLotus, makeTemple, frontOf });
     return A;
 };
