@@ -605,6 +605,18 @@ window.STORYBOOK = (K, T) => {
     const fireball = (col = 0xffa040, s = 1) => { const g = groupOf(); const c = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexH(), color: 0xffffff, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true })); c.scale.set(2.2 * s, 2.2 * s, 1); g.add(c);
       const o = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexH(), color: col, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true })); o.scale.set(7 * s, 7 * s, 1); g.add(o);
       const pl = new THREE.PointLight(col, 12, 18, 1.5); g.add(pl); g.userData.pl = pl; return g; };
+    const makeElephant = (col = 0x8a8a92, s = 1) => { const g = groupOf(); g.scale.setScalar(s); const m = mat(col, { roughness: 0.8 });
+      const body = new THREE.Mesh(new THREE.SphereGeometry(1, 28, 20), m); body.scale.set(0.95, 0.85, 1.4); body.position.y = 2.1; g.add(body);
+      const legs = []; for (const [x, z] of [[-0.5, 0.8], [0.5, 0.8], [-0.5, -0.8], [0.5, -0.8]]) { const lg = new THREE.Group(); lg.position.set(x, 1.6, z); g.add(lg); const l = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.3, 1.6, 16), m); l.position.y = -0.8; lg.add(l); legs.push(lg); }
+      const hd = new THREE.Mesh(new THREE.SphereGeometry(0.62, 24, 18), m); hd.position.set(0, 2.7, 1.45); g.add(hd);
+      for (const sx of [-1, 1]) { const ear = new THREE.Mesh(new THREE.CircleGeometry(0.55, 24), mat(col, { side: THREE.DoubleSide })); ear.position.set(sx * 0.55, 2.75, 1.2); ear.rotation.y = sx * 1.1; g.add(ear);
+        const tk = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.6, 10), mat(0xf6f0e0)); tk.position.set(sx * 0.22, 2.25, 1.9); tk.rotation.x = 2.0; g.add(tk);
+        const ey = new THREE.Mesh(new THREE.SphereGeometry(0.05, 10, 8), mat(0x1a1410)); ey.position.set(sx * 0.33, 2.85, 1.9); g.add(ey); }
+      const pts = []; for (let i = 0; i <= 10; i++) { const k = i / 10; pts.push(V3(0, 2.5 - k * 1.7, 1.95 + Math.sin(k * 2.2) * 0.45)); } const tr = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 24, 0.17, 12), m); g.add(tr);
+      const cl = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.06, 1.6), mat(0xc0302a)); cl.position.set(0, 2.98, 0); g.add(cl); shadowAll(g); g.userData.legs = legs; return g; };
+    const makeSnake = (col = 0x2a8a3a, len = 2.4, s = 1) => { const g = groupOf(); const pts = []; for (let i = 0; i <= 30; i++) { const k = i / 30; pts.push(V3(Math.sin(k * 9) * 0.25, 0.08 + (k > 0.8 ? (k - 0.8) * 3 : 0), -k * len)); }
+      const b = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 60, 0.07, 10), mat(col)); g.add(b); const hd = new THREE.Mesh(new THREE.SphereGeometry(0.13, 14, 10), mat(col)); hd.scale.set(1.3, 0.6, 1.5); hd.position.copy(pts[30]); g.add(hd);
+      g.scale.setScalar(s); shadowAll(g); return g; };
     const snake = (M) => { const sn = new THREE.Mesh(new THREE.TorusGeometry(0.15, 0.025, 8, 32), mat(0x3a7a4a)); sn.rotation.x = PI / 2 - 0.4; const g = new THREE.Group(); g.add(sn); const hd = new THREE.Mesh(new THREE.SphereGeometry(0.04, 12, 8), mat(0x3a7a4a)); hd.position.set(0.12, 0.08, 0.1); g.add(hd);
       M.g.updateMatrixWorld(true); const nk = M.B.Neck; nk.add(g); const ws = nk.getWorldScale(V3(0, 0, 0)).x; g.scale.setScalar(1 / ws * 0.86); g.position.set(0, -0.02 / ws, 0.02 / ws); return g; };
 
@@ -655,6 +667,6 @@ window.STORYBOOK = (K, T) => {
     Object.assign(A, { THREE, S, R, PI, TAU, clamp, lerp, ease, eo, prog, L, LINES, N, IDX, Bt, Et, F, D, XF, V3, rng, mat, GOLD, GOLD2, RUBY, PEARL, SILVER, cloth, strandTex, clothTex, makeHead, hero, heroes, pose, place,
       makeBow, handBow, arrowField, singleArrow, SKIES, skyTex, setSky, key, hemi, sky, sky2, groupOf, shadowAll, wheel, chariot, horseLegs, waveFlag, banners, bannerFlags, debris, tents, flameTex, glowTex, flames, diya, torch,
       ptsTex, cloud, fly, dust, sparks, petals, stars, burst, label, tag, pill, cam, C, narr, reg, outdoor, finish,
-      waterTex, makeWater, lotus, makeBoat, makeHut, makePalace, makeHeaven, makeBook, endCard, titleCard, P_, mix_, bonfire, snake, bigLotus, makeTemple, frontOf, makeForest, bird, makeSword, holdR, fireball, glowTexH });
+      waterTex, makeWater, lotus, makeBoat, makeHut, makePalace, makeHeaven, makeBook, endCard, titleCard, P_, mix_, bonfire, snake, bigLotus, makeTemple, frontOf, makeForest, bird, makeSword, holdR, fireball, glowTexH, makeElephant, makeSnake });
     return A;
 };
