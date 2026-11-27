@@ -5,7 +5,8 @@ SCENE=$1; KIT=${2:-kit}; REPO=$(pwd)
 [ -d "$KIT/codevid" ] || git clone -q --depth 1 -b codevid-wip https://github.com/madhureddy18/insideyou-shorts.git "$KIT"
 cd "$KIT" && git checkout -q -- codevid/render.js && git apply "$REPO/studio/render/keywords.patch" && python3 "$REPO/studio/render/kit_patch.py" codevid/render.js
 cd codevid && [ -d node_modules/three ] || npm install --silent
-mkdir -p ~/.fonts && for u in "ofl/fredoka/Fredoka%5Bwdth,wght%5D.ttf:Fredoka" "ofl/cinzel/Cinzel%5Bwght%5D.ttf:Cinzel" "ofl/oswald/Oswald%5Bwght%5D.ttf:Oswald" "ofl/bangers/Bangers-Regular.ttf:Bangers" "ofl/notosanstelugu/NotoSansTelugu%5Bwdth,wght%5D.ttf:NotoSansTelugu" "ofl/poppins/Poppins-SemiBold.ttf:Poppins-SemiBold" "ofl/poppins/Poppins-Bold.ttf:Poppins-Bold"; do f=${u%%:*}; n=${u##*:}; [ -f ~/.fonts/$n.ttf ] || for _t in 1 2 3 4; do curl -sfL "https://raw.githubusercontent.com/google/fonts/main/$f" -o ~/.fonts/$n.ttf && break; sleep 5; done; done; fc-cache -f >/dev/null
-cat "$REPO/studio/scenes/${SCENE}_lines.js" "$REPO/studio/scenes/${SCENE}_body.js" > scenes/$SCENE.js
+mkdir -p ~/.fonts && for u in "ofl/fredoka/Fredoka%5Bwdth,wght%5D.ttf:Fredoka" "ofl/cinzel/Cinzel%5Bwght%5D.ttf:Cinzel" "ofl/oswald/Oswald%5Bwght%5D.ttf:Oswald" "ofl/bangers/Bangers-Regular.ttf:Bangers" "ofl/notosanstelugu/NotoSansTelugu%5Bwdth,wght%5D.ttf:NotoSansTelugu" "ofl/ebgaramond/EBGaramond%5Bwght%5D.ttf:EBGaramond" "ofl/ebgaramond/EBGaramond-Italic%5Bwght%5D.ttf:EBGaramond-Italic" "ofl/poppins/Poppins-SemiBold.ttf:Poppins-SemiBold" "ofl/poppins/Poppins-Bold.ttf:Poppins-Bold"; do f=${u%%:*}; n=${u##*:}; [ -f ~/.fonts/$n.ttf ] || for _t in 1 2 3 4; do curl -sfL "https://raw.githubusercontent.com/google/fonts/main/$f" -o ~/.fonts/$n.ttf && break; sleep 5; done; done; fc-cache -f >/dev/null
+KITF=""; grep -q "STORYBOOK" "$REPO/studio/scenes/${SCENE}_body.js" && KITF="$REPO/studio/scenes/stb_storybook_kit.js"   # 3D storybook reels share one kit
+cat "$REPO/studio/scenes/${SCENE}_lines.js" $KITF "$REPO/studio/scenes/${SCENE}_body.js" > scenes/$SCENE.js
 rm -rf voice/$SCENE && mkdir -p voice/$SCENE && cp "$REPO"/studio/voices/out/$SCENE/*.wav voice/$SCENE/
 echo "kit ready: $SCENE"
