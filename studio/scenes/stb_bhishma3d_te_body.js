@@ -212,9 +212,11 @@ window.SCENE = {
       return M;
     }
     // pose: play a clip, then add bone rotation offsets {Bone: [x,y,z]}
+    // (the mixer only rewrites bones whose clip value changed, so last frame's offsets are taken off first — no drift)
     const pose = (M, clip, ct, offs = {}, { loop = true } = {}) => {
-      M.play(clip, ct, { loop });
-      for (const n in offs) { const b = M.B[n]; if (b) { b.rotation.x += offs[n][0] || 0; b.rotation.y += offs[n][1] || 0; b.rotation.z += offs[n][2] || 0; } }
+      const old = M._off || {}; for (const n in old) { const b = M.B[n]; b.rotation.x -= old[n][0]; b.rotation.y -= old[n][1]; b.rotation.z -= old[n][2]; }
+      M.play(clip, ct, { loop }); M._off = {};
+      for (const n in offs) { const b = M.B[n]; if (b) { const o = [offs[n][0] || 0, offs[n][1] || 0, offs[n][2] || 0]; b.rotation.x += o[0]; b.rotation.y += o[1]; b.rotation.z += o[2]; M._off[n] = o; } }
     };
     const place = (M, x, y, z, ry = 0, rx = 0, rz = 0) => { M.root.visible = true; M.root.position.set(x, y, z); M.root.rotation.set(rx, ry, rz, 'YXZ'); };
 
