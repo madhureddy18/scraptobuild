@@ -90,6 +90,8 @@ window.STORYBOOK = (K, T) => {
       for (const sx of [-1, 1]) { const pk = add(new THREE.SphereGeometry(0.014, 12, 8), lipM, sx * 0.014, -0.19, 0.366); pk.scale.set(1.3, 0.8, 0.8); }
       const lo = add(new THREE.CapsuleGeometry(0.015, 0.058, 6, 12), lipM, 0, -0.226, 0.352); lo.rotation.z = PI / 2;
       const gap = add(new THREE.SphereGeometry(0.04, 16, 10), mat(0x2a0c08), 0, -0.21, 0.355); gap.scale.set(1.0, 0.08, 0.3);
+      if (o.bindi) add(new THREE.SphereGeometry(0.018, 12, 8), mat(0xc0101a), 0, 0.17, 0.392).scale.z = 0.4;
+      if (o.earrings) for (const sx of [-1, 1]) { const er = add(new THREE.TorusGeometry(0.035, 0.008, 8, 20), GOLD, sx * 0.335, -0.12, 0.0); er.rotation.y = PI / 2; add(new THREE.SphereGeometry(0.018, 10, 8), GOLD, sx * 0.335, -0.17, 0.0); }
       if (o.tilak) { const tw = add(new THREE.TorusGeometry(0.03, 0.007, 6, 20, PI), mat(0xf2ede0, { roughness: 0.6 }), 0, 0.2, 0.392); tw.rotation.z = PI; tw.scale.y = 1.7;
         const tr = add(new THREE.CapsuleGeometry(0.006, 0.06, 4, 8), mat(0xc81818, { roughness: 0.5 }), 0, 0.2, 0.396); }
       const hairT = strandTex('#' + new THREE.Color(o.hair).getHexString(), (o.seed || 1) * 100 | 0);
@@ -140,6 +142,17 @@ window.STORYBOOK = (K, T) => {
         const h = add(new THREE.SphereGeometry(0.46, 40, 24, 0, TAU, 0, PI * 0.55), o.helmMat || mat(0x8a5a2a, { metalness: 0.7, roughness: 0.4 }), 0, 0.06, -0.01); h.scale.set(0.86, 1.08, 0.98);
         add(new THREE.ConeGeometry(0.05, 0.25, 16), GOLD2, 0, 0.6, -0.01);
         const rim = add(new THREE.TorusGeometry(0.42, 0.02, 8, 48), GOLD2, 0, 0.12, -0.01); rim.rotation.x = PI / 2; rim.scale.set(0.86, 0.98, 1);
+      } else if (o.crown === 'turban') {
+        const tc = new THREE.Color(o.turban || 0xf2ede0); for (let i = 0; i < 4; i++) { const tr = add(new THREE.TorusGeometry(0.4 - i * 0.05, 0.075, 12, 40), mat(tc.getHex(), { roughness: 0.8 }), 0, 0.26 + i * 0.09, -0.02); tr.rotation.x = PI / 2 + 0.08 * (i % 2 ? 1 : -1); tr.scale.set(0.86, 0.96, 1); }
+        add(new THREE.SphereGeometry(0.22, 20, 14), mat(tc.getHex(), { roughness: 0.8 }), 0, 0.5, -0.03).scale.set(1.1, 0.7, 1);
+      } else if (o.crown === 'bun') {
+        const bn = add(new THREE.SphereGeometry(0.19, 24, 16), mat(o.hair, { roughness: 0.55 }), 0, 0.05, -0.43); bn.scale.set(1, 0.9, 0.8);
+        if (o.flower) for (let i = 0; i < 7; i++) add(new THREE.SphereGeometry(0.04, 10, 8), mat(0xf6f2e6), Math.cos(i / 7 * TAU) * 0.19, 0.05 + Math.sin(i / 7 * TAU) * 0.17, -0.38);
+      } else if (o.crown === 'tiara') {
+        const r = add(new THREE.TorusGeometry(0.4, 0.02, 10, 48), GOLD, 0, 0.3, 0); r.rotation.x = PI / 2 - 0.15; r.scale.set(0.84, 0.97, 1);
+        const crest = new THREE.Shape(); crest.moveTo(-0.11, 0); crest.quadraticCurveTo(0, 0.24, 0.11, 0); crest.lineTo(-0.11, 0);
+        add(new THREE.ExtrudeGeometry(crest, { depth: 0.015, bevelEnabled: false }), GOLD, 0, 0.32, 0.34).rotation.x = -0.3; add(new THREE.SphereGeometry(0.025, 12, 8), RUBY, 0, 0.38, 0.37);
+        const bn = add(new THREE.SphereGeometry(0.17, 24, 16), mat(o.hair, { roughness: 0.55 }), 0, 0.12, -0.42); bn.scale.set(1, 0.9, 0.8);
       } else if (o.crown === 'band') {
         const r = add(new THREE.TorusGeometry(0.4, 0.016, 10, 48), GOLD, 0, 0.27, 0); r.rotation.x = PI / 2 - 0.12; r.scale.set(0.84, 0.97, 1);
         add(new THREE.SphereGeometry(0.022, 12, 10), RUBY, 0, 0.3, 0.37);
@@ -172,9 +185,15 @@ window.STORYBOOK = (K, T) => {
       const Ty = y => y - tor.y, legY = P('UpperLegL').y, shY = P('UpperArmL').y, yN = neck.y;
       const torsoM = o.torso === 'armor' ? SILVER : o.torso === 'tunic' ? cloth(o.tunic, 0.8) : skinM;
       // torso: one smooth shape, broad shoulders, narrow waist
-      const chest = K.barrel([[Ty(legY - 0.04), 0.0], [Ty(legY - 0.035), 0.2], [Ty(legY + 0.05), 0.198], [Ty(abd.y + 0.05), 0.205], [0, 0.236], [Ty(shY - 0.1), 0.258], [Ty(shY - 0.02), 0.235], [Ty(yN) - 0.04, 0.15], [Ty(yN) - 0.005, 0.08], [Ty(yN), 0.0]], torsoM, 0.6, 72);
+      const fw = o.female ? 0.84 : 1;
+      const chest = K.barrel([[Ty(legY - 0.04), 0.0], [Ty(legY - 0.035), 0.2 * (o.female ? 0.95 : 1)], [Ty(legY + 0.05), 0.198 * fw], [Ty(abd.y + 0.05), 0.205 * (o.female ? 0.8 : 1)], [0, 0.236 * fw], [Ty(shY - 0.1), 0.258 * fw], [Ty(shY - 0.02), 0.235 * fw], [Ty(yN) - 0.04, 0.15 * fw], [Ty(yN) - 0.005, 0.08], [Ty(yN), 0.0]], torsoM, 0.6, 72);
+      if (o.female) {                                                             // blouse + bust
+        const blM = cloth(o.blouse || o.sash, 0.7);
+        const bl = K.barrel([[Ty(shY - 0.3), 0.0], [Ty(shY - 0.29), 0.212], [Ty(shY - 0.1), 0.222], [Ty(shY - 0.02), 0.205], [Ty(yN) - 0.05, 0.13], [Ty(yN) - 0.04, 0.0]], blM, 0.64, 64); bl.position.set(cx, tor.y, tor.z + 0.006); pin(bl, 'Torso');
+        for (const sx of [-1, 1]) { const bu = new THREE.Mesh(new THREE.SphereGeometry(0.085, 28, 18), blM); bu.scale.set(1, 0.9, 0.8); bu.position.set(cx + sx * 0.075, shY - 0.17, tor.z + 0.1); pin(bu, 'Torso'); }
+      }
       chest.position.set(cx, tor.y, tor.z + 0.005); pin(chest, 'Torso');
-      if (o.torso === 'bare') {                                                    // pecs + a soft line down the belly
+      if (o.torso === 'bare' && !o.female) {                                                    // pecs + a soft line down the belly
         for (const sx of [-1, 1]) { const pc = new THREE.Mesh(new THREE.SphereGeometry(0.11, 32, 20), skinM); pc.scale.set(1.15, 0.5, 0.28); pc.rotation.z = sx * 0.15; pc.position.set(cx + sx * 0.1, shY - 0.15, tor.z + 0.118); pin(pc, 'Torso'); }
       }
       if (o.torso === 'armor') {                                                   // pauldrons + gold trim
@@ -216,27 +235,32 @@ window.STORYBOOK = (K, T) => {
         pin(hand, 'Palm' + sd);
         // legs: loose dhoti to mid-shin, bare shin, bare foot, anklet
         const th = P('UpperLeg' + sd), kn = P('LowerLeg' + sd), an = P('Foot' + sd);
-        pin(K.segment(th.clone().add(V3(sx * 0.03, -0.02, -0.01)), kn, 0.13, 0.11, dhM), 'UpperLeg' + sd);
+        if (!o.female) pin(K.segment(th.clone().add(V3(sx * 0.03, -0.02, -0.01)), kn, 0.13, 0.11, dhM), 'UpperLeg' + sd);
         const mid = kn.clone().lerp(an, 0.55);
-        pin(K.segment(kn, mid, 0.105, 0.098, dhM), 'LowerLeg' + sd);
-        const hem = new THREE.Mesh(new THREE.TorusGeometry(0.098, 0.014, 8, 32), sashM); hem.position.copy(mid); hem.rotation.x = PI / 2; pin(hem, 'LowerLeg' + sd);
+        if (!o.female) pin(K.segment(kn, mid, 0.105, 0.098, dhM), 'LowerLeg' + sd);
+        const hem = new THREE.Mesh(new THREE.TorusGeometry(0.098, 0.014, 8, 32), sashM); hem.position.copy(mid); hem.rotation.x = PI / 2; hem.visible = !o.female; pin(hem, 'LowerLeg' + sd);
         pin(K.segment(mid.clone().lerp(kn, 0.2), an.clone().add(V3(0, 0.04, 0)), 0.055, 0.045, skinM), 'LowerLeg' + sd);
         const foot = new THREE.Mesh(new THREE.SphereGeometry(0.085, 28, 18), skinM); foot.scale.set(0.72, 0.42, 1.65); foot.position.copy(an).add(V3(0, -0.04, 0.07)); pin(foot, 'Foot' + sd);
         const ank = new THREE.Mesh(new THREE.TorusGeometry(0.05, 0.01, 8, 28), GOLD); ank.rotation.x = PI / 2; ank.position.copy(an).add(V3(0, 0.03, 0)); pin(ank, 'LowerLeg' + sd);
       }
       // pelvis: dhoti wrap, waist cloth, front pleats
-      const pel = K.barrel([[-0.2, 0.0], [-0.17, 0.17], [-0.06, 0.235], [0.06, 0.225], [0.11, 0.205], [0.13, 0.0]], dhM, 0.72, 64);
+      if (o.female) {                                                              // saree skirt to the ankles (with a gold border)
+        const sk = new THREE.Mesh(new THREE.LatheGeometry([[0.0, 0.14], [0.19, 0.14], [0.205, 0.05], [0.235, -0.3], [0.27, -0.6], [0.3, -0.86], [0.29, -0.9], [0.0, -0.9]].map(([r, y]) => new THREE.Vector2(r, y)), 56),
+          mat(0xffffff, { map: clothTex(hx(o.dhoti), o.motif || hx(new THREE.Color(o.dhoti).lerp(new THREE.Color(0xffffff), 0.3)), hx(o.sash), 31, [3, 1]), roughness: 0.8, side: THREE.DoubleSide }));
+        sk.scale.z = 0.8; sk.position.set(cx, hip.y, hip.z); pin(sk, 'Hips');
+      }
+      const pel = K.barrel([[-0.2, 0.0], [-0.17, 0.17], [-0.06, 0.235], [0.06, 0.225], [0.11, 0.205], [0.13, 0.0]], dhM, 0.72, 64); pel.visible = !o.female;
       pel.position.set(cx, hip.y, hip.z - 0.01); pin(pel, 'Hips');
       const wb = new THREE.Mesh(new THREE.TorusGeometry(0.212, 0.034, 12, 56), sashM); wb.rotation.x = PI / 2; wb.scale.set(1, 0.72, 1); wb.position.set(cx, hip.y + 0.1, hip.z - 0.01); pin(wb, 'Hips');
       const pl = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.42, 0.012), dhD); pl.position.set(cx, hip.y - 0.2, hip.z + 0.175); pl.rotation.x = 0.08; pl.visible = false; pin(pl, 'Hips');
-      const knot = new THREE.Mesh(new THREE.SphereGeometry(0.04, 16, 12), sashM); knot.position.set(cx + 0.08, hip.y + 0.08, hip.z + 0.15); pin(knot, 'Hips');
+      const knot = new THREE.Mesh(new THREE.SphereGeometry(0.04, 16, 12), sashM); wb.visible = !o.female; knot.position.set(cx + 0.08, hip.y + 0.08, hip.z + 0.15); pin(knot, 'Hips');
       // head on the neck
       const head = makeHead(o);
       K.swapHead(M, head, { offset: [0, 0.2, 0.02], scale: o.headScale });
       M.head = head; M.B = B; M.o = o;
       // holder so we can place / lay down the whole figure
       const holder = new THREE.Group(); S.add(holder); holder.add(M.g); M.g.position.set(0, 0, 0); M.root = holder;
-      holder.scale.setScalar(o.scale * 0.86);
+      holder.scale.setScalar(o.scale * 0.86 * (o.female ? 0.93 : 1));
       M.g.traverse(q => { if (q.isMesh) q.frustumCulled = false; });
       heroes.push(M);
       return M;
@@ -456,6 +480,81 @@ window.STORYBOOK = (K, T) => {
     const cam = { p: V3(0, 2, 8), l: V3(0, 1, 0), fov: 35 };
     const C = (p0, p1, l0, l1, u, fov = 35, e = ease) => { const k = e(u); cam.p.set(...p0.map((v, i) => lerp(v, p1[i], k))); cam.l.set(...l0.map((v, i) => lerp(v, l1[i], k))); cam.fov = fov; };
     const narr = t => K.voice('narrator', t);
+
+    // ================================================================ generic sets (reusable): river/lake, boat, hut, palace hall, cloud heaven, palm-leaf book, end card
+    const waterTex = K.canvasTex(512, 512, (x, w, h) => { x.fillStyle = '#4b97cf'; x.fillRect(0, 0, w, h); const r = rng(3); for (let i = 0; i < 240; i++) { x.strokeStyle = `rgba(255,255,255,${0.15 + r() * 0.3})`; x.lineWidth = 2; const px = r() * w, py = r() * h, l = 10 + r() * 30; x.beginPath(); x.moveTo(px, py); x.quadraticCurveTo(px + l / 2, py - 3, px + l, py); x.stroke(); } });
+    waterTex.wrapS = waterTex.wrapT = THREE.RepeatWrapping; waterTex.repeat.set(24, 24);
+    const makeWater = (x, z, w, d, rot = 0) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, d), mat(0xffffff, { map: waterTex, roughness: 0.25 })); m.rotation.set(-PI / 2, 0, rot); m.position.set(x, 0.035, z); m.receiveShadow = true; S.add(m); return m; };
+    const lotus = (parent, x, z, s = 1, flower = true) => { const g = new THREE.Group(); g.position.set(x, 0.05, z); g.scale.setScalar(s); parent.add(g);
+      const pad = new THREE.Mesh(new THREE.CircleGeometry(0.35, 24, 0.3, TAU - 0.3), mat(0x3f9a3a, { side: THREE.DoubleSide })); pad.rotation.x = -PI / 2; g.add(pad);
+      if (flower) for (let i = 0; i < 8; i++) { const pt = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 8), mat(0xf4a0b8)); pt.scale.set(0.5, 1.2, 0.35); pt.position.set(Math.cos(i / 8 * TAU) * 0.05, 0.08, Math.sin(i / 8 * TAU) * 0.05); pt.rotation.set(Math.sin(i / 8 * TAU) * 0.5, 0, -Math.cos(i / 8 * TAU) * 0.5); g.add(pt); }
+      return g; };
+    const makeBoat = () => { const g = groupOf(); const wood = mat(0x8a5a2e, { roughness: 0.7 });
+      const hull = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 12, 0, TAU, PI / 2, PI / 2), wood); hull.scale.set(0.55, 0.38, 1.9); hull.position.y = 0.3; g.add(hull);
+      const rim = new THREE.Mesh(new THREE.TorusGeometry(1, 0.03, 8, 48), mat(0x6a4020)); rim.rotation.x = PI / 2; rim.scale.set(0.55, 1.9, 1); rim.position.y = 0.3; g.add(rim);
+      const oar = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 2.2, 8), mat(0x6a4020)); oar.position.set(0.5, 0.6, -0.6); oar.rotation.set(0.6, 0, 0.5); g.add(oar); shadowAll(g); return g; };
+    const makeHut = () => { const g = groupOf(); const wall = new THREE.Mesh(new THREE.CylinderGeometry(1.4, 1.5, 1.6, 28), mat(0xc89a6a, { roughness: 0.9 })); wall.position.y = 0.8; g.add(wall);
+      const thT = K.canvasTex(256, 128, (x, w, h) => { x.fillStyle = '#b08a4a'; x.fillRect(0, 0, w, h); const r = rng(9); for (let i = 0; i < 400; i++) { x.strokeStyle = `rgba(${90 + r() * 60},${60 + r() * 40},20,0.6)`; x.beginPath(); const px = r() * w; x.moveTo(px, 0); x.lineTo(px + (r() - 0.5) * 8, h); x.stroke(); } });
+      const roof = new THREE.Mesh(new THREE.ConeGeometry(2.0, 1.6, 28), mat(0xffffff, { map: thT, roughness: 1 })); roof.position.y = 2.35; g.add(roof);
+      const door = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 1.1), mat(0x3a2414)); door.position.set(0, 0.55, 1.46); g.add(door);
+      const net = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 1.0, 8, 6), new THREE.MeshStandardMaterial({ color: 0x8a7a5a, wireframe: true })); net.position.set(1.8, 0.7, 0.6); net.rotation.y = -0.6; g.add(net); shadowAll(g); return g; };
+    const floorTex = (a, b) => { const t = K.canvasTex(256, 256, (x, w, h) => { for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) { x.fillStyle = (i + j) % 2 ? a : b; x.fillRect(i * 64, j * 64, 64, 64); } x.strokeStyle = 'rgba(160,120,40,0.5)'; x.lineWidth = 2; for (let i = 0; i <= 4; i++) { x.beginPath(); x.moveTo(i * 64, 0); x.lineTo(i * 64, h); x.moveTo(0, i * 64); x.lineTo(w, i * 64); x.stroke(); } }); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(10, 10); return t; };
+    // palace hall: pillars, arched back wall with curtains, dais + throne + royal umbrella, lamps. Faces +z (camera side), centre at (x0,0,z0)
+    const makePalace = ({ x0 = -100, z0 = 0, wall = '#f2e6cc', arch = '#c9a46a', curtain = '#b0202a', pillar = 0xf6efe0, floorA = '#efe2c6', floorB = '#e2cfa4' } = {}) => {
+      const g = groupOf(); g.position.set(x0, 0, z0);
+      const fl = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), mat(0xffffff, { map: floorTex(floorA, floorB), roughness: 0.35 })); fl.rotation.x = -PI / 2; fl.position.y = 0.02; g.add(fl);
+      const wT = K.canvasTex(1024, 512, (x, w, h) => { x.fillStyle = wall; x.fillRect(0, 0, w, h); for (let i = 0; i < 5; i++) { const cx = 102 + i * 205; x.fillStyle = arch; x.beginPath(); x.moveTo(cx - 70, h); x.lineTo(cx - 70, 200); x.arc(cx, 200, 70, PI, 0); x.lineTo(cx + 70, h); x.fill();
+          x.fillStyle = curtain; x.beginPath(); x.moveTo(cx - 60, 210); x.quadraticCurveTo(cx - 20, 300, cx - 50, h); x.lineTo(cx - 60, h); x.fill(); x.beginPath(); x.moveTo(cx + 60, 210); x.quadraticCurveTo(cx + 20, 300, cx + 50, h); x.lineTo(cx + 60, h); x.fill();
+          x.strokeStyle = '#d8b04a'; x.lineWidth = 8; x.beginPath(); x.moveTo(cx - 70, h); x.lineTo(cx - 70, 200); x.arc(cx, 200, 70, PI, 0); x.lineTo(cx + 70, h); x.stroke(); }
+        x.fillStyle = '#d8b04a'; x.fillRect(0, 60, w, 14); x.fillRect(0, 0, w, 8); });
+      const bw = new THREE.Mesh(new THREE.PlaneGeometry(30, 14), mat(0xffffff, { map: wT })); bw.position.set(0, 7, -14); g.add(bw);
+      for (const sx of [-1, 1]) { const sw = new THREE.Mesh(new THREE.PlaneGeometry(30, 14), mat(0xffffff, { map: wT })); sw.position.set(sx * 13, 7, 0); sw.rotation.y = -sx * PI / 2; g.add(sw); }
+      const ceil = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), mat(0xd8c49a)); ceil.rotation.x = PI / 2; ceil.position.y = 9; g.add(ceil);
+      for (const sx of [-1, 1]) for (let z = -11; z <= 7; z += 4.5) { const p = new THREE.Group(); p.position.set(sx * 4.2, 0, z); g.add(p);
+        const sh = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.36, 8.4, 24), mat(pillar)); sh.position.y = 4.4; p.add(sh);
+        for (const y of [0.15, 8.6]) { const c = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.3, 24), GOLD); c.position.y = y; p.add(c); }
+        for (const y of [1.2, 7.6]) { const ring = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.04, 8, 24), GOLD); ring.rotation.x = PI / 2; ring.position.y = y; p.add(ring); }
+        const st = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.06, 1.3, 8), GOLD2); st.position.set(-sx * 0.7, 0.65, 0); p.add(st); diya(p, -sx * 0.7, 1.3, 0, 1.4, false); }
+      const dais = new THREE.Group(); dais.position.set(0, 0, -11.2); g.add(dais);
+      [[6, 0.25, 3.6, 0.125], [4.6, 0.25, 2.8, 0.375]].forEach(([w, h, d, y]) => { const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(0xf6efe0)); b.position.y = y; dais.add(b); const tr = new THREE.Mesh(new THREE.BoxGeometry(w + 0.02, 0.05, d + 0.02), GOLD); tr.position.y = y + h / 2; dais.add(tr); });
+      const carpet = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 20), mat(0xa81c24)); carpet.rotation.x = -PI / 2; carpet.position.set(0, 0.03, -1); g.add(carpet);
+      const throne = new THREE.Group(); throne.position.set(0, 0.5, -11.4); g.add(throne);
+      const seat = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.5, 1.0), GOLD); seat.position.y = 0.25; throne.add(seat); const cu = new THREE.Mesh(new THREE.BoxGeometry(1.15, 0.12, 0.9), mat(0xb01c22)); cu.position.y = 0.56; throne.add(cu);
+      const bk = new THREE.Shape(); bk.moveTo(-0.7, 0); bk.lineTo(-0.7, 1.2); bk.quadraticCurveTo(0, 2.1, 0.7, 1.2); bk.lineTo(0.7, 0); bk.lineTo(-0.7, 0);
+      const back = new THREE.Mesh(new THREE.ExtrudeGeometry(bk, { depth: 0.12, bevelEnabled: true, bevelSize: 0.03, bevelThickness: 0.03 }), GOLD); back.position.set(0, 0.5, -0.55); throne.add(back);
+      const bp = new THREE.Mesh(new THREE.CircleGeometry(0.4, 32), mat(0xb01c22)); bp.position.set(0, 1.45, -0.4); throne.add(bp);
+      for (const sx of [-1, 1]) { const ar = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.35, 0.9), GOLD); ar.position.set(sx * 0.65, 0.75, 0); throne.add(ar); }
+      const um = new THREE.Mesh(new THREE.SphereGeometry(1.0, 32, 12, 0, TAU, 0, PI / 2), mat(0xf8f2e2, { side: THREE.DoubleSide })); um.scale.y = 0.35; um.position.set(0, 3.6, -0.2); throne.add(um);
+      const ump = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.6, 8), GOLD); ump.position.set(0, 2.8, -0.2); throne.add(ump);
+      const umv = new THREE.Mesh(new THREE.CylinderGeometry(1.0, 1.0, 0.12, 32, 1, true), GOLD); umv.position.set(0, 3.58, -0.2); throne.add(umv);
+      shadowAll(g); g.userData.seat = V3(x0, 1.1, z0 - 11.35); return g; };
+    // cloud heaven (a bank of puffy clouds up high with a golden glow)
+    const makeHeaven = (x0 = 0, y0 = 40, z0 = 200) => { const g = groupOf(); g.position.set(x0, y0, z0); const r = rng(55), cm = mat(0xffffff, { roughness: 1 });
+      for (let i = 0; i < 70; i++) { const a = r() * TAU, d = Math.pow(r(), 0.6) * 9, s = 0.9 + r() * 1.6; const c = new THREE.Mesh(new THREE.SphereGeometry(s, 20, 14), cm); c.position.set(Math.cos(a) * d * 1.3, -r() * 1.2 - s * 0.3, Math.sin(a) * d); c.scale.y = 0.7; g.add(c); }
+      const gl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.8 })); gl.scale.set(16, 16, 1); gl.position.set(0, 3, -6); g.add(gl);
+      return g; };
+    // palm-leaf manuscript on a stand with a diya (for "source" lines)
+    const makeBook = () => { const book = groupOf(); const st = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.08, 0.55), mat(0x5a3418, { roughness: 0.5 })); st.position.y = 0.5; book.add(st);
+      for (const sx of [-1, 1]) { const lg = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.5, 0.06), mat(0x4a2a12)); lg.position.set(sx * 0.5, 0.25, 0); book.add(lg); }
+      const lt = K.canvasTex(1024, 128, (x, w, h) => { x.fillStyle = '#d9c08a'; x.fillRect(0, 0, w, h); x.fillStyle = '#3a2a1a'; const r = rng(3); for (let row = 0; row < 4; row++) for (let i = 0; i < 70; i++) { x.globalAlpha = 0.55; x.fillRect(40 + i * 13, 22 + row * 26, 6 + r() * 5, 3 + r() * 6); } x.globalAlpha = 1; });
+      for (let i = 0; i < 9; i++) { const lf = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.012, 0.12), [mat(0xc8a870), mat(0xc8a870), new THREE.MeshStandardMaterial({ map: lt, roughness: 0.8 }), mat(0xc8a870), mat(0xc8a870), mat(0xc8a870)]); lf.position.set(0, 0.55 + i * 0.013, 0); lf.rotation.y = (i - 4) * 0.008; book.add(lf); }
+      const thread = new THREE.Mesh(new THREE.TorusGeometry(0.08, 0.008, 6, 20), mat(0xa02020)); thread.position.set(0.05, 0.6, 0.0); thread.rotation.y = PI / 2; book.add(thread);
+      diya(book, 0.55, 0.54, 0.12, 1.3, true); shadowAll(book); return book; };
+    // navy end card (reference style): series name, part, italic title, Telugu title, follow line
+    const endCard = (x, t, u, { series, part, title, te, next, ctaAt }) => { const a = eo(clamp(u * 2.5));
+      let g = x.createLinearGradient(0, 0, 0, 760); g.addColorStop(0, `rgba(12,12,34,${a})`); g.addColorStop(0.75, `rgba(12,12,34,${0.92 * a})`); g.addColorStop(1, 'rgba(12,12,34,0)'); x.fillStyle = g; x.fillRect(0, 0, 1080, 760);
+      g = x.createLinearGradient(0, 1150, 0, 1920); g.addColorStop(0, 'rgba(12,12,34,0)'); g.addColorStop(0.3, `rgba(12,12,34,${0.9 * a})`); g.addColorStop(1, `rgba(12,12,34,${a})`); x.fillStyle = g; x.fillRect(0, 1150, 1080, 770);
+      label(x, series, 540, 300, 34, '#f2d79a', a, 'EB Garamond', '500', 5); if (part) label(x, part, 540, 345, 24, '#f2d79a', a * 0.9, 'EB Garamond', '500', 4);
+      x.save(); x.globalAlpha = a * 0.8; x.fillStyle = '#e8c46a'; x.fillRect(440, 378, 200, 2); x.restore();
+      label(x, title, 540, 455, 92, '#ffffff', a, 'EB Garamond', '500', 0, true); if (te) label(x, te, 540, 545, 46, '#f2d79a', a, 'Noto Sans Telugu', '600');
+      if (next) label(x, next, 540, 1560, 36, '#ffffff', eo(clamp((t - ctaAt) / 0.5)), 'EB Garamond', '400', 0, true);
+      label(x, next ? 'FOLLOW FOR THE NEXT PART' : 'FOLLOW FOR MORE STORIES', 540, next ? 1630 : 1590, 30, '#ffffff', eo(clamp((t - ctaAt) / 0.5)), 'EB Garamond', '600', 4); };
+    const titleCard = (x, u, title, sub) => { const a = 1 - clamp((u - 0.75) * 5); label(x, title, 540, 300, 76, '#ffffff', a, 'EB Garamond', '600'); label(x, sub, 540, 372, 30, '#f2d79a', a, 'EB Garamond', '500', 4); };
+    // common poses
+    const P_ = { vowUp: { UpperArmR: [0, 2.5, 0.35], LowerArmR: [0, 0, 0.2] }, point: { UpperArmR: [0, 1.0, 1.0], LowerArmR: [0, 0, 0.15] }, chest: { UpperArmR: [0, 0.1, 0.8], LowerArmR: [0, 0, 1.6] },
+      bless: { UpperArmR: [0, 0.6, 1.25], LowerArmR: [0, 0, 0.9] }, namaste: { UpperArmR: [0, 0.1, 0.7], LowerArmR: [0, 0, 1.55], UpperArmL: [0, -0.1, 0.7], LowerArmL: [0, 0, 1.55] }, bowHead: { Neck: [0.45, 0, 0], Torso: [0.15, 0, 0] },
+      armsOut: { UpperArmR: [0, 1.2, 0.5], UpperArmL: [0, -1.2, 0.5] }, sad: { Neck: [0.5, 0, 0], Torso: [0.2, 0, 0], UpperArmR: [0, 0.1, 0.4], UpperArmL: [0, -0.1, 0.4] } };
+    const mix_ = (...o) => Object.assign({}, ...o);
     const regs = [chariot, banners, debris, burst, sparks, petals]; const reg = (...o) => { regs.push(...o); return o[0]; };
     const worldObjs = () => [hills1, hills2, ground, grassIM, ...treeIM, tents];
     const outdoor = v => worldObjs().forEach(o => { if (o) o.visible = v; });
@@ -502,6 +601,7 @@ window.STORYBOOK = (K, T) => {
     };
     Object.assign(A, { THREE, S, R, PI, TAU, clamp, lerp, ease, eo, prog, L, LINES, N, IDX, Bt, Et, F, D, XF, V3, rng, mat, GOLD, GOLD2, RUBY, PEARL, SILVER, cloth, strandTex, clothTex, makeHead, hero, heroes, pose, place,
       makeBow, handBow, arrowField, singleArrow, SKIES, skyTex, setSky, key, hemi, sky, sky2, groupOf, shadowAll, wheel, chariot, horseLegs, waveFlag, banners, bannerFlags, debris, tents, flameTex, glowTex, flames, diya, torch,
-      ptsTex, cloud, fly, dust, sparks, petals, stars, burst, label, tag, pill, cam, C, narr, reg, outdoor, finish });
+      ptsTex, cloud, fly, dust, sparks, petals, stars, burst, label, tag, pill, cam, C, narr, reg, outdoor, finish,
+      waterTex, makeWater, lotus, makeBoat, makeHut, makePalace, makeHeaven, makeBook, endCard, titleCard, P_, mix_ });
     return A;
 };
