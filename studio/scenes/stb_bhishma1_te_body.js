@@ -60,9 +60,9 @@ window.SCENE = {
         C([RX + 3.6, 1.5, 6.2], [RX + 2.9, 1.6, 5.2], [RX + 0.2, 1.4, -1.2], [RX + 0.3, 1.5, -1.0], u, 34);
         A.HUD = x => tag(x, 'GANGA DEVI  ·  SHANTANUDU', K.pulse(u, 0.05, 0.9), 'The river goddess and the king'); },
       prince: (t, u) => { setSky('gold', V3(0, 0, -4)); [target, tArrows, ...flying].forEach(o => o.visible = true);
-        const d = 0.5 + 0.5 * Math.abs(Math.sin(u * 6)); place(DV, 0.35, 0, 2.6, PI + 0.05); pose(DV, 'Man_Idle', t, { UpperArmL: [0, -1.2, 0.5], LowerArmL: [0, 0, 0.1], UpperArmR: [0, 0.9, 0.7], LowerArmR: [0, 0, 0.6 + 1.2 * d], Neck: [0, -0.35, 0] }); DV.head.update(t, { brow: -0.5 });
-        flying.forEach((a, i) => { const k = (u * 2.2 + i / 3) % 1, from = V3(0.3, 1.7, 2.0), to = V3(0.6 + (i - 1) * 0.15, 1.45, -8.9); a.position.copy(from.clone().lerp(to, k)); a.lookAt(to); a.rotateX(-PI / 2); a.visible = k > 0.05 && k < 0.95; });
-        C([1.7, 1.7, 5.2], [1.4, 1.75, 4.7], [0.2, 1.5, -4], [0.4, 1.5, -6], u, 34);
+        const d = 0.5 + 0.5 * Math.abs(Math.sin(u * 6)); place(DV, 0.6, 0, 2.8, PI + 0.05); pose(DV, 'Man_Idle', t, { UpperArmL: [0, -1.2, 0.5], LowerArmL: [0, 0, 0.1], UpperArmR: [0, 0.9, 0.7], LowerArmR: [0, 0, 0.6 + 1.2 * d], Neck: [0, -0.35, 0] }); DV.head.update(t, { brow: -0.5 });
+        flying.forEach((a, i) => { const k = (u * 2.2 + i / 3) % 1, from = V3(0.55, 1.7, 2.2), to = V3(0.6 + (i - 1) * 0.15, 1.45, -8.9); a.position.copy(from.clone().lerp(to, k)); a.lookAt(to); a.rotateX(-PI / 2); a.visible = k > 0.05 && k < 0.95; });
+        C([1.05, 1.75, 5.1], [0.9, 1.75, 4.9], [0.3, 1.5, -6], [0.3, 1.5, -6], u, 34);
         A.HUD = x => tag(x, 'HASTINAPURAM', K.pulse(u, 0.05, 0.9), 'The crown prince'); },
       river: (t, u) => { riverSet('gold'); place(SN, RX + 1.2, 0, 2.2, PI - 0.15); pose(SN, 'Man_Idle', t); SN.head.update(t, { look: [-0.2, 0] });
         boat.position.set(RX - 1.0 + u * 0.8, Math.sin(t * 1.3) * 0.03, -4.8); boat.rotation.y = 1.25;
