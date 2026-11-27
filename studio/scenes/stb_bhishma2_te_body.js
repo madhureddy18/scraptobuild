@@ -102,7 +102,7 @@ window.SCENE = {
         place(BH, 0.3, 0.95, -7.1, 0.1); pose(BH, 'Man_Idle', t, { UpperArmL: [0, -0.2, 0.2] }); BH.head.update(t, { close: 0.3 });
         place(SK, 0.0, 0, -1.0, PI); pose(SK, 'Man_Idle', t, { UpperArmL: [0, -1.2, 0.5], UpperArmR: [0, 0.9, 0.7], LowerArmR: [0, 0, 1.4] }); SK.head.update(t, {});
         const g = eo(clamp((u - 0.45) * 3)); AMG.root.visible = g > 0.01; place(AMG, 0.2, 0.15, -0.2, PI); AMG.root.visible = g > 0.01; pose(AMG, 'Man_Idle', t, P_.armsOut); AMG.head.update(t, {}); ghostOpacity = g * 0.45;
-        C([1.4, 1.7, 2.8], [1.1, 1.75, 2.3], [0, 1.6, -6], [0.1, 1.6, -6], u, 34);
+        C([0.6, 1.7, 2.8], [0.5, 1.72, 2.4], [0.1, 1.5, -6], [0.1, 1.5, -6], u, 34);
         A.HUD = x => tag(x, 'KURUKSHETRAM', K.pulse(u, 0.05, 0.6), 'He will not shoot at Amba'); },
       tenth: (t, u) => { setSky('gold', V3(0, 0, -6)); [chariot, A.banners, A.debris].forEach(o => o.visible = true); chariot.position.set(0.2, 0, -7); chariot.rotation.y = -1.3;
         place(BH, 0.3, 0.95, -7.1, 0.1); pose(BH, 'Man_Idle', t, { UpperArmL: [0, -0.2, 0.2], Neck: [0.2 * u, 0, 0] }); BH.head.update(t, { close: 0.3 + u * 0.4 });
